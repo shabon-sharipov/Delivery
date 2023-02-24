@@ -1,3 +1,6 @@
+using Delivery.Application.Common.Interfaces;
+using Delivery.Application.Services;
+
 namespace Delivery.API
 {
     public class Program
@@ -12,6 +15,7 @@ namespace Delivery.API
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddScoped<IProductService, ProductServices>();
 
             var app = builder.Build();
 

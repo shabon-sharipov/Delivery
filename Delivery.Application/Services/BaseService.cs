@@ -5,22 +5,22 @@ namespace Delivery.Application.Services
 {
     public abstract class BaseService<TEntity> : IBaseService<TEntity> where TEntity : EntityBase
     {
-        public TEntity Create(TEntity entity)
+        public virtual TEntity Create(TEntity entity)
         {
             throw new NotImplementedException();
         }
 
-        public TEntity Delete(ulong id)
+        public virtual bool Delete(ulong id)
         {
             throw new NotImplementedException();
         }
 
-        public TEntity Get(ulong id)
+        public virtual TEntity Get(ulong id)
         {
             throw new NotImplementedException();
         }
 
-        public TEntity Update(TEntity entity, ulong id)
+        public virtual TEntity Update(TEntity entity, ulong id)
         {
             throw new NotImplementedException();
         }
