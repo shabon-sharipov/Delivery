@@ -1,6 +1,5 @@
 ﻿using Delivery.Application.Common.Interfaces;
 using Delivery.Domain.Model;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Delivery.API.Controllers
@@ -30,7 +29,7 @@ namespace Delivery.API.Controllers
             return Ok(entity);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id}")] 
         public IActionResult Put(Product product, ulong id)
         {
             var entity = productService.Update(product, id);

@@ -1,5 +1,10 @@
 using Delivery.Application.Common.Interfaces;
+using Delivery.Application.Common.Interfaces.Repositories;
 using Delivery.Application.Services;
+using Delivery.Infrastructure.Persistence.Database;
+using Delivery.Infrastructure.Persistence.Repositories;
+using Microsoft.EntityFrameworkCore;
+using System.Configuration;
 
 namespace Delivery.API
 {
@@ -16,6 +21,15 @@ namespace Delivery.API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<IProductService, ProductServices>();
+
+            builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            //Add Db
+
+            builder.Services.AddDbContext<EFContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer"));
+                options.UseLazyLoadingProxies();
+            }, ServiceLifetime.Scoped);
 
             var app = builder.Build();
 
