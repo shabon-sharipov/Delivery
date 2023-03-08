@@ -13,7 +13,7 @@ namespace Delivery.Infrastructure.Persistence.TableConfigurations
     {
         public void Configure(EntityTypeBuilder<Product> builder)
         {
-
+           
         }
     }
 }

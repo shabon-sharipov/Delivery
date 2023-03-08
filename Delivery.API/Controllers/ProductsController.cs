@@ -16,30 +16,30 @@ namespace Delivery.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(ulong id)
+        public async Task<ActionResult<Product>> GetById(ulong id)
         {
-            var entity = productService.Get(id);
+            var entity =await productService.Get(id, CancellationToken.None);
             return Ok(entity);
         }
 
         [HttpPost]
-        public IActionResult Post(Product product)
+        public async Task<ActionResult<Product>> Post(Product product)
         {
-            var entity = productService.Create(product);
+            var entity = await productService.Create(product, CancellationToken.None);
             return Ok(entity);
         }
 
-        [HttpPut("{id}")] 
-        public IActionResult Put(Product product, ulong id)
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Product>> Put(Product product, ulong id)
         {
-            var entity = productService.Update(product, id);
+            var entity =await productService.Update(product, id, CancellationToken.None);
             return Ok(entity);
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(ulong id)
         {
-            var entity = productService.Delete(id);
+            var entity = productService.Delete(id, CancellationToken.None);
             return Ok(entity);
         }
     }

@@ -11,19 +11,20 @@ namespace Delivery.Application.Services
         {
             _repository = repository;
         }
-        public override Product Create(Product entity)
+        public override async Task<Product> Create(Product entity, CancellationToken cancellationToken)
         {
             if (entity == null)
                 throw new NullReferenceException(nameof(Product));
 
-            _repository.Add(entity);
-            _repository.SaveChanges();
+            await _repository.AddAsync(entity, CancellationToken.None);
+            await _repository.SaveChangesAsync(CancellationToken.None);
+
             return entity;
         }
 
-        public override Product Update(Product product, ulong id)
+        public override async Task<Product> Update(Product product, ulong id, CancellationToken cancellationToken)
         {
-            var entity = _repository.Find(id);
+            var entity = await _repository.FindAsync(id, CancellationToken.None);
             if (entity == null)
                 throw new NullReferenceException(nameof(Product));
 
@@ -33,29 +34,30 @@ namespace Delivery.Application.Services
             entity.Discription = product.Discription;
             entity.IsActive = product.IsActive;
             _repository.Update(entity);
-            _repository.SaveChanges();
+            await _repository.SaveChangesAsync(CancellationToken.None);
 
             return entity;
         }
 
-        public override bool Delete(ulong id)
+        public override bool Delete(ulong id, CancellationToken cancellationToken)
         {
             var entity = _repository.Find(id);
             if (entity == null)
                 throw new NullReferenceException(nameof(Product));
 
             _repository.Delete(entity);
-
+            _repository.SaveChanges();
             return true;
         }
 
-        public override Product Get(ulong id)
+        public override async Task<Product> Get(ulong id, CancellationToken cancellationToken)
         {
-            var entity = _repository.Find(id);
+            var entity = await _repository.FindAsync(id, CancellationToken.None);
             if (entity == null)
                 throw new NullReferenceException(nameof(Product));
 
             return entity;
         }
+
     }
 }
