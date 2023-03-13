@@ -2,7 +2,7 @@
 
 namespace Delivery.Domain.Model
 {
-    public class EntityBase
+    public abstract class EntityBase
     {
         [JsonIgnore]
         public ulong Id { get; set; }
