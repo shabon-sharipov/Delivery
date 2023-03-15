@@ -16,7 +16,10 @@ namespace Delivery.Infrastructure.Persistence.Repositories
             _context = context;
         }
 
-        public IQueryable<T> GetAll() => _dbSet;
+        public IQueryable<T> GetAll(int pageSize, int PageNumber)
+        {
+            return _dbSet.Skip(pageSize * PageNumber).Take(pageSize);
+        }
 
         public T Find(ulong id) => _dbSet.Find(id);
         public async Task<T> FindAsync(ulong id, CancellationToken cancellationToken = default) => await _dbSet.FindAsync(id);

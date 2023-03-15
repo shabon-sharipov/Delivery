@@ -18,7 +18,14 @@ namespace Delivery.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetById(ulong id)
         {
-            var entity =await productService.Get(id, CancellationToken.None);
+            var entity = await productService.Get(id, CancellationToken.None);
+            return Ok(entity);
+        }
+
+        [HttpGet("GetAll")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetAll(int pageSize, int pageNamber)
+        {
+            var entity = await productService.GetAll(pageNamber, pageSize, CancellationToken.None);
             return Ok(entity);
         }
 
@@ -32,7 +39,7 @@ namespace Delivery.API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<Product>> Put(Product product, ulong id)
         {
-            var entity =await productService.Update(product, id, CancellationToken.None);
+            var entity = await productService.Update(product, id, CancellationToken.None);
             return Ok(entity);
         }
 

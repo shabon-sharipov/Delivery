@@ -11,6 +11,8 @@ namespace Delivery.Application.Services
         {
             _repository = repository;
         }
+
+
         public override async Task<Product> Create(Product entity, CancellationToken cancellationToken)
         {
             if (entity == null)
@@ -59,5 +61,9 @@ namespace Delivery.Application.Services
             return entity;
         }
 
+        public override async Task<IEnumerable<Product>> GetAll(int pageSize, int pageNumber, CancellationToken cancellationToken)
+        {
+            return _repository.GetAll(pageSize, pageNumber);
+        }
     }
 }

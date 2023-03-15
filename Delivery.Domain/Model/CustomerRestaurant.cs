@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Delivery.Domain.Model
 {
-    public class CustomerRestaurant: EntityBase
+    public class CustomerRestaurant : EntityBase
     {
         public string Name { get; set; }
         public string Location { get; set; }

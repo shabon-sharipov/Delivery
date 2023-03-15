@@ -20,6 +20,11 @@ namespace Delivery.Application.Services
             throw new NotImplementedException();
         }
 
+        public virtual Task<IEnumerable< TEntity>> GetAll(int PageSize, int PageNumber, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
         public virtual Task<TEntity> Update(TEntity entity, ulong id, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
