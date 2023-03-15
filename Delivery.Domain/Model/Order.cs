@@ -11,7 +11,7 @@ namespace Delivery.Domain.Model
         public IEnumerable<Product> Products { get; set; }
         public string AvailableFrom { get; set; }
         public string AvailableTo { get; set;}
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
         public bool IsPayment { get; set; }
         public decimal TotalPrice { get; set; }
         public ulong SenderId { get; set; }
