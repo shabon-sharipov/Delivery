@@ -1,11 +1,16 @@
 ﻿using Delivery.Application.Common.Interfaces;
+using Delivery.Application.Requests;
+using Delivery.Application.Respons;
 using Delivery.Domain.Model;
 
 namespace Delivery.Application.Services
 {
-    public abstract class BaseService<TEntity> : IBaseService<TEntity> where TEntity : EntityBase
+    public abstract class BaseService<TEntity, IResponse, IRequest> : IBaseService<TEntity, IResponse, IRequest>
+        where TEntity : EntityBase
+        where IRequest : BaseRequest
+        where IResponse : BaseResponse
     {
-        public virtual async Task<TEntity> Create(TEntity entity, CancellationToken cancellationToken)
+        public virtual Task<IResponse> Create(IRequest entity, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
@@ -15,17 +20,17 @@ namespace Delivery.Application.Services
             throw new NotImplementedException();
         }
 
-        public virtual Task<TEntity> Get(ulong id, CancellationToken cancellationToken)
+        public virtual Task<IResponse> Get(ulong id, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
 
-        public virtual Task<IEnumerable< TEntity>> GetAll(int PageSize, int PageNumber, CancellationToken cancellationToken)
+        public virtual Task<IEnumerable<IResponse>> GetAll(int PageSize, int PageNumber, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
 
-        public virtual Task<TEntity> Update(TEntity entity, ulong id, CancellationToken cancellationToken)
+        public virtual Task<IResponse> Update(IRequest request, ulong id, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

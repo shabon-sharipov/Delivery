@@ -12,6 +12,6 @@ namespace Delivery.Domain.Model
         public string Location { get; set; }
         public string ShortDiscreption { get; set; }
         public string IsActive { get; set; }
-        public List<Product> Products { get; set; }
+        public virtual IEnumerable<Product> Products { get; set; }
     }
 }

@@ -1,11 +1,6 @@
 ﻿using Delivery.Domain.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Delivery.Infrastructure.Persistence.TableConfigurations
 {
@@ -13,7 +8,14 @@ namespace Delivery.Infrastructure.Persistence.TableConfigurations
     {
         public void Configure(EntityTypeBuilder<Product> builder)
         {
-           
+            builder.ToTable(nameof(Product));
+            builder.HasKey(p => p.Id);
+            builder.Property(p => p.Id).ValueGeneratedOnAdd();
+
+            builder.HasOne(v => v.CategoryProduct)
+                .WithMany()
+                .HasForeignKey(c => c.CategoryId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
