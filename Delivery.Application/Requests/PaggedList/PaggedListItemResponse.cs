@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Delivery.Application.Requests.PaggedList
 {
-    public class PaggedList<T>
+    public class PaggedListItemResponse
     {
         public ulong Id { get; set; }
         public string Name { get; set; }
