@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace Delivery.Application.Requests.CategoryCustomerRequest
 {
-    public class CategoryCustomerRequest : BaseRequest
+    public abstract class CategoryCustomerRequest : BaseRequest
     {
+        public string Name { get; set; }
+        public string Description { get; set; }
     }
 }

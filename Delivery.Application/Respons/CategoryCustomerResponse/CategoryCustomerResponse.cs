@@ -8,6 +8,8 @@ namespace Delivery.Application.Respons.CategoryCustomerResponse
 {
     public class CategoryCustomerResponse : BaseResponse
     {
-
+        public ulong id { get; set; }
+        public string Name { get; set; }
+        public string ShortDescreption { get; set; }
     }
 }

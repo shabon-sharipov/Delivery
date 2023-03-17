@@ -10,6 +10,11 @@ namespace Delivery.Application.Validations.CreateCategoryCustomerRequestValidati
 {
     public class CreateCategoryCustomerRequestValidation : AbstractValidator<CreateCategoryCustomerRequest>
     {
-        
+        public CreateCategoryCustomerRequestValidation()
+        {
+            RuleFor(c => c.Name).NotEmpty().NotNull();
+            RuleFor(c=>c.Description).NotEmpty();
+        }
+
     }
 }
