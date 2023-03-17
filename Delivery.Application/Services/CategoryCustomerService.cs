@@ -2,11 +2,6 @@
 using Delivery.Application.Requests.CategoryCustomerRequest;
 using Delivery.Application.Respons.CategoryCustomerResponse;
 using Delivery.Domain.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Delivery.Application.Common.Interfaces.Repositories;
 using AutoMapper;
 
@@ -29,15 +24,15 @@ namespace Delivery.Application.Services
                 throw new NullReferenceException(nameof(CategoryCustomer));
 
             var entity = _mapper.Map<CreateCategoryCustomerRequest, CategoryCustomer>(request);
-            await _repository.AddAsync(entity);
-            await _repository.SaveChangesAsync();
+            await _repository.AddAsync(entity, cancellationToken);
+            await _repository.SaveChangesAsync(cancellationToken);
 
-            return _mapper.Map<CategoryCustomer, CategoryCustomerResponse>(entity);
+            return _mapper.Map<Category, CategoryCustomerResponse>(entity);
         }
 
         public async override Task<CategoryCustomerResponse> Get(ulong id, CancellationToken cancellationToken)
         {
-            var entity = _repository.Find(id);
+            var entity = await _repository.FindAsync(id, cancellationToken);
             if (entity == null)
                 throw new NullReferenceException(nameof(CategoryCustomer));
             return _mapper.Map<Category, CategoryCustomerResponse>(entity);
@@ -57,14 +52,14 @@ namespace Delivery.Application.Services
 
         public async override Task<CategoryCustomerResponse> Update(CreateCategoryCustomerRequest request, ulong id, CancellationToken cancellationToken)
         {
-            var entity = _repository.Find(id);
+            var entity = await _repository.FindAsync(id, cancellationToken);
             if (entity == null)
                 throw new NullReferenceException(nameof(CategoryCustomer));
 
             var result = _mapper.Map<CreateCategoryCustomerRequest, CategoryCustomerResponse>(request);
-            
+
             _repository.Update(entity);
-            _repository.SaveChangesAsync(CancellationToken.None);
+            await _repository.SaveChangesAsync(cancellationToken);
 
             return result;
         }

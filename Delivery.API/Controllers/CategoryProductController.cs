@@ -25,6 +25,5 @@ namespace Delivery.API.Controllers
             var entity = await productService.Create(request, CancellationToken.None);
             return Ok(entity);
         }
-
     }
 }

@@ -10,5 +10,6 @@ namespace Delivery.Application.Validations.CreateCategoryCustomerRequestValidati
 {
     public class CreateCategoryCustomerRequestValidation : AbstractValidator<CreateCategoryCustomerRequest>
     {
+        
     }
 }

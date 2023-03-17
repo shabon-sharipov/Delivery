@@ -8,5 +8,6 @@ namespace Delivery.Application.Respons.CategoryCustomerResponse
 {
     public class CategoryCustomerResponse : BaseResponse
     {
+
     }
 }

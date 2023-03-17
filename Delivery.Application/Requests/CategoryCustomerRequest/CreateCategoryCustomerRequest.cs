@@ -8,5 +8,6 @@ namespace Delivery.Application.Requests.CategoryCustomerRequest
 {
     public class CreateCategoryCustomerRequest : CategoryCustomerRequest
     {
+
     }
 }
