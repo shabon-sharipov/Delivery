@@ -33,6 +33,7 @@ namespace Delivery.Application.Services
 
             await _repository.AddAsync(entity, cancellationToken);
             await _repository.SaveChangesAsync(cancellationToken);
+
             return _mapper.Map<CategoryProduct, CategoryProductResponse>(entity);
         }
 

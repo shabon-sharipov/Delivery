@@ -19,4 +19,9 @@
     <ProjectReference Include="..\Delivery.Domain\Delivery.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Validations\CategoryProductValidation\" />
+    <Folder Include="Validations\CreateCustomerValidation\" />
+  </ItemGroup>
+
 </Project>

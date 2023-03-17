@@ -26,6 +26,7 @@ namespace Delivery.API
             builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<IProductService, ProductServices>();
             builder.Services.AddScoped<ICategoryProductServices, CategoryProductServices>();
+
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             builder.Services.AddFluentValidationAutoValidation();
             builder.Services.AddValidatorsFromAssembly(typeof(CreateProductValidation).Assembly);

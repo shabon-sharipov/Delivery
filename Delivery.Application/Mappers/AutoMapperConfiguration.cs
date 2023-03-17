@@ -20,8 +20,13 @@ namespace Delivery.Application.Mappers
             CreateMap<Product, ProductResponse>();
             CreateMap<ProductRequest, Product>();
 
+
+
             CreateMap<CategoryProduct, CategoryProductResponse>();
             CreateMap<CategoryProductRequest, CategoryProduct>();
+
+
+
             CreateMap<Product, PaggedListItemResponse>();
         }
     }
