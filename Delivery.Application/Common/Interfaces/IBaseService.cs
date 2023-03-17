@@ -10,6 +10,7 @@ namespace Delivery.Application.Common.Interfaces
         Task<TEntity> Create(TEntity entity, CancellationToken cancellationToken);
         Task<TEntity> Update(TEntity entity, ulong id, CancellationToken cancellationToken);
         bool Delete(ulong id, CancellationToken cancellationToken);
+       
     }
 }
 
