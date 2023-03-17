@@ -1,8 +1,12 @@
 using Delivery.Application.Common.Interfaces;
 using Delivery.Application.Common.Interfaces.Repositories;
+using Delivery.Application.Mappers;
 using Delivery.Application.Services;
+using Delivery.Application.Validations.ProductValidations;
 using Delivery.Infrastructure.Persistence.Database;
 using Delivery.Infrastructure.Persistence.Repositories;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
 
@@ -21,8 +25,12 @@ namespace Delivery.API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<IProductService, ProductServices>();
-
+            builder.Services.AddScoped<ICategoryProductServices, CategoryProductServices>();
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            builder.Services.AddFluentValidationAutoValidation();
+            builder.Services.AddValidatorsFromAssembly(typeof(CreateProductValidation).Assembly);
+            builder.Services.AddValidatorsFromAssembly(typeof(UpdateProductValidation).Assembly);
+            builder.Services.AddAutoMapper(typeof(AutoMapperConfiguration).Assembly);
             //Add Db
 
             builder.Services.AddDbContext<EFContext>(options =>
