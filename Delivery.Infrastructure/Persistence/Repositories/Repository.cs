@@ -16,7 +16,7 @@ namespace Delivery.Infrastructure.Persistence.Repositories
             _context = context;
         }
 
-        public IQueryable<T> GetAll(int pageSize, int PageNumber)
+        public IQueryable<T> GetAll(int pageSize, int PageNumber, CancellationToken cancellationToken)
         {
             return _dbSet.Skip(pageSize * PageNumber).Take(pageSize);
         }

@@ -21,6 +21,7 @@ namespace Delivery.Application.Services
         public override async Task<ProductResponse> Create(UpdateProductRequest request, CancellationToken cancellationToken)
         {
             if (request == null)
+
                 throw new NullReferenceException(nameof(Product));
 
             var entity = _mapper.Map<UpdateProductRequest, Product>(request);
