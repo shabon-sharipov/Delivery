@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using Delivery.Application.Common.Interfaces;
 using Delivery.Application.Common.Interfaces.Repositories;
-using Delivery.Application.Requests.PaggedList;
 using Delivery.Application.Requests.ProductsRequest;
 using Delivery.Application.Respons.ProductRespons;
+using Delivery.Application.Respons.ProductRespons.PaggedList;
 using Delivery.Domain.Model;
 namespace Delivery.Application.Services
 {
-    public class ProductServices : BaseService<Product, ProductResponse, UpdateProductRequest>, IProductService
+    public class ProductServices : BaseService<Product, ProductResponse, ProductRequest>, IProductService
     {
         private readonly IRepository<Product> _repository;
         private readonly IMapper _mapper;
@@ -18,26 +18,30 @@ namespace Delivery.Application.Services
             _mapper = mapper;
         }
 
-        public override async Task<ProductResponse> Create(UpdateProductRequest request, CancellationToken cancellationToken)
+        public override async Task<ProductResponse> Create(ProductRequest request, CancellationToken cancellationToken)
         {
             if (request == null)
-
                 throw new NullReferenceException(nameof(Product));
 
-            var entity = _mapper.Map<UpdateProductRequest, Product>(request);
+            var createProductRequset = request as CreateProductRequest;
+            var entity = _mapper.Map<CreateProductRequest, Product>(createProductRequset);
 
             await _repository.AddAsync(entity, cancellationToken);
             await _repository.SaveChangesAsync(cancellationToken);
-            return _mapper.Map<ProductResponse>(entity);
+
+            var result = _mapper.Map<Product, CreateProductResponse>(entity);
+
+            return result;
         }
 
-        public override Task<IEnumerable<ProductResponse>> GetAll(int PageSize, int PageNumber, CancellationToken cancellationToken)
+        public async override Task<List<ProductResponse>> GetAll(int PageSize, int PageNumber, CancellationToken cancellationToken)
         {
-            //var products = _repository.GetAll(PageSize, PageNumber, cancellationToken);
+            var products = _repository.GetAll(PageSize, PageNumber, cancellationToken);
 
-            // _mapper.Map<List<PaggedListItemResponse>>(products);
-            // _mapper.Map<List<PaggedListItemResponse>>(products);
-            return null;
+            _mapper.Map<List<PaggedListItemResponse>>(products);
+
+            var result = _mapper.Map<IEnumerable<PaggedListItemResponse>>(products);
+            return _mapper.Map<List<PaggedListItemResponse>>(products);
         }
 
         public async override Task<ProductResponse> Get(ulong id, CancellationToken cancellationToken)
@@ -60,13 +64,13 @@ namespace Delivery.Application.Services
             return true;
         }
 
-        public async override Task<ProductResponse> Update(UpdateProductRequest request, ulong id, CancellationToken cancellationToken)
+        public async override Task<ProductResponse> Update(ProductRequest request, ulong id, CancellationToken cancellationToken)
         {
             var entity = await _repository.FindAsync(id, CancellationToken.None);
             if (entity == null)
                 throw new NullReferenceException(nameof(Product));
-
-            _mapper.Map(request, entity);
+            var updateProductRequset = request as UpdateProductRequest;
+            _mapper.Map(updateProductRequset, entity);
             _repository.Update(entity);
             await _repository.SaveChangesAsync(CancellationToken.None);
 

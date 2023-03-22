@@ -4,7 +4,8 @@ namespace Delivery.Application.Common.Interfaces.Repositories
 {
     public interface IRepository<TEntity> where TEntity : EntityBase
     {
-        IQueryable<TEntity> GetAll(int pageSize, int pageNumber,CancellationToken cancellation);
+        IQueryable<TEntity> GetAll(int pageSize, int pageNumber, CancellationToken cancellation);
+        Task<IQueryable<TEntity>> GetAllAsync(int pageSize, int pageNumber, CancellationToken cancellation);
 
         TEntity Find(ulong id);
         Task<TEntity> FindAsync(ulong id, CancellationToken cancellationToken = default);

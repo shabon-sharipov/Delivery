@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Delivery.Application.Validations.ProductValidations
 {
-    public class CreateProductValidation : AbstractValidator<UpdateProductRequest>
+    public class CreateProductValidation : AbstractValidator<CreateProductRequest>
     {
         public CreateProductValidation()
         {

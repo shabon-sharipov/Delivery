@@ -1,4 +1,6 @@
-﻿using Delivery.Application.Common.Interfaces.Repositories;
+﻿using AutoMapper;
+using Delivery.Application.Common.Interfaces.Repositories;
+using Delivery.Application.Respons.ProductRespons;
 using Delivery.Application.Services;
 using Delivery.Domain.Model;
 using Moq;
@@ -9,36 +11,43 @@ namespace Delivery.Application.Tests.Services.ProductService
     public class GetByIdProductServiceTests
     {
         private readonly Mock<IRepository<Product>> _repository;
+        private readonly Mock<IMapper> _mapper;
 
+        
         public GetByIdProductServiceTests()
         {
             _repository = new Mock<IRepository<Product>>();
+            _mapper = new Mock<IMapper>();
         }
 
         [Test]
         public async Task GetById_Product_Tests()
         {
-            //ulong productId = 1;
-            //_repository.Setup(p => p.FindAsync(productId, CancellationToken.None)).ReturnsAsync(new Product() { Name = "Soup", CategoryId = 1 });
+            ulong productId = 1;
+            var product = new Product() { Name = "Soup", CategoryId = 1 };
+            var productResponse = new ProductResponse() { Name = "Soup", CategoryId = 1 };
+            _repository.Setup(p => p.FindAsync(productId, CancellationToken.None)).ReturnsAsync(product);
 
-            //var service = new ProductServices(_repository.Object);
-            //var result = await service.Get(productId, CancellationToken.None);
+            _mapper.Setup(m => m.Map<Product, ProductResponse>(product)).Returns(productResponse);
 
-            //_repository.Verify(p => p.FindAsync(productId, CancellationToken.None));
+            var service = new ProductServices(_repository.Object, _mapper.Object);
+            var result = await service.Get(productId, CancellationToken.None);
 
-            //Assert.That("Soup", Is.EqualTo(result.Name));
+            _repository.Verify(p => p.FindAsync(productId, CancellationToken.None));
+
+            Assert.That("Soup", Is.EqualTo(result.Name));
         }
 
         [Test]
         public async Task GetById_Product_Should_have_error_when_ProductId_is_null()
         {
-            //ulong productId = 1;
-            //_repository.Setup(p => p.FindAsync(productId, CancellationToken.None)).Returns(Task.FromResult<Product>(null));
+            ulong productId = 1;
+            _repository.Setup(p => p.FindAsync(productId, CancellationToken.None)).Returns(Task.FromResult<Product>(null));
 
-            //var service = new ProductServices(_repository.Object);
+            var service = new ProductServices(_repository.Object, _mapper.Object);
 
-            //Assert.ThrowsAsync<NullReferenceException>(async () => await service.Get(productId, CancellationToken.None));
-            //_repository.Verify(p => p.FindAsync(productId, CancellationToken.None));
+            Assert.ThrowsAsync<NullReferenceException>(async () => await service.Get(productId, CancellationToken.None));
+            _repository.Verify(p => p.FindAsync(productId, CancellationToken.None));
         }
     }
 }

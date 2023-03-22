@@ -15,7 +15,7 @@ namespace Delivery.Application.Common.Interfaces
         Task<IResponse> Create(IRequest request, CancellationToken cancellationToken);
         Task<IResponse> Update(IRequest request, ulong id, CancellationToken cancellationToken);
         bool Delete(ulong id, CancellationToken cancellationToken);
-       
+
     }
 }
 

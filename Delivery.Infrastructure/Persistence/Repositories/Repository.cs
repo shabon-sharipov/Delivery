@@ -16,6 +16,11 @@ namespace Delivery.Infrastructure.Persistence.Repositories
             _context = context;
         }
 
+        public async Task<IQueryable<T>> GetAllAsync(int pageSize, int PageNumber, CancellationToken cancellationToken)
+        {
+            return _dbSet.Skip(pageSize * PageNumber).Take(pageSize);
+        }
+
         public IQueryable<T> GetAll(int pageSize, int PageNumber, CancellationToken cancellationToken)
         {
             return _dbSet.Skip(pageSize * PageNumber).Take(pageSize);

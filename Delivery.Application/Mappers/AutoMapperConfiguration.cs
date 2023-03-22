@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using Delivery.Application.Requests.CategoryCustomerRequest;
 using Delivery.Application.Requests.CategoryProductRequest;
-using Delivery.Application.Requests.PaggedList;
 using Delivery.Application.Requests.ProductsRequest;
 using Delivery.Application.Respons.CategoryCustomerResponse;
 using Delivery.Application.Respons.CategoryProductResponse;
 using Delivery.Application.Respons.ProductRespons;
+using Delivery.Application.Respons.ProductRespons.PaggedList;
 using Delivery.Domain.Model;
 using System;
 using System.Collections.Generic;
@@ -29,7 +29,7 @@ namespace Delivery.Application.Mappers
 
 
 
-            CreateMap<Product, PaggedListItemResponse>();
+            CreateMap<IEnumerable<Product>, IEnumerable<PaggedListItemResponse>>();
 
 
             CreateMap<CategoryCustomer, CategoryCustomerResponse>();
