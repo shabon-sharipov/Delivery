@@ -5,15 +5,10 @@ using Delivery.Application.Requests.CategoryProductRequest;
 using Delivery.Application.Respons.CategoryProductResponse;
 using Delivery.Application.Respons.ProductRespons;
 using Delivery.Domain.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Delivery.Application.Services
 {
-    public class CategoryProductServices : BaseService<CategoryProduct, CategoryProductResponse, CreateCategoryProductRequest>, ICategoryProductServices
+    public class CategoryProductServices : BaseService<CategoryProduct, CategoryProductResponse, CategoryProductRequest>, ICategoryProductServices
     {
         private readonly IRepository<Category> _repository;
         private readonly IMapper _mapper;
@@ -24,12 +19,12 @@ namespace Delivery.Application.Services
             _mapper = mapper;
         }
 
-        public async override Task<CategoryProductResponse> Create(CreateCategoryProductRequest request, CancellationToken cancellationToken)
+        public async override Task<CategoryProductResponse> Create(CategoryProductRequest request, CancellationToken cancellationToken)
         {
             if (request == null)
                 throw new NullReferenceException(nameof(CategoryProduct));
 
-            var entity = _mapper.Map<CreateCategoryProductRequest, CategoryProduct>(request);
+            var entity = _mapper.Map<CreateCategoryProductRequest, CategoryProduct>(request as CreateCategoryProductRequest);
 
             await _repository.AddAsync(entity, cancellationToken);
             await _repository.SaveChangesAsync(cancellationToken);
@@ -46,7 +41,7 @@ namespace Delivery.Application.Services
             return _mapper.Map<Category, CategoryProductResponse>(entity);
         }
 
-        public  override bool Delete(ulong id, CancellationToken cancellationToken)
+        public override bool Delete(ulong id, CancellationToken cancellationToken)
         {
             var entity = _repository.Find(id);
             if (entity == null)
@@ -57,17 +52,18 @@ namespace Delivery.Application.Services
             return true;
         }
 
-        //public async override Task<CategoryProductResponse> Update(CreateCategoryProductRequest request, ulong id, CancellationToken cancellationToken)
-        //{
-        //    var entity = await _repository.FindAsync(id, CancellationToken.None);
-        //    if (entity == null)
-        //        throw new NullReferenceException(nameof(Product));
+        public async override Task<CategoryProductResponse> Update(CategoryProductRequest request, ulong id, CancellationToken cancellationToken)
+        {
+            var entity = await _repository.FindAsync(id, CancellationToken.None);
+            if (entity == null)
+                throw new NullReferenceException(nameof(Product));
+            var categoryUpdateRequest = request as UpdateCategoryProductRequest;
+            var result = _mapper.Map(categoryUpdateRequest, entity);
 
-        //    var result = _mapper.Map<UpdateCategoryProductRequest, CategProduct>(request, entity);
-        //    _repository.Update(entity);
-        //    await _repository.SaveChangesAsync(CancellationToken.None);
+            _repository.Update(result);
+            await _repository.SaveChangesAsync(CancellationToken.None);
 
-        //    return _mapper.Map<Product, ProductResponse>(entity);
-        //}
+            return _mapper.Map<Category, CategoryProductResponse>(result);
+        }
     }
 }

@@ -29,19 +29,19 @@ namespace Delivery.Application.Services
             await _repository.AddAsync(entity, cancellationToken);
             await _repository.SaveChangesAsync(cancellationToken);
 
-            var result = _mapper.Map<Product, CreateProductResponse>(entity);
+            CreateProductResponse result = _mapper.Map<Product, CreateProductResponse>(entity);
 
             return result;
         }
 
-        public async override Task<List<ProductResponse>> GetAll(int PageSize, int PageNumber, CancellationToken cancellationToken)
+        public async override Task<IEnumerable<ProductResponse>> GetAll(int PageSize, int PageNumber, CancellationToken cancellationToken)
         {
             var products = _repository.GetAll(PageSize, PageNumber, cancellationToken);
 
-            _mapper.Map<List<PaggedListItemResponse>>(products);
+            _mapper.Map<IEnumerable<PaggedListItemResponse>>(products);
 
             var result = _mapper.Map<IEnumerable<PaggedListItemResponse>>(products);
-            return _mapper.Map<List<PaggedListItemResponse>>(products);
+            return _mapper.Map<IEnumerable<PaggedListItemResponse>>(products);
         }
 
         public async override Task<ProductResponse> Get(ulong id, CancellationToken cancellationToken)
@@ -70,11 +70,28 @@ namespace Delivery.Application.Services
             if (entity == null)
                 throw new NullReferenceException(nameof(Product));
             var updateProductRequset = request as UpdateProductRequest;
-            _mapper.Map(updateProductRequset, entity);
+
+
+            var prductTEst = new Product
+            {
+                CategoryId = updateProductRequset.CategoryId,
+                Name = updateProductRequset.Name,
+                Discription = updateProductRequset.Discription,
+                Price = updateProductRequset.Price,
+                IsActive = updateProductRequset.IsActive
+            };
+
+            _mapper.Map<UpdateProductRequest, Product>(updateProductRequset, entity);
+
+
+
+
             _repository.Update(entity);
             await _repository.SaveChangesAsync(CancellationToken.None);
 
             return _mapper.Map<Product, ProductResponse>(entity);
+
+
         }
     }
 }
