@@ -23,7 +23,7 @@ namespace Delivery.Application.Services
             _mapper = mapper;
         }
 
-        public async override Task<SenderRequest> Create(CreateSenderRequest request, CancellationToken cancellationToken)
+        public async override Task<SenderResponse> Create(CreateSenderRequest request, CancellationToken cancellationToken)
         {
             if (request == null)
                 throw new NullReferenceException(nameof(Sender));
@@ -35,7 +35,7 @@ namespace Delivery.Application.Services
             return _mapper.Map<Sender, SenderResponse>(entity);
         }
 
-        public override async Task<SenderRequest> Get(ulong id, CancellationToken cancellationToken)
+        public override async Task<SenderResponse> Get(ulong id, CancellationToken cancellationToken)
         {
             var entity = await _repository.FindAsync(id, cancellationToken);
 
@@ -57,17 +57,17 @@ namespace Delivery.Application.Services
             return true;
         }
 
-        public override async Task<SenderRequest> Update(CreateSenderRequest request, ulong id, CancellationToken cancellationToken)
+        public override async Task<SenderResponse> Update(CreateSenderRequest request, ulong id, CancellationToken cancellationToken)
         {
-            var entity = _repository.FindAsync(id);
+            var entity = await _repository.FindAsync(id);
             if (entity == null)
                 throw new NullReferenceException(nameof(Sender));
 
-            var result = _mapper.Map<CreateSenderRequest, SenderResponse>(request);
+            var result = _mapper.Map(request, entity);
 
             _repository.Update(entity);
             await _repository.SaveChangesAsync(cancellationToken);
-            return result;
+            return _mapper.Map<Sender, SenderResponse>(result);
 
         }
     }
