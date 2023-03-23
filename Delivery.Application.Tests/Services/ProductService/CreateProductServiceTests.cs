@@ -30,7 +30,7 @@ namespace Delivery.Application.Tests.Services
         {
             var productRequest = new CreateProductRequest() { Name = "Soup", Price = 20, CategoryId = 2, Discription = "1234512345123451234512345" };
             var product = new Product() { Name = "Soup", Price = 20, CategoryId = 2, Discription = "1234512345123451234512345" };
-            var productResponse = new ProductResponse() { Name = "Soup", Price = 20, CategoryId = 2, Discription = "1234512345123451234512345" };
+            var productResponse = new CreateProductResponse() { Name = "Soup", Price = 20, CategoryId = 2, Discription = "1234512345123451234512345" };
 
             _mapper.Setup(m => m.Map<CreateProductRequest, Product>(productRequest))
                 .Returns(product);
@@ -44,7 +44,9 @@ namespace Delivery.Application.Tests.Services
             _repository.Verify(r => r.AddAsync(It.IsAny<Product>(), CancellationToken.None));
             _repository.Verify(r => r.SaveChangesAsync(CancellationToken.None));
 
-            Assert.That(result.Price, Is.EqualTo(product.Price));
+            var test = result as CreateProductResponse;
+
+            Assert.That(test.Price, Is.EqualTo(product.Price));
         }
 
         [Test]

@@ -25,7 +25,7 @@ namespace Delivery.Application.Tests.Services.ProductService
         {
             ulong productId = 1;
             var product = new Product() { Name = "Soup", CategoryId = 1 };
-            var productResponse = new ProductResponse() { Name = "Soup", CategoryId = 1 };
+            var productResponse = new CreateProductResponse() { Name = "Soup", CategoryId = 1 };
             _repository.Setup(p => p.FindAsync(productId, CancellationToken.None)).ReturnsAsync(product);
 
             _mapper.Setup(m => m.Map<Product, ProductResponse>(product)).Returns(productResponse);
