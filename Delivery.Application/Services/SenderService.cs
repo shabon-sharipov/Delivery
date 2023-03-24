@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Delivery.Application.Services
 {
-    public class SenderService : BaseService<Sender, SenderResponse, CreateSenderRequest>, ISenderService
+    public class SenderService : BaseService<Sender, SenderResponse, SenderRequest>, ISenderService
     {
         private readonly IRepository<Sender> _repository;
         private readonly IMapper _mapper;
@@ -23,16 +23,18 @@ namespace Delivery.Application.Services
             _mapper = mapper;
         }
 
-        public async override Task<SenderResponse> Create(CreateSenderRequest request, CancellationToken cancellationToken)
+        public async override Task<SenderResponse> Create(SenderRequest request, CancellationToken cancellationToken)
         {
             if (request == null)
                 throw new NullReferenceException(nameof(Sender));
 
-            var entity = _mapper.Map<CreateSenderRequest, Sender>(request);
+            var createSenderRequest = request as CreateSenderRequest;
+            var entity = _mapper.Map<CreateSenderRequest, Sender>(createSenderRequest);
 
             await _repository.AddAsync(entity, cancellationToken);
             await _repository.SaveChangesAsync(cancellationToken);
-            return _mapper.Map<Sender, SenderResponse>(entity);
+
+            return _mapper.Map<Sender, CreateSenderResponse>(entity);
         }
 
         public override async Task<SenderResponse> Get(ulong id, CancellationToken cancellationToken)
@@ -42,7 +44,7 @@ namespace Delivery.Application.Services
             if (entity == null)
                 throw new NullReferenceException(nameof(Sender));
 
-            return _mapper.Map<Sender, SenderResponse>(entity);
+            return _mapper.Map<Sender, GetSenderResponse>(entity);
         }
 
         public override bool Delete(ulong id, CancellationToken cancellationToken)
@@ -57,18 +59,26 @@ namespace Delivery.Application.Services
             return true;
         }
 
-        public override async Task<SenderResponse> Update(CreateSenderRequest request, ulong id, CancellationToken cancellationToken)
+        public override async Task<SenderResponse> Update(SenderRequest request, ulong id, CancellationToken cancellationToken)
         {
             var entity = await _repository.FindAsync(id);
             if (entity == null)
                 throw new NullReferenceException(nameof(Sender));
 
-            var result = _mapper.Map(request, entity);
+            var updateSenderRequset = request as UpdateSenderRequest;
+            var result = _mapper.Map(updateSenderRequset, entity);
 
             _repository.Update(entity);
             await _repository.SaveChangesAsync(cancellationToken);
-            return _mapper.Map<Sender, SenderResponse>(result);
+            return _mapper.Map<Sender, UpdateSenderResponse>(result);
 
+        }
+
+        public override async Task<IEnumerable<SenderResponse>> GetAll(int pageSize, int pageNumber, CancellationToken cancellationToken)
+        {
+            var entities = _repository.GetAll(pageSize, pageNumber, cancellationToken);
+
+            return _mapper.Map<IEnumerable<SenderPaggedListItemResponse>>(entities);
         }
     }
 }

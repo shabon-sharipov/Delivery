@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace Delivery.Application.Respons.SenderResponse
 {
-    public class SenderResponse : BaseResponse
+    public abstract class SenderResponse : BaseResponse
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Address { get; set; }
     }
 }

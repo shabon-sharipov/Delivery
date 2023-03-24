@@ -24,7 +24,8 @@ namespace Delivery.Application.Services
             if (request == null)
                 throw new NullReferenceException(nameof(CategoryProduct));
 
-            var entity = _mapper.Map<CreateCategoryProductRequest, CategoryProduct>(request as CreateCategoryProductRequest);
+            var createCategoryProductRequest = request as CreateCategoryProductRequest;
+            var entity = _mapper.Map<CreateCategoryProductRequest, CategoryProduct>(createCategoryProductRequest);
 
             await _repository.AddAsync(entity, cancellationToken);
             await _repository.SaveChangesAsync(cancellationToken);
@@ -57,6 +58,7 @@ namespace Delivery.Application.Services
             var entity = await _repository.FindAsync(id, CancellationToken.None);
             if (entity == null)
                 throw new NullReferenceException(nameof(Product));
+
             var categoryUpdateRequest = request as UpdateCategoryProductRequest;
             var result = _mapper.Map(categoryUpdateRequest, entity);
 

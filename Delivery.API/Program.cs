@@ -24,10 +24,11 @@ namespace Delivery.API
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
             builder.Services.AddScoped<IProductService, ProductServices>();
             builder.Services.AddScoped<ICategoryProductServices, CategoryProductServices>();
-
             builder.Services.AddScoped<ICategoryCustomerService, CategoryCustomerService>();
+            builder.Services.AddScoped<ISenderService, SenderService>();
 
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             builder.Services.AddFluentValidationAutoValidation();

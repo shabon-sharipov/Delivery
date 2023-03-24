@@ -3,7 +3,6 @@ using Delivery.Application.Common.Interfaces;
 using Delivery.Application.Common.Interfaces.Repositories;
 using Delivery.Application.Requests.ProductsRequest;
 using Delivery.Application.Respons.ProductRespons;
-using Delivery.Application.Respons.ProductRespons.PaggedList;
 using Delivery.Domain.Model;
 namespace Delivery.Application.Services
 {
@@ -29,19 +28,14 @@ namespace Delivery.Application.Services
             await _repository.AddAsync(entity, cancellationToken);
             await _repository.SaveChangesAsync(cancellationToken);
 
-            CreateProductResponse result = _mapper.Map<Product, CreateProductResponse>(entity);
-
-            return result;
+            return _mapper.Map<Product, CreateProductResponse>(entity); ;
         }
 
         public async override Task<IEnumerable<ProductResponse>> GetAll(int PageSize, int PageNumber, CancellationToken cancellationToken)
         {
             var products = _repository.GetAll(PageSize, PageNumber, cancellationToken);
 
-            _mapper.Map<IEnumerable<PaggedListItemResponse>>(products);
-
-            var result = _mapper.Map<IEnumerable<PaggedListItemResponse>>(products);
-            return _mapper.Map<IEnumerable<PaggedListItemResponse>>(products);
+            return _mapper.Map<IEnumerable<ProductPaggedListItemResponse>>(products);
         }
 
         public async override Task<ProductResponse> Get(ulong id, CancellationToken cancellationToken)
@@ -50,7 +44,7 @@ namespace Delivery.Application.Services
             if (entity == null)
                 throw new NullReferenceException(nameof(Product));
 
-            return _mapper.Map<Product, ProductResponse>(entity);
+            return _mapper.Map<Product, GetProductResponse>(entity);
         }
 
         public override bool Delete(ulong id, CancellationToken cancellationToken)
@@ -69,29 +63,13 @@ namespace Delivery.Application.Services
             var entity = await _repository.FindAsync(id, CancellationToken.None);
             if (entity == null)
                 throw new NullReferenceException(nameof(Product));
+
             var updateProductRequset = request as UpdateProductRequest;
-
-
-            var prductTEst = new Product
-            {
-                CategoryId = updateProductRequset.CategoryId,
-                Name = updateProductRequset.Name,
-                Discription = updateProductRequset.Discription,
-                Price = updateProductRequset.Price,
-                IsActive = updateProductRequset.IsActive
-            };
-
             _mapper.Map<UpdateProductRequest, Product>(updateProductRequset, entity);
-
-
-
-
             _repository.Update(entity);
             await _repository.SaveChangesAsync(CancellationToken.None);
 
-            return _mapper.Map<Product, ProductResponse>(entity);
-
-
+            return _mapper.Map<Product, UpdateProductResponse>(entity);
         }
     }
 }

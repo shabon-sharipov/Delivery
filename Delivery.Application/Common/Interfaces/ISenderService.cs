@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Delivery.Application.Common.Interfaces
 {
-    public interface ISenderService : IBaseService<Sender, SenderResponse, CreateSenderRequest>
+    public interface ISenderService : IBaseService<Sender, SenderResponse, SenderRequest>
     {
     }
 }

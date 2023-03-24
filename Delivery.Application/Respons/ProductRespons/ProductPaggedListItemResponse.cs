@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Delivery.Application.Respons.CategoryProductResponse
+namespace Delivery.Application.Respons.ProductRespons
 {
-    public class ProductListItemResponse
+    public class ProductPaggedListItemResponse : ProductResponse
     {
         public ulong Id { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
-        public string Description { get; set; }
     }
 }
