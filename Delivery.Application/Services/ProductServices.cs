@@ -28,7 +28,7 @@ namespace Delivery.Application.Services
             await _repository.AddAsync(entity, cancellationToken);
             await _repository.SaveChangesAsync(cancellationToken);
 
-            return _mapper.Map<Product, CreateProductResponse>(entity); ;
+            return _mapper.Map<Product, CreateProductResponse>(entity); 
         }
 
         public async override Task<IEnumerable<ProductResponse>> GetAll(int PageSize, int PageNumber, CancellationToken cancellationToken)

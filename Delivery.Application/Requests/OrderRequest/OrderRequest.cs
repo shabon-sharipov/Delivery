@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Delivery.Application.Requests.OrderRequest
 {
-    public class OrderRequest : BaseRequest
+    public abstract class OrderRequest : BaseRequest
     {
         public string AvailableFrom { get; set; }
         public string AvailableTo { get; set;}

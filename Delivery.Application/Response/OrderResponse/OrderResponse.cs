@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Delivery.Application.Respons.OrderResponse
 {
-    public class OrderResponse : BaseResponse
+    public abstract class OrderResponse : BaseResponse
     {
         public string PhoneNumber { get; set; }
         public string IsPayment { get; set; }

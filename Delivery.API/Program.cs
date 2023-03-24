@@ -29,6 +29,7 @@ namespace Delivery.API
             builder.Services.AddScoped<ICategoryProductServices, CategoryProductServices>();
             builder.Services.AddScoped<ICategoryCustomerService, CategoryCustomerService>();
             builder.Services.AddScoped<ISenderService, SenderService>();
+            builder.Services.AddScoped<IOrderService, OrderService>();
 
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             builder.Services.AddFluentValidationAutoValidation();
