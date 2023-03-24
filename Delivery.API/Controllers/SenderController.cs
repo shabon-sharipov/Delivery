@@ -9,39 +9,39 @@ namespace Delivery.API.Controllers
     [ApiController]
     public class SenderController : ControllerBase
     {
-        private readonly ISenderService senderService;
+        private readonly ISenderService _senderService;
 
-        public SenderController(ISenderService _senderService)
+        public SenderController(ISenderService senderService)
         {
-            senderService = _senderService;
+            _senderService = senderService;
         }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<SenderResponse>> GetById(ulong id)
         {
-            var entity = await senderService.Get(id, CancellationToken.None);
+            var entity = await _senderService.Get(id, CancellationToken.None);
             return Ok(entity);
         }
 
         [HttpPost]
         public async Task<ActionResult<SenderResponse>> Post(CreateSenderRequest sender)
         {
-            var entity = await senderService.Create(sender, CancellationToken.None);
+            var entity = await _senderService.Create(sender, CancellationToken.None);
             return Ok(entity);
         }
 
         [HttpPut]
         public async Task<ActionResult<SenderResponse>> Put(CreateSenderRequest sender, ulong id)
         {
-            var entity = await senderService.Update(sender, id, CancellationToken.None);
+            var entity = await _senderService.Update(sender, id, CancellationToken.None);
             return Ok(entity);
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(ulong id)
         {
-            var entity =  senderService.Delete(id, CancellationToken.None);
+            var entity = _senderService.Delete(id, CancellationToken.None);
             return Ok(entity);
         }
-
     }
 }
