@@ -10,6 +10,6 @@ namespace Delivery.Application.Requests.CategoryCustomerRequest
     public abstract class CategoryCustomerRequest : BaseRequest
     {
         public string Name { get; set; }
-        public string Description { get; set; }
+        public string ShortDescreption { get; set; }
     }
 }

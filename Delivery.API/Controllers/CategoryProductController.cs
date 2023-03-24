@@ -3,6 +3,8 @@ using Delivery.Application.Requests.CategoryProductRequest;
 using Delivery.Application.Requests.ProductsRequest;
 using Delivery.Application.Respons.CategoryProductResponse;
 using Delivery.Application.Respons.ProductRespons;
+using Delivery.Application.Respons.SenderResponse;
+using Delivery.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 
@@ -13,38 +15,45 @@ namespace Delivery.API.Controllers
     [ApiController]
     public class CategoryProductController : ControllerBase
     {
-        private readonly ICategoryProductServices productService;
+        private readonly ICategoryProductServices _productService;
 
-        public CategoryProductController(ICategoryProductServices _productService)
+        public CategoryProductController(ICategoryProductServices productService)
         {
-            productService = _productService;
+            _productService = productService;
         }
 
         [HttpPost]
         public async Task<ActionResult<CategoryProductResponse>> Post(CreateCategoryProductRequest request)
         {
-            var entity = await productService.Create(request, CancellationToken.None);
+            var entity = await _productService.Create(request, CancellationToken.None);
             return Ok(entity);
         }
 
-        [HttpGet("id")] 
+        [HttpGet("id")]
         public async Task<ActionResult<CategoryProductResponse>> GetById(ulong id)
         {
-            var entity = await productService.Get(id, CancellationToken.None);
+            var entity = await _productService.Get(id, CancellationToken.None);
             return Ok(entity);
+        }
+
+        [HttpGet("GetAll")]
+        public async Task<ActionResult<IEnumerable<CategoryProductResponse>>> GetAll(int pageSize, int pageNamber, CancellationToken cancellationToken)
+        {
+            var result = await _productService.GetAll(pageSize, pageNamber, cancellationToken);
+            return Ok(result);
         }
 
         [HttpPut("id")]
         public async Task<ActionResult<CategoryProductResponse>> Put(UpdateCategoryProductRequest product, ulong id)
         {
-            var entity = await productService.Update(product, id, CancellationToken.None);
+            var entity = await _productService.Update(product, id, CancellationToken.None);
             return Ok(entity);
         }
 
         [HttpDelete("id")]
         public IActionResult Delete(ulong id)
         {
-            var entity = productService.Delete(id, CancellationToken.None);
+            var entity = _productService.Delete(id, CancellationToken.None);
             return Ok(entity);
         }
     }

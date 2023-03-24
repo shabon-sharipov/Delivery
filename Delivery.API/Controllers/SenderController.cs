@@ -23,6 +23,13 @@ namespace Delivery.API.Controllers
             return Ok(entity);
         }
 
+        [HttpGet("GetAll")]
+        public async Task<ActionResult<IEnumerable<SenderResponse>>> GetAll(int pageSize, int pageNamber, CancellationToken cancellationToken)
+        {
+            var result = await _senderService.GetAll(pageSize, pageNamber, cancellationToken);
+            return Ok(result);
+        }
+
         [HttpPost]
         public async Task<ActionResult<SenderResponse>> Post(CreateSenderRequest sender)
         {

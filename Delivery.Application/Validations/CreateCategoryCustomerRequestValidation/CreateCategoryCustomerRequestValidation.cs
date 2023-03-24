@@ -8,7 +8,7 @@ namespace Delivery.Application.Validations.CreateCategoryCustomerRequestValidati
         public CreateCategoryCustomerRequestValidation()
         {
             RuleFor(c => c.Name).NotEmpty().NotNull();
-            RuleFor(c => c.Description).NotEmpty();
+            RuleFor(c => c.ShortDescreption).NotEmpty();
         }
     }
 }
