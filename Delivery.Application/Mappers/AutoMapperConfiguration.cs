@@ -45,5 +45,6 @@ namespace Delivery.Application.Mappers
             CreateMap<Sender, GetSenderResponse>();
             CreateMap<Sender, SenderPaggedListItemResponse>();
         }
+
     }
 }

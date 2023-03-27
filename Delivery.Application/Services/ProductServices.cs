@@ -23,7 +23,7 @@ namespace Delivery.Application.Services
                 throw new NullReferenceException(nameof(Product));
 
             var createProductRequset = request as CreateProductRequest;
-            var entity = _mapper.Map<CreateProductRequest, Product>(createProductRequset);
+            Product entity = _mapper.Map<CreateProductRequest, Product>(createProductRequset);
 
             await _repository.AddAsync(entity, cancellationToken);
             await _repository.SaveChangesAsync(cancellationToken);
@@ -40,7 +40,7 @@ namespace Delivery.Application.Services
 
         public async override Task<ProductResponse> Get(ulong id, CancellationToken cancellationToken)
         {
-            var entity = await _repository.FindAsync(id, cancellationToken);
+            Product entity = await _repository.FindAsync(id, cancellationToken);
             if (entity == null)
                 throw new NullReferenceException(nameof(Product));
 
