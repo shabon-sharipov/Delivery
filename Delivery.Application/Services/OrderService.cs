@@ -34,7 +34,7 @@ namespace Delivery.Application.Services
             await _repository.AddAsync(entity, cancellationToken);
             await _repository.SaveChangesAsync(cancellationToken);
 
-            return _mapper.Map<Order, OrderResponse>(entity);
+            return _mapper.Map<Order, CreateOrderResponse>(entity);
         }
 
         public async override Task<OrderResponse> Get(ulong id, CancellationToken cancellationToken)
@@ -43,7 +43,7 @@ namespace Delivery.Application.Services
             if (entity == null)
                 throw new NullReferenceException(nameof(Order));
 
-            return _mapper.Map<Order, OrderResponse>(entity);
+            return _mapper.Map<Order, GetOrderResponse>(entity);
         }
 
         public override bool Delete(ulong id, CancellationToken cancellationToken)
@@ -68,7 +68,7 @@ namespace Delivery.Application.Services
 
              _repository.Update(entity);
             await _repository.SaveChangesAsync(CancellationToken.None);
-            return _mapper.Map<Order, OrderResponse>(result);
+            return _mapper.Map<Order, UpdateOrderResponse>(result);
         }
     }
 }
