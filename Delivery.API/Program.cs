@@ -25,19 +25,23 @@ namespace Delivery.API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            //interfacec
             builder.Services.AddScoped<IProductService, ProductServices>();
             builder.Services.AddScoped<ICategoryProductServices, CategoryProductServices>();
             builder.Services.AddScoped<IMerchantCategoryService, MerchantCategoryService>();
             builder.Services.AddScoped<IDriverService, DriverService>();
             builder.Services.AddScoped<IOrderService, OrderService>();
-
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+            //Validator
             builder.Services.AddFluentValidationAutoValidation();
             builder.Services.AddValidatorsFromAssembly(typeof(CreateProductValidation).Assembly);
             builder.Services.AddValidatorsFromAssembly(typeof(UpdateProductValidation).Assembly);
-            builder.Services.AddAutoMapper(typeof(AutoMapperConfiguration).Assembly);
-            //Add Db
 
+            //AvtoMapper
+            builder.Services.AddAutoMapper(typeof(AutoMapperConfiguration).Assembly);
+           
+            //Add Db
             builder.Services.AddDbContext<EFContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer"));

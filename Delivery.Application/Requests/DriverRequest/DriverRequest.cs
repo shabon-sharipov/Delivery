@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Delivery.Application.Requests.SenderRequest
 {
-    public class DriverRequest : BaseRequest
+    public abstract class DriverRequest : BaseRequest
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

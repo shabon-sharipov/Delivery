@@ -24,8 +24,8 @@ namespace Delivery.Application.Services
             if (request == null)
                 throw new NullReferenceException(nameof(MerchantCategory));
 
-            var createCategoryCustomerRequest = request as CreateMerchantCustomerRequest;
-            var entity = _mapper.Map<CreateMerchantCustomerRequest, MerchantCategory>(createCategoryCustomerRequest);
+            var createCategoryCustomerRequest = request as CreateMerchantCategoryRequest;
+            var entity = _mapper.Map<CreateMerchantCategoryRequest, MerchantCategory>(createCategoryCustomerRequest);
             await _repository.AddAsync(entity, cancellationToken);
             await _repository.SaveChangesAsync(cancellationToken);
 

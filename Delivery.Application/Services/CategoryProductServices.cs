@@ -8,7 +8,7 @@ using Delivery.Domain.Model;
 
 namespace Delivery.Application.Services
 {
-    public class CategoryProductServices : BaseService<ProductCategory, CategoryProductResponse, CategoryProductRequest>, ICategoryProductServices
+    public class CategoryProductServices : BaseService<ProductCategory, ProductCategoryResponse, CategoryProductRequest>, ICategoryProductServices
     {
         private readonly IRepository<Category> _repository;
         private readonly IMapper _mapper;
@@ -19,7 +19,7 @@ namespace Delivery.Application.Services
             _mapper = mapper;
         }
 
-        public async override Task<CategoryProductResponse> Create(CategoryProductRequest request, CancellationToken cancellationToken)
+        public async override Task<ProductCategoryResponse> Create(CategoryProductRequest request, CancellationToken cancellationToken)
         {
             if (request == null)
                 throw new NullReferenceException(nameof(ProductCategory));
@@ -30,16 +30,16 @@ namespace Delivery.Application.Services
             await _repository.AddAsync(entity, cancellationToken);
             await _repository.SaveChangesAsync(cancellationToken);
 
-            return _mapper.Map<ProductCategory, CategoryProductResponse>(entity);
+            return _mapper.Map<ProductCategory, ProductCategoryResponse>(entity);
         }
 
-        public async override Task<CategoryProductResponse> Get(ulong id, CancellationToken cancellationToken)
+        public async override Task<ProductCategoryResponse> Get(ulong id, CancellationToken cancellationToken)
         {
             var entity = await _repository.FindAsync(id, cancellationToken);
             if (entity == null)
                 throw new NullReferenceException(nameof(ProductCategory));
 
-            return _mapper.Map<Category, CategoryProductResponse>(entity);
+            return _mapper.Map<Category, ProductCategoryResponse>(entity);
         }
 
         public override bool Delete(ulong id, CancellationToken cancellationToken)
@@ -53,7 +53,7 @@ namespace Delivery.Application.Services
             return true;
         }
 
-        public async override Task<CategoryProductResponse> Update(CategoryProductRequest request, ulong id, CancellationToken cancellationToken)
+        public async override Task<ProductCategoryResponse> Update(CategoryProductRequest request, ulong id, CancellationToken cancellationToken)
         {
             var entity = await _repository.FindAsync(id, CancellationToken.None);
             if (entity == null)
@@ -65,7 +65,7 @@ namespace Delivery.Application.Services
             _repository.Update(result);
             await _repository.SaveChangesAsync(CancellationToken.None);
 
-            return _mapper.Map<Category, CategoryProductResponse>(result);
+            return _mapper.Map<Category, ProductCategoryResponse>(result);
         }
     }
 }

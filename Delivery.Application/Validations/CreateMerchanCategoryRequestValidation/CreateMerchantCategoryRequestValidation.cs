@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace Delivery.Application.Validations.CreateCategoryCustomerRequestValidation
 {
-    public class CreateCategoryCustomerRequestValidation : AbstractValidator<CreateMerchantCustomerRequest>
+    public class CreateMerchantCategoryRequestValidation : AbstractValidator<CreateMerchantCategoryRequest>
     {
-        public CreateCategoryCustomerRequestValidation()
+        public CreateMerchantCategoryRequestValidation()
         {
             RuleFor(c => c.Name).NotEmpty().NotNull();
             RuleFor(c => c.ShortDescreption).NotEmpty();

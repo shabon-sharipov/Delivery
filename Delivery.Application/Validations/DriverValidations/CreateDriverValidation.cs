@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Delivery.Application.Validations.SenderValidations
 {
-    public class CreateSenderValidation : AbstractValidator<DriverRequest>
+    public class CreateDriverValidation : AbstractValidator<DriverRequest>
     {
-        public CreateSenderValidation()
+        public CreateDriverValidation()
         {
             RuleFor(s => s.FirstName).NotEmpty();
             RuleFor(s => s.Address).NotEmpty().NotNull();

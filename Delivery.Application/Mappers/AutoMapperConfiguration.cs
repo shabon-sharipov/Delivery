@@ -31,10 +31,10 @@ namespace Delivery.Application.Mappers
 
             CreateMap<CreateCategoryProductRequest, ProductCategory>();
             CreateMap<UpdateCategoryProductRequest, ProductCategory>();
-            CreateMap<ProductCategory, CategoryProductResponse>();
+            CreateMap<ProductCategory, ProductCategoryResponse>();
 
 
-            CreateMap<CreateMerchantCustomerRequest, MerchantCategory>();
+            CreateMap<CreateMerchantCategoryRequest, MerchantCategory>();
             CreateMap<UpdateCategoryProductRequest, MerchantCategory>();
             CreateMap<MerchantCategory, MerchantCategoryResponse>();
 

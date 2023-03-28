@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Delivery.Application.Requests.CategoryCustomerRequest
 {
-    public class CreateMerchantCustomerRequest : MerchantCategoryRequest
+    public class CreateMerchantCategoryRequest : MerchantCategoryRequest
     {
 
     }

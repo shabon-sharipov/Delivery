@@ -5,17 +5,17 @@ using Microsoft.AspNetCore.Mvc;
 
 [Route("api/[controller]")]
 [ApiController]
-public class CategoryCustomerController : ControllerBase
+public class MerchanCategoryController : ControllerBase
 {
     private readonly IMerchantCategoryService _categoryCustomerService;
 
-    public CategoryCustomerController(IMerchantCategoryService categoryCustomerService)
+    public MerchanCategoryController(IMerchantCategoryService categoryCustomerService)
     {
         _categoryCustomerService = categoryCustomerService;
     }
 
     [HttpPost]
-    public async Task<ActionResult<MerchantCategoryResponse>> Post(CreateMerchantCustomerRequest request)
+    public async Task<ActionResult<MerchantCategoryResponse>> Post(CreateMerchantCategoryRequest request)
     {
         var entity = await _categoryCustomerService.Create(request, CancellationToken.None);
         return Ok(entity);

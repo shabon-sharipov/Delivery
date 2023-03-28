@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Delivery.Application.Response.CategoryProductResponse
 {
-    public class CategoryProductResponse : BaseResponse
+    public class ProductCategoryResponse : BaseResponse
     {
         public ulong Id { get; set; }
         public string Name { get; set; }

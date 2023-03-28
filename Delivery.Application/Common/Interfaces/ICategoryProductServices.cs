@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Delivery.Application.Common.Interfaces
 {
-    public interface ICategoryProductServices : IBaseService<ProductCategory, CategoryProductResponse, CategoryProductRequest>
+    public interface ICategoryProductServices : IBaseService<ProductCategory, ProductCategoryResponse, CategoryProductRequest>
     {
     }
 }
