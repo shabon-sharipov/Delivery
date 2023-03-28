@@ -1,6 +1,6 @@
 ﻿using Delivery.Application.Requests;
-using Delivery.Application.Respons;
-using Delivery.Domain.Model;
+using Delivery.Application.Response;
+using Delivery.Domain.Abstract;
 using System.Reflection.Emit;
 
 namespace Delivery.Application.Common.Interfaces

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Delivery.Domain.Model
+namespace Delivery.Domain.Abstract
 {
     public abstract class Category : EntityBase
     {

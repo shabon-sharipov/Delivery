@@ -1,4 +1,4 @@
-﻿using Delivery.Domain.Model;
+﻿using Delivery.Domain.Abstract;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

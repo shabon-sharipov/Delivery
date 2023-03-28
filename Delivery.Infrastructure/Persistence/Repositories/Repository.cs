@@ -1,5 +1,5 @@
 ﻿using Delivery.Application.Common.Interfaces.Repositories;
-using Delivery.Domain.Model;
+using Delivery.Domain.Abstract;
 using Delivery.Infrastructure.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 

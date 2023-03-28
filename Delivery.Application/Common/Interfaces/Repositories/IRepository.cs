@@ -1,4 +1,4 @@
-﻿using Delivery.Domain.Model;
+﻿using Delivery.Domain.Abstract;
 
 namespace Delivery.Application.Common.Interfaces.Repositories
 {

@@ -1,7 +1,7 @@
 ﻿using Delivery.Application.Common.Interfaces;
 using Delivery.Application.Requests;
-using Delivery.Application.Respons;
-using Delivery.Domain.Model;
+using Delivery.Application.Response;
+using Delivery.Domain.Abstract;
 
 namespace Delivery.Application.Services
 {

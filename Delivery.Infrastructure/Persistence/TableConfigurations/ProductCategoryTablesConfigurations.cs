@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-public class ProductCategoryTablesConfigurations : IEntityTypeConfiguration<CategoryProduct>
+public class ProductCategoryTablesConfigurations : IEntityTypeConfiguration<ProductCategory>
 {
-    public void Configure(EntityTypeBuilder<CategoryProduct> builder)
+    public void Configure(EntityTypeBuilder<ProductCategory> builder)
     {
     }
 }

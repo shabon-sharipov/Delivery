@@ -4,11 +4,10 @@ using Delivery.Application.Requests.CategoryProductRequest;
 using Delivery.Application.Requests.OrderRequest;
 using Delivery.Application.Requests.ProductsRequest;
 using Delivery.Application.Requests.SenderRequest;
-using Delivery.Application.Respons.CategoryCustomerResponse;
-using Delivery.Application.Respons.CategoryProductResponse;
-using Delivery.Application.Respons.OrderResponse;
-using Delivery.Application.Respons.ProductRespons;
-using Delivery.Application.Respons.SenderResponse;
+using Delivery.Application.Response.CategoryCustomerResponse;
+using Delivery.Application.Response.CategoryProductResponse;
+using Delivery.Application.Response.OrderResponse;
+using Delivery.Application.Response.ProductResponse;
 using Delivery.Domain.Model;
 using System;
 using System.Collections.Generic;
@@ -30,22 +29,22 @@ namespace Delivery.Application.Mappers
             CreateMap<Product, UpdateProductResponse>();
 
 
-            CreateMap<CreateCategoryProductRequest, CategoryProduct>();
-            CreateMap<UpdateCategoryProductRequest, CategoryProduct>();
-            CreateMap<CategoryProduct, CategoryProductResponse>();
+            CreateMap<CreateCategoryProductRequest, ProductCategory>();
+            CreateMap<UpdateCategoryProductRequest, ProductCategory>();
+            CreateMap<ProductCategory, CategoryProductResponse>();
 
 
-            CreateMap<CreateCategoryCustomerRequest, CategoryCustomer>();
-            CreateMap<UpdateCategoryProductRequest, CategoryCustomer>();
-            CreateMap<CategoryCustomer, CategoryCustomerResponse>();
+            CreateMap<CreateMerchantCustomerRequest, MerchantCategory>();
+            CreateMap<UpdateCategoryProductRequest, MerchantCategory>();
+            CreateMap<MerchantCategory, MerchantCategoryResponse>();
 
 
-            CreateMap<CreateSenderRequest, Sender>();
-            CreateMap<UpdateSenderRequest, Sender>();
-            CreateMap<Sender, CreateSenderResponse>();
-            CreateMap<Sender, UpdateSenderResponse>();
-            CreateMap<Sender, GetSenderResponse>();
-            CreateMap<Sender, SenderPaggedListItemResponse>();
+            CreateMap<CreateDriverRequest, Driver>();
+            CreateMap<UpdateDriverRequest, Driver>();
+            CreateMap<Driver, CreateDriverResponse>();
+            CreateMap<Driver, UpdateDriverResponse>();
+            CreateMap<Driver, GetDriverResponse>();
+            CreateMap<Driver, DriverPaggedListItemResponse>();
 
             CreateMap<CreateOrderRequest, Order>();
             CreateMap<Order, CreateOrderResponse>();

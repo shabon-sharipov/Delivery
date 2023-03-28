@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Delivery.Application.Respons.ProductRespons
+namespace Delivery.Application.Response.ProductResponse
 {
     public class ProductPaggedListItemResponse : ProductResponse
     {

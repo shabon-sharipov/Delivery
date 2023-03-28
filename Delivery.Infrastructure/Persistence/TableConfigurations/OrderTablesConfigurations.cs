@@ -9,9 +9,18 @@ public class OrderTablesConfigurations : IEntityTypeConfiguration<Order>
         builder.ToTable(nameof(Order));
         builder.HasKey(p => p.Id);
 
-        builder.HasOne(v => v.Sender)
+        builder.HasOne(o => o.Driver)
             .WithMany()
-            .HasForeignKey(c => c.SenderId)
+            .HasForeignKey(o => o.DriverId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasOne(o => o.Customer)
+            .WithMany()
+            .HasForeignKey(o => o.CustomerId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasMany(p => p.OrderDetails)
+            .WithOne(o => o.Order)
             .OnDelete(DeleteBehavior.Restrict);
     }
 }

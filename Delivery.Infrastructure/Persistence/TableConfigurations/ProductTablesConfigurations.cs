@@ -16,6 +16,11 @@ namespace Delivery.Infrastructure.Persistence.TableConfigurations
                 .WithMany()
                 .HasForeignKey(c => c.CategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(v => v.Merchant)
+               .WithMany(m => m.Products)
+               .HasForeignKey(c => c.MerchantId)
+               .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

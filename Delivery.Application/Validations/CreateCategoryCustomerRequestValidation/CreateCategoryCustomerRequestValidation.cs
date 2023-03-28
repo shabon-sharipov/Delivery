@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace Delivery.Application.Validations.CreateCategoryCustomerRequestValidation
 {
-    public class CreateCategoryCustomerRequestValidation : AbstractValidator<CreateCategoryCustomerRequest>
+    public class CreateCategoryCustomerRequestValidation : AbstractValidator<CreateMerchantCustomerRequest>
     {
         public CreateCategoryCustomerRequestValidation()
         {

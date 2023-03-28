@@ -1,4 +1,4 @@
-﻿using Delivery.Domain.Model;
+﻿using Delivery.Domain.Abstract;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -10,4 +10,3 @@ public class CategoryTablesConfigurations : IEntityTypeConfiguration<Category>
         builder.HasKey(p => p.Id);
     }
 }
-

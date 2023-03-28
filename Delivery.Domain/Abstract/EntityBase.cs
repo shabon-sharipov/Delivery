@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Delivery.Domain.Model
+namespace Delivery.Domain.Abstract
 {
     public abstract class EntityBase
     {

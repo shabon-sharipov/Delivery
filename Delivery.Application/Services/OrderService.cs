@@ -2,7 +2,7 @@
 using Delivery.Application.Common.Interfaces;
 using Delivery.Application.Common.Interfaces.Repositories;
 using Delivery.Application.Requests.OrderRequest;
-using Delivery.Application.Respons.OrderResponse;
+using Delivery.Application.Response.OrderResponse;
 using Delivery.Domain.Model;
 using System;
 using System.Collections.Generic;

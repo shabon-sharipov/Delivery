@@ -2,13 +2,13 @@
 using Delivery.Application.Common.Interfaces;
 using Delivery.Application.Common.Interfaces.Repositories;
 using Delivery.Application.Requests.CategoryProductRequest;
-using Delivery.Application.Respons.CategoryProductResponse;
-using Delivery.Application.Respons.ProductRespons;
+using Delivery.Application.Response.CategoryProductResponse;
+using Delivery.Domain.Abstract;
 using Delivery.Domain.Model;
 
 namespace Delivery.Application.Services
 {
-    public class CategoryProductServices : BaseService<CategoryProduct, CategoryProductResponse, CategoryProductRequest>, ICategoryProductServices
+    public class CategoryProductServices : BaseService<ProductCategory, CategoryProductResponse, CategoryProductRequest>, ICategoryProductServices
     {
         private readonly IRepository<Category> _repository;
         private readonly IMapper _mapper;
@@ -22,22 +22,22 @@ namespace Delivery.Application.Services
         public async override Task<CategoryProductResponse> Create(CategoryProductRequest request, CancellationToken cancellationToken)
         {
             if (request == null)
-                throw new NullReferenceException(nameof(CategoryProduct));
+                throw new NullReferenceException(nameof(ProductCategory));
 
             var createCategoryProductRequest = request as CreateCategoryProductRequest;
-            var entity = _mapper.Map<CreateCategoryProductRequest, CategoryProduct>(createCategoryProductRequest);
+            var entity = _mapper.Map<CreateCategoryProductRequest, ProductCategory>(createCategoryProductRequest);
 
             await _repository.AddAsync(entity, cancellationToken);
             await _repository.SaveChangesAsync(cancellationToken);
 
-            return _mapper.Map<CategoryProduct, CategoryProductResponse>(entity);
+            return _mapper.Map<ProductCategory, CategoryProductResponse>(entity);
         }
 
         public async override Task<CategoryProductResponse> Get(ulong id, CancellationToken cancellationToken)
         {
             var entity = await _repository.FindAsync(id, cancellationToken);
             if (entity == null)
-                throw new NullReferenceException(nameof(CategoryProduct));
+                throw new NullReferenceException(nameof(ProductCategory));
 
             return _mapper.Map<Category, CategoryProductResponse>(entity);
         }

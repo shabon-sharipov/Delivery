@@ -1,6 +1,6 @@
 ﻿using Delivery.Application.Common.Interfaces;
 using Delivery.Application.Requests.OrderRequest;
-using Delivery.Application.Respons.OrderResponse;
+using Delivery.Application.Response.OrderResponse;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Delivery.API.Controllers

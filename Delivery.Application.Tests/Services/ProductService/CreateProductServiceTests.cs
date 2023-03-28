@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Delivery.Application.Common.Interfaces.Repositories;
 using Delivery.Application.Requests.ProductsRequest;
-using Delivery.Application.Respons.ProductRespons;
+using Delivery.Application.Response.ProductResponse;
 using Delivery.Application.Services;
 using Delivery.Application.Validations.ProductValidations;
 using Delivery.Domain.Model;
@@ -9,7 +9,7 @@ using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
 
-namespace Delivery.Application.Tests.Services
+namespace Delivery.Application.Tests.Services.ProductService
 {
     public class CreateProductServiceTests
     {

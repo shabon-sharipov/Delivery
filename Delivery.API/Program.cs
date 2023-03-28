@@ -27,8 +27,8 @@ namespace Delivery.API
 
             builder.Services.AddScoped<IProductService, ProductServices>();
             builder.Services.AddScoped<ICategoryProductServices, CategoryProductServices>();
-            builder.Services.AddScoped<ICategoryCustomerService, CategoryCustomerService>();
-            builder.Services.AddScoped<ISenderService, SenderService>();
+            builder.Services.AddScoped<IMerchantCategoryService, MerchantCategoryService>();
+            builder.Services.AddScoped<IDriverService, DriverService>();
             builder.Services.AddScoped<IOrderService, OrderService>();
 
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));

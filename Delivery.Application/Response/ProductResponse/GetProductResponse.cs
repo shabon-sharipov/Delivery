@@ -1,4 +1,4 @@
-﻿using Delivery.Application.Respons.ProductRespons;
+﻿using Delivery.Application.Response.ProductResponse;
 
 public class GetProductResponse : ProductResponse
 {

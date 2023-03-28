@@ -1,11 +1,10 @@
-﻿using Delivery.Application.Respons.ProductRespons;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Delivery.Application.Respons.ProductRespons
+namespace Delivery.Application.Response.ProductResponse
 {
     public class CreateProductResponse : ProductResponse
     {

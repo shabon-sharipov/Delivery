@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Delivery.Application.Validations.SenderValidations
 {
-    public class CreateSenderValidation : AbstractValidator<SenderRequest>
+    public class CreateSenderValidation : AbstractValidator<DriverRequest>
     {
         public CreateSenderValidation()
         {

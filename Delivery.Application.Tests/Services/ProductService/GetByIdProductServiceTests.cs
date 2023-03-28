@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Delivery.Application.Common.Interfaces.Repositories;
-using Delivery.Application.Respons.ProductRespons;
+using Delivery.Application.Response.ProductResponse;
 using Delivery.Application.Services;
 using Delivery.Domain.Model;
 using Moq;
@@ -13,7 +13,7 @@ namespace Delivery.Application.Tests.Services.ProductService
         private readonly Mock<IRepository<Product>> _repository;
         private readonly Mock<IMapper> _mapper;
 
-        
+
         public GetByIdProductServiceTests()
         {
             _repository = new Mock<IRepository<Product>>();
@@ -35,8 +35,7 @@ namespace Delivery.Application.Tests.Services.ProductService
 
             _repository.Verify(p => p.FindAsync(productId, CancellationToken.None));
 
-            
-            //Assert.That("Soup", Is.EqualTo(result.Name));
+            Assert.That("Soup", Is.EqualTo(result.Name));
         }
 
         [Test]

@@ -1,9 +1,8 @@
 ﻿using Delivery.Application.Common.Interfaces;
 using Delivery.Application.Requests.CategoryProductRequest;
 using Delivery.Application.Requests.ProductsRequest;
-using Delivery.Application.Respons.CategoryProductResponse;
-using Delivery.Application.Respons.ProductRespons;
-using Delivery.Application.Respons.SenderResponse;
+
+using Delivery.Application.Response.CategoryProductResponse;
 using Delivery.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
