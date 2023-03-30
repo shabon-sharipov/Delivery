@@ -1,12 +1,14 @@
 ﻿using AutoMapper;
 using Delivery.Application.Requests.CategoryCustomerRequest;
 using Delivery.Application.Requests.CategoryProductRequest;
+using Delivery.Application.Requests.CustomerRequest;
 using Delivery.Application.Requests.MerchantRequest;
 using Delivery.Application.Requests.OrderRequest;
 using Delivery.Application.Requests.ProductsRequest;
 using Delivery.Application.Requests.SenderRequest;
 using Delivery.Application.Response.CategoryCustomerResponse;
 using Delivery.Application.Response.CategoryProductResponse;
+using Delivery.Application.Response.CustomerResponse;
 using Delivery.Application.Response.MerchantResponse;
 using Delivery.Application.Response.OrderResponse;
 using Delivery.Application.Response.ProductResponse;
@@ -59,6 +61,12 @@ namespace Delivery.Application.Mappers
             CreateMap<Merchant, GetMerchantResponse>();
             CreateMap<UpdateMerchantRequest, Merchant>();
             CreateMap<Merchant, UpdateMerchantResponse>();
+
+            CreateMap<CreateCustomerRequest, Customer>();
+            CreateMap<Customer, CreateCustomerResponse>();
+            CreateMap<Customer, GetCustomerResponse>();
+            CreateMap<UpdateCustomerRequest, Customer>();
+            CreateMap<Customer, UpdateCustomerResponse>();
         }
 
     }
