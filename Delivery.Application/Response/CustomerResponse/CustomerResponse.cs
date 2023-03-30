@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Delivery.Application.Response.CustomerResponse
 {
-    public class CustomerResponse: BaseResponse
+    public abstract class CustomerResponse: BaseResponse
     {
     }
 }

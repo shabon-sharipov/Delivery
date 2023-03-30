@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Delivery.Application.Response.MerchantResponse
 {
-    public class MerchantResponse : BaseResponse
+    public abstract class MerchantResponse : BaseResponse
     {
     }
 }

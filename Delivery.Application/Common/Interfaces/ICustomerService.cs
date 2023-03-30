@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Delivery.Application.Common.Interfaces
 {
-    public interface ICustomerService : IBaseService< Customer, CustomerRequest , CustomerResponse>
+    public interface ICustomerService : IBaseService<Customer, CustomerResponse, CustomerRequest>
     {
     }
 }

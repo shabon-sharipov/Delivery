@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Delivery.Application.Services
 {
-    public class MerchantService : BaseService<Merchant, MerchantRequest, MerchantResponse>, IMerchantService
+    public class MerchantService : BaseService<Merchant, MerchantResponse, MerchantRequest>, IMerchantService
     {
         private readonly IRepository<Merchant> _repozitory;
         private readonly IMapper _mapper;
@@ -22,6 +22,7 @@ namespace Delivery.Application.Services
             _repozitory = repository;
             _mapper = mapper;
         }
+
 
         public async override Task<MerchantResponse> Create(MerchantRequest request, CancellationToken cancellationToken)
         {
@@ -55,17 +56,16 @@ namespace Delivery.Application.Services
             _repozitory.Delete(entity);
             _repozitory.SaveChanges();
             return true;
-                
         }
 
         public override async Task<MerchantResponse> Update(MerchantRequest request, ulong id, CancellationToken cancellationToken)
         {
-            var entity = _repozitory.FindAsync(id, CancellationToken.None);
+            var entity = await _repozitory.FindAsync(id, CancellationToken.None);
             if (entity == null)
                 throw new NullReferenceException(nameof(Merchant));
 
-            var updateMerchantRequest= request as UpdateMerchantRequest;
-            var result= _mapper.Map(updateMerchantRequest, entity);
+            var updateMerchantRequest = request as UpdateMerchantRequest;
+            var result = _mapper.Map(updateMerchantRequest, entity);
 
             _repozitory.Update(entity);
             await _repozitory.SaveChangesAsync(CancellationToken.None);

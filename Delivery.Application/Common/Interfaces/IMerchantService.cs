@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Delivery.Application.Common.Interfaces
 {
-    public interface IMerchantService : IBaseService<Merchant, MerchantRequest, MerchantResponse>
+    public interface IMerchantService : IBaseService<Merchant,  MerchantResponse, MerchantRequest>
     {
     }
 }

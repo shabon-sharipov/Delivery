@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Delivery.Application.Services
 {
-    public class CustomerService : BaseService<Customer, CustomerRequest, CustomerResponse>, ICustomerService
+    public class CustomerService : BaseService<Customer, CustomerResponse, CustomerRequest>, ICustomerService
     {
         private readonly IRepository<Customer> _repository;
         private readonly IMapper _mapper;
@@ -21,6 +21,7 @@ namespace Delivery.Application.Services
             _mapper = mapper;
             _repository = repository;
         }
+
 
         public async override Task<CustomerResponse> Create(CustomerRequest request, CancellationToken cancellationToken)
         {

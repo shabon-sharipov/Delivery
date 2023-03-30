@@ -14,7 +14,5 @@ namespace Delivery.Application.Requests.MerchantRequest
         public string ShortDiscreption { get; set; }
         public string IsActive { get; set; }
         public ulong MerchantCategoryId { get; set; }
-        public virtual MerchantCategory MerchantCategory { get; set; }
-        public virtual IEnumerable<Product> Products { get; set; }
     }
 }
