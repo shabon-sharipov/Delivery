@@ -23,5 +23,12 @@ namespace Delivery.Domain.Model
         public decimal TotalPrice { get; set; }
 
         public virtual IEnumerable<OrderDetails> OrderDetails { get; set; }
+        public string AvailableFrom { get; set; }
+        
+        public string AvailableTo { get; set; }
+        public string PhoneNumber { get; set; }
+        public bool IsPayment { get; set; }
+        
+        public ulong SenderId { get; set; }
     }
 }
