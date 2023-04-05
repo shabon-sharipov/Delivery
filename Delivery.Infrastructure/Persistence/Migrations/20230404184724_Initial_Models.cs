@@ -78,7 +78,12 @@ namespace Delivery.Infrastructure.Persistence.Migrations
                     OrderStatus = table.Column<int>(type: "int", nullable: false),
                     CustomerId = table.Column<decimal>(type: "decimal(20,0)", nullable: false),
                     DriverId = table.Column<decimal>(type: "decimal(20,0)", nullable: false),
-                    TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    AvailableFrom = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AvailableTo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsPayment = table.Column<bool>(type: "bit", nullable: false),
+                    SenderId = table.Column<decimal>(type: "decimal(20,0)", nullable: false)
                 },
                 constraints: table =>
                 {

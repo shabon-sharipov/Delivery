@@ -8,7 +8,7 @@ namespace Delivery.Application.Response.OrderResponse
 {
     public class GetOrderResponse : OrderResponse
     {
-        public string OrderId { get; set; }
+        public ulong Id { get; set; }
         public string AvailableFrom { get; set; }
         public string AvailableTo { get; set; }
         public string PhoneNumber { get; set; }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Delivery.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(EFContext))]
-    [Migration("20230328191106_Initial_Models")]
-    partial class Initial_Models
+    [Migration("20230405082112_Initial_ModelsChange")]
+    partial class Initial_ModelsChange
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -96,14 +96,29 @@ namespace Delivery.Infrastructure.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Id"));
 
+                    b.Property<string>("AvailableFrom")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AvailableTo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("CustomerId")
                         .HasColumnType("decimal(20,0)");
 
                     b.Property<decimal>("DriverId")
                         .HasColumnType("decimal(20,0)");
 
+                    b.Property<bool>("IsPayment")
+                        .HasColumnType("bit");
+
                     b.Property<int>("OrderStatus")
                         .HasColumnType("int");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ShipAddress")
                         .IsRequired()

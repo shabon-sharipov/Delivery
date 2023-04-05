@@ -8,6 +8,7 @@ namespace Delivery.Application.Response.CustomerResponse
 {
     public class GetCustomerResponse : CustomerResponse
     {
+        public ulong Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime DataOfBirth { get; set; }

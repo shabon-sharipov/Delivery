@@ -29,11 +29,13 @@ namespace Delivery.Application.Tests.Services.ProductService
         public async Task Create_Product_Test()
         {
             var productRequest = new CreateProductRequest() { Name = "Soup", Price = 20, CategoryId = 2, Discription = "1234512345123451234512345" };
+
             var product = new Product() { Name = "Soup", Price = 20, CategoryId = 2, Discription = "1234512345123451234512345" };
+
             var productResponse = new CreateProductResponse() { Name = "Soup", Price = 20, CategoryId = 2, Discription = "1234512345123451234512345" };
 
             _mapper.Setup(m => m.Map<CreateProductRequest, Product>(productRequest))
-                .Returns(product);
+             .Returns(product);
 
             _mapper.Setup(m => m.Map<Product, ProductResponse>(product))
                 .Returns(productResponse);

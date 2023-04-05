@@ -19,7 +19,7 @@ namespace Delivery.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<CustomerResponse>> GetById(ulong id)
         {
-            var entity = customerService.Get(id, CancellationToken.None);
+            var entity =await customerService.Get(id, CancellationToken.None);
             return Ok(entity);
         }
 

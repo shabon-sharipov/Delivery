@@ -60,7 +60,7 @@ namespace Delivery.Application.Tests.Services.OrderService
             _mapper.Setup(o => o.Map<CreateOrderRequest, Order>(orderRequest)).Returns(order);
             _mapper.Setup(o => o.Map<Order, CreateOrderResponse>(order)).Returns(orderResponse);
 
-            var service = new OrderService(_repository.Object,_mapper.Object);
+            var service = new Application.Services.OrderService(_repository.Object, _mapper.Object);
             var result = await service.Create(orderRequest, CancellationToken.None);
 
             _repository.Verify(a => a.AddAsync(It.IsAny<Order>(), CancellationToken.None));
@@ -71,7 +71,7 @@ namespace Delivery.Application.Tests.Services.OrderService
 
 
         }
-        
+
 
     }
 }

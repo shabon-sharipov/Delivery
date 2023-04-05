@@ -10,6 +10,7 @@ namespace Delivery.Domain.Model
     public class Merchant : EntityBase
     {
         public string Name { get; set; }
+      //todo
         public string Location { get; set; }
         public string ShortDiscreption { get; set; }
         public string IsActive { get; set; }

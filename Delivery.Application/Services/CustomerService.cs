@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Delivery.Application.Common.Interfaces;
 using Delivery.Application.Common.Interfaces.Repositories;
+using Delivery.Application.Exceptions;
 using Delivery.Application.Requests.CustomerRequest;
 using Delivery.Application.Response.CustomerResponse;
 using System;
@@ -41,7 +42,7 @@ namespace Delivery.Application.Services
         {
             var entity = await _repository.FindAsync(id, cancellationToken);
             if (entity == null)
-                throw new NullReferenceException(nameof(Customer));
+                throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound,nameof(Customer));
 
             return _mapper.Map<Customer, GetCustomerResponse>(entity);
         }

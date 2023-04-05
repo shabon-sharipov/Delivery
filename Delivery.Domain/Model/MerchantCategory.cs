@@ -9,6 +9,5 @@ namespace Delivery.Domain.Model
 {
     public class MerchantCategory : Category
     {
-
     }
 }

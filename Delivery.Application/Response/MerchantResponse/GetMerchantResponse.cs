@@ -8,6 +8,7 @@ namespace Delivery.Application.Response.MerchantResponse
 {
     public class GetMerchantResponse : MerchantResponse
     {
+        public ulong Id { get; set; }
         public string Name { get; set; }
         public string Location { get; set; }
         public string ShortDiscreption { get; set; }
