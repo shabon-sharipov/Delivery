@@ -19,7 +19,7 @@ namespace Delivery.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<CustomerResponse>> GetById(ulong id)
         {
-            var entity =await customerService.Get(id, CancellationToken.None);
+            var entity = await customerService.Get(id, CancellationToken.None);
             return Ok(entity);
         }
 
@@ -31,7 +31,7 @@ namespace Delivery.API.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<CustomerResponse>> Put(CreateCustomerRequest customer, ulong id)
+        public async Task<ActionResult<CustomerResponse>> Put(UpdateCustomerRequest customer, ulong id)
         {
             var entity = await customerService.Update(customer, id, CancellationToken.None);
             return Ok(entity);

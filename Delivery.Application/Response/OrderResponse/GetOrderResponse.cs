@@ -14,5 +14,6 @@ namespace Delivery.Application.Response.OrderResponse
         public string PhoneNumber { get; set; }
         public string IsPayment { get; set; }
         public decimal TotalPrice { get; set; }
+        public ulong DriverId { get; set; }
     }
 }

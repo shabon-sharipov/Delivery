@@ -38,7 +38,7 @@ namespace Delivery.API.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<DriverResponse>> Put(CreateDriverRequest sender, ulong id)
+        public async Task<ActionResult<DriverResponse>> Put(UpdateDriverRequest sender, ulong id)
         {
             var entity = await _senderService.Update(sender, id, CancellationToken.None);
             return Ok(entity);

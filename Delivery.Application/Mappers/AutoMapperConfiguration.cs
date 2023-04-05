@@ -28,7 +28,7 @@ namespace Delivery.Application.Mappers
             CreateMap<Product, CreateProductResponse>();
             CreateMap<CreateProductRequest, Product>();
             CreateMap<UpdateProductRequest, Product>();
-            CreateMap<Product, ProductPaggedListItemResponse>();
+            CreateMap<Product, PaggedListProductItemResponse>();
             CreateMap<Product, GetProductResponse>();
             CreateMap<Product, UpdateProductResponse>();
 
@@ -48,25 +48,35 @@ namespace Delivery.Application.Mappers
             CreateMap<Driver, CreateDriverResponse>();
             CreateMap<Driver, UpdateDriverResponse>();
             CreateMap<Driver, GetDriverResponse>();
-            CreateMap<Driver, DriverPaggedListItemResponse>();
+            CreateMap<Driver, PaggedListDriverItemResponse>();
 
             CreateMap<CreateOrderRequest, Order>();
+            CreateMap<UpdateOrderRequest, Order>();
             CreateMap<Order, CreateOrderResponse>();
             CreateMap<Order, GetOrderResponse>();
-            CreateMap<UpdateOrderRequest, Order>();
             CreateMap<Order, UpdateOrderResponse>();
+            CreateMap<Order, PaggedOrderListItemResponse>();
 
             CreateMap<CreateMerchantRequest, Merchant>();
             CreateMap<Merchant, CreateMerchantResponse>();
             CreateMap<Merchant, GetMerchantResponse>();
             CreateMap<UpdateMerchantRequest, Merchant>();
             CreateMap<Merchant, UpdateMerchantResponse>();
+            CreateMap<Merchant, PaggedMerchantListItemResponse>();
 
             CreateMap<CreateCustomerRequest, Customer>();
             CreateMap<Customer, CreateCustomerResponse>();
             CreateMap<Customer, GetCustomerResponse>();
             CreateMap<UpdateCustomerRequest, Customer>();
             CreateMap<Customer, UpdateCustomerResponse>();
+            CreateMap<Customer, PaggedListCustomerItemResponse>();
+
+            CreateMap<CreateOrderDitelsRequest, OrderDetails>();
+            CreateMap<OrderDetails, CreateOrderDitelsResponse>();
+            CreateMap<OrderDetails, GetOrderDitelsResponse>();
+            CreateMap<UpdateOrderDitelsRequest, OrderDetails>();
+            CreateMap<OrderDetails, UpdateOrderDitelsResponse>();
+            CreateMap<OrderDetails, PaggedOrderDitelsListItemResponse>();
         }
 
     }

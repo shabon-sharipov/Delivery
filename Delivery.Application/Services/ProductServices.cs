@@ -35,7 +35,7 @@ namespace Delivery.Application.Services
         {
             var products = _repository.GetAll(PageSize, PageNumber, cancellationToken);
 
-            return _mapper.Map<IEnumerable<ProductPaggedListItemResponse>>(products);
+            return _mapper.Map<IEnumerable<PaggedListProductItemResponse>>(products);
         }
 
         public async override Task<ProductResponse> Get(ulong id, CancellationToken cancellationToken)

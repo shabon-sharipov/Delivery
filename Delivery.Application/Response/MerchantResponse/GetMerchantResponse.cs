@@ -16,3 +16,4 @@ namespace Delivery.Application.Response.MerchantResponse
         public ulong MerchantCategoryId { get; set; }
     }
 }
+

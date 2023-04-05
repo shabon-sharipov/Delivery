@@ -36,7 +36,7 @@ namespace Delivery.Application.Tests.Services.OrderService
                 AvailableTo = "Ulitsa A.Samadov, Dom 24",
                 PhoneNumber = "+992111442277",
                 TotalPrice = 54,
-                SenderId = 2
+                DriverId = 2
             };
 
             var order = new Order()
@@ -45,7 +45,7 @@ namespace Delivery.Application.Tests.Services.OrderService
                 AvailableTo = "Ulitsa A.Samadov, Dom 24",
                 PhoneNumber = "+992111442277",
                 TotalPrice = 54,
-                SenderId = 2
+                DriverId = 2
             };
 
             var orderResponse = new CreateOrderResponse()
@@ -54,7 +54,7 @@ namespace Delivery.Application.Tests.Services.OrderService
                 AvailableTo = "Ulitsa A.Samadov, Dom 24",
                 PhoneNumber = "+992111442277",
                 TotalPrice = 54,
-                SenderId = 2
+                DriverId = 2
             };
 
             _mapper.Setup(o => o.Map<CreateOrderRequest, Order>(orderRequest)).Returns(order);

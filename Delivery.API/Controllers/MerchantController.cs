@@ -19,7 +19,7 @@ namespace Delivery.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<MerchantResponse>> GetById(ulong id)
         {
-            var entity = merchantService.Get(id, CancellationToken.None);
+            var entity = await merchantService.Get(id, CancellationToken.None);
             return Ok(entity);
         }
 
@@ -31,7 +31,7 @@ namespace Delivery.API.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<MerchantResponse>> Put(CreateMerchantRequest merchant, ulong id)
+        public async Task<ActionResult<MerchantResponse>> Put(UpdateMerchantRequest merchant, ulong id)
         {
             var entity = await merchantService.Update(merchant, id, CancellationToken.None);
             return Ok(entity);

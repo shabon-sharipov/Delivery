@@ -39,7 +39,7 @@ namespace Delivery.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<ProductResponse>> Put(CreateProductRequest product, ulong id)
+        public async Task<ActionResult<ProductResponse>> Put(UpdateProductRequest product, ulong id)
         {
             var entity = await productService.Update(product, id, CancellationToken.None);
             return Ok(entity);

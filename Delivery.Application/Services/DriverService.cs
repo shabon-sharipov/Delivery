@@ -78,7 +78,7 @@ namespace Delivery.Application.Services
         {
             var entities = _repository.GetAll(pageSize, pageNumber, cancellationToken);
 
-            return _mapper.Map<IEnumerable<DriverPaggedListItemResponse>>(entities);
+            return _mapper.Map<IEnumerable<PaggedListDriverItemResponse>>(entities);
         }
     }
 }

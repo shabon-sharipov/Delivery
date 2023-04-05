@@ -19,7 +19,7 @@ namespace Delivery.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<OrderResponse>> GetById(ulong id)
         {
-            var entity = orderService.Get(id, CancellationToken.None);
+            var entity = await orderService.Get(id, CancellationToken.None);
             return Ok(entity);
         }
 
@@ -27,11 +27,11 @@ namespace Delivery.API.Controllers
         public async Task<ActionResult<OrderResponse>> Post(CreateOrderRequest order)
         {
             var entity = await orderService.Create(order, CancellationToken.None);
-                return Ok(entity);
+            return Ok(entity);
         }
 
         [HttpPut]
-        public async Task<ActionResult<OrderResponse>> Put(CreateOrderRequest order, ulong id)
+        public async Task<ActionResult<OrderResponse>> Put(UpdateOrderRequest order, ulong id)
         {
             var entity = await orderService.Update(order, id, CancellationToken.None);
             return Ok(entity);
