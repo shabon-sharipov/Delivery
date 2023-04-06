@@ -23,19 +23,22 @@ namespace Delivery.Application.Tests.Services.ProductService
         [Test]
         public async Task GetById_Product_Tests()
         {
-            //ulong productId = 1;
-            //var product = new Product() { Name = "Soup", CategoryId = 1 };
-            //var productResponse = new CreateProductResponse() { Name = "Soup", CategoryId = 1 };
-            //_repository.Setup(p => p.FindAsync(productId, CancellationToken.None)).ReturnsAsync(product);
+            ulong productId = 1;
+            var product = new Product() { Name = "Soup", CategoryId = 1 };
+            var productResponse = new GetProductResponse() { Name = "Soup", CategoryId = 1 };
 
-            //_mapper.Setup(m => m.Map<Product, ProductResponse>(product)).Returns(productResponse);
+            _repository.Setup(p => p.FindAsync(productId, CancellationToken.None)).ReturnsAsync(product);
 
-            //var service = new ProductServices(_repository.Object, _mapper.Object);
-            //var result = await service.Get(productId, CancellationToken.None);
+            _mapper.Setup(m => m.Map<Product, ProductResponse>(product)).Returns(productResponse);
 
-            //_repository.Verify(p => p.FindAsync(productId, CancellationToken.None));
+            var service = new ProductServices(_repository.Object, _mapper.Object);
+            var entity = await service.Get(productId, CancellationToken.None);
 
-            //Assert.That("Soup", Is.EqualTo(result.Name));
+            _repository.Verify(p => p.FindAsync(productId, CancellationToken.None));
+
+            var result = entity as GetProductResponse;
+
+            Assert.That("Soup", Is.EqualTo(result.Name));
         }
 
         [Test]
