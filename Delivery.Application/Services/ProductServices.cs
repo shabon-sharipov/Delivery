@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Delivery.Application.Common.Interfaces;
 using Delivery.Application.Common.Interfaces.Repositories;
+using Delivery.Application.Exceptions;
 using Delivery.Application.Requests.ProductsRequest;
 using Delivery.Application.Response.ProductResponse;
 using Delivery.Domain.Model;
@@ -20,7 +21,7 @@ namespace Delivery.Application.Services
         public override async Task<ProductResponse> Create(ProductRequest request, CancellationToken cancellationToken)
         {
             if (request == null)
-                throw new NullReferenceException(nameof(Product));
+                throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Product));;
 
             var createProductRequset = request as CreateProductRequest;
             Product entity = _mapper.Map<CreateProductRequest, Product>(createProductRequset);
@@ -42,7 +43,7 @@ namespace Delivery.Application.Services
         {
             Product entity = await _repository.FindAsync(id, cancellationToken);
             if (entity == null)
-                throw new NullReferenceException(nameof(Product));
+                throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Product));;
 
             return _mapper.Map<Product, GetProductResponse>(entity);
         }
@@ -51,7 +52,7 @@ namespace Delivery.Application.Services
         {
             var entity = _repository.Find(id);
             if (entity == null)
-                throw new NullReferenceException(nameof(Product));
+                throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Product));;
 
             _repository.Delete(entity);
             _repository.SaveChanges();
@@ -62,7 +63,7 @@ namespace Delivery.Application.Services
         {
             var entity = await _repository.FindAsync(id, CancellationToken.None);
             if (entity == null)
-                throw new NullReferenceException(nameof(Product));
+                throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Product));;
 
             var updateProductRequset = request as UpdateProductRequest;
             _mapper.Map<UpdateProductRequest, Product>(updateProductRequset, entity);

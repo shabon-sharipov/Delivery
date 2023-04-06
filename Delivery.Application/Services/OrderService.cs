@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Delivery.Application.Common.Interfaces;
 using Delivery.Application.Common.Interfaces.Repositories;
+using Delivery.Application.Exceptions;
 using Delivery.Application.Requests.OrderRequest;
 using Delivery.Application.Response.OrderResponse;
 using Delivery.Domain.Model;
@@ -26,7 +27,7 @@ namespace Delivery.Application.Services
         public async override Task<OrderResponse> Create(OrderRequest request, CancellationToken cancellationToken)
         {
             if (request == null)
-                throw new NullReferenceException(nameof(Order));
+                throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Order));
 
             var createOrderRequest = request as CreateOrderRequest;
             var entity = _mapper.Map<CreateOrderRequest, Order>(createOrderRequest);
@@ -41,7 +42,7 @@ namespace Delivery.Application.Services
         {
             var entity = await _repository.FindAsync(id, cancellationToken);
             if (entity == null)
-                throw new NullReferenceException(nameof(Order));
+                throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Order));
 
             return _mapper.Map<Order, GetOrderResponse>(entity);
         }
@@ -50,7 +51,7 @@ namespace Delivery.Application.Services
         {
             var entity = _repository.Find(id);
             if (entity == null)
-                throw new NullReferenceException(nameof(Order));
+                throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Order));
 
             _repository.Delete(entity);
             _repository.SaveChanges();
@@ -61,7 +62,7 @@ namespace Delivery.Application.Services
         {
             var entity = await _repository.FindAsync(id, CancellationToken.None);
             if (entity == null)
-                throw new NullReferenceException(nameof(Order));
+                throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Order));
 
             var updateOrderRequest = request as UpdateOrderRequest;
             var result = _mapper.Map(updateOrderRequest, entity);

@@ -5,6 +5,7 @@ using Delivery.Application.Common.Interfaces.Repositories;
 using AutoMapper;
 using Delivery.Application.Response.CategoryCustomerResponse;
 using Delivery.Domain.Abstract;
+using Delivery.Application.Exceptions;
 
 namespace Delivery.Application.Services
 {
@@ -22,7 +23,7 @@ namespace Delivery.Application.Services
         public async override Task<MerchantCategoryResponse> Create(MerchantCategoryRequest request, CancellationToken cancellationToken)
         {
             if (request == null)
-                throw new NullReferenceException(nameof(MerchantCategory));
+                throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(MerchantCategory));
 
             var createCategoryCustomerRequest = request as CreateMerchantCategoryRequest;
             var entity = _mapper.Map<CreateMerchantCategoryRequest, MerchantCategory>(createCategoryCustomerRequest);
@@ -36,7 +37,7 @@ namespace Delivery.Application.Services
         {
             var entity = await _repository.FindAsync(id, cancellationToken);
             if (entity == null)
-                throw new NullReferenceException(nameof(MerchantCategory));
+                throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(MerchantCategory));
 
             return _mapper.Map<Category, MerchantCategoryResponse>(entity);
         }
@@ -45,7 +46,7 @@ namespace Delivery.Application.Services
         {
             var entity = _repository.Find(id);
             if (entity == null)
-                throw new NullReferenceException(nameof(MerchantCategory));
+                throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(MerchantCategory));
 
             _repository.Delete(entity);
             _repository.SaveChanges();
@@ -57,7 +58,7 @@ namespace Delivery.Application.Services
         {
             var entity = await _repository.FindAsync(id, cancellationToken);
             if (entity == null)
-                throw new NullReferenceException(nameof(MerchantCategory));
+                throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(MerchantCategory));
 
             var updateCategoryCustomerRequest = request as UpdateCustomeMerchantrRequest;
 

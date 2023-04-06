@@ -4,6 +4,7 @@ using Delivery.Application.Common.Interfaces.Repositories;
 using Delivery.Application.Exceptions;
 using Delivery.Application.Requests.CustomerRequest;
 using Delivery.Application.Response.CustomerResponse;
+using Delivery.Domain.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace Delivery.Application.Services
         public async override Task<CustomerResponse> Create(CustomerRequest request, CancellationToken cancellationToken)
         {
             if (request == null)
-                throw new NullReferenceException(nameof(Customer));
+                throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Customer)); 
 
             var createCustomerRequest = request as CreateCustomerRequest;
             var entity = _mapper.Map<CreateCustomerRequest, Customer>(createCustomerRequest);
@@ -51,7 +52,7 @@ namespace Delivery.Application.Services
         {
             var entity = _repository.Find(id);
             if (entity == null)
-                throw new NullReferenceException(nameof(Customer));
+                throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Customer));
 
             _repository.Delete(entity);
             _repository.SaveChanges();
@@ -62,7 +63,7 @@ namespace Delivery.Application.Services
         {
             var entity = await _repository.FindAsync(id, CancellationToken.None);
             if (entity == null)
-                throw new NullReferenceException(nameof(Customer));
+                throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Customer));
 
             var updateOrderRequest = request as UpdateCustomerRequest;
             var result = _mapper.Map(updateOrderRequest, entity);
