@@ -19,6 +19,12 @@ namespace Delivery.Application.Services
             _repository = repository;
             _mapper = mapper;
         }
+        
+        public async Task<IEnumerable<ProductCategoryResponse>> GetAll(int pageSize, int pageNumber, CancellationToken cancellationToken)
+        {
+            var merchants = _repository.GetAll(pageSize, pageNumber, cancellationToken);
+            return _mapper.Map<IEnumerable<PaggedListProductCategoryItemResponse>>(merchants);
+        }
 
         public async override Task<ProductCategoryResponse> Create(CategoryProductRequest request, CancellationToken cancellationToken)
         {

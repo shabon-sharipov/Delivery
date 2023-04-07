@@ -25,6 +25,13 @@ namespace Delivery.Application.Services
         }
 
 
+        public async Task<IEnumerable<CustomerResponse>> GetAll(int pageSize, int pageNumber, CancellationToken cancellationToken)
+        {
+            var customers = _repository.GetAll(pageSize, pageNumber, cancellationToken);
+            return _mapper.Map<IEnumerable<PaggedListCustomerItemResponse>>(customers);
+        }
+
+
         public async override Task<CustomerResponse> Create(CustomerRequest request, CancellationToken cancellationToken)
         {
             if (request == null)

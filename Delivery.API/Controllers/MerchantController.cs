@@ -16,6 +16,13 @@ namespace Delivery.API.Controllers
             merchantService = _merchantService;
         }
 
+        [HttpGet("GetAll")]
+        public async Task<ActionResult<PaggedMerchantListItemResponse>> GetAll(int pageSize, int pageNumber)
+        {
+           var entity = merchantService.GetAll(pageSize, pageNumber, CancellationToken.None);
+           return Ok(entity);
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<MerchantResponse>> GetById(ulong id)
         {

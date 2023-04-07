@@ -24,6 +24,12 @@ namespace Delivery.Application.Services
             _mapper = mapper;
         }
 
+        public async Task<IEnumerable<OrderResponse>> GetAll(int PageSize, int PageNumber, CancellationToken cancellationToken)
+        {
+            var products = _repository.GetAll(PageSize, PageNumber, cancellationToken);
+            return _mapper.Map<IEnumerable<PaggedOrderListItemResponse>>(products);
+        }
+
         public async override Task<OrderResponse> Create(OrderRequest request, CancellationToken cancellationToken)
         {
             if (request == null)
