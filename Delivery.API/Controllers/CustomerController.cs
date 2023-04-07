@@ -19,7 +19,7 @@ namespace Delivery.API.Controllers
         [HttpGet("GetAll")]
         public async Task<ActionResult<PaggedListCustomerItemResponse>> GetAll(int pageSize, int pageNumber)
         {
-            var entity =  customerService.GetAll(pageSize, pageNumber, CancellationToken.None);
+            var entity = await customerService.GetAll(pageSize, pageNumber, CancellationToken.None);
             return Ok(entity);
         }
 
