@@ -16,6 +16,13 @@ namespace Delivery.API.Controllers
             customerService = _customerService;
         }
 
+        [HttpGet("GetAll")]
+        public async Task<ActionResult<PaggedListCustomerItemResponse>> GetAll(int pageSize, int pageNumber)
+        {
+            var entity = await customerService.GetAll(pageSize, pageNumber, CancellationToken.None);
+            return Ok(entity);
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<CustomerResponse>> GetById(ulong id)
         {

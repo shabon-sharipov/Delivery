@@ -16,6 +16,13 @@ namespace Delivery.API.Controllers
             orderService = _orderService;
         }
 
+        [HttpGet("GetAll")]
+        public async Task<ActionResult<PaggedOrderListItemResponse>> GetAll(int pageSize, int pageNumber)
+        {
+            var entity = await orderService.GetAll(pageSize, pageNumber, CancellationToken.None);
+            return Ok(entity);
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<OrderResponse>> GetById(ulong id)
         {

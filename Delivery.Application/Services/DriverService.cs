@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Delivery.Application.Common.Interfaces;
 using Delivery.Application.Common.Interfaces.Repositories;
+using Delivery.Application.Exceptions;
 using Delivery.Application.Requests.SenderRequest;
 using Delivery.Application.Response.SenderResponse;
 using Delivery.Domain.Model;
@@ -26,7 +27,7 @@ namespace Delivery.Application.Services
         public async override Task<DriverResponse> Create(DriverRequest request, CancellationToken cancellationToken)
         {
             if (request == null)
-                throw new NullReferenceException(nameof(Driver));
+                throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Driver));
 
             var createSenderRequest = request as CreateDriverRequest;
             var entity = _mapper.Map<CreateDriverRequest, Driver>(createSenderRequest);
@@ -42,7 +43,7 @@ namespace Delivery.Application.Services
             var entity = await _repository.FindAsync(id, cancellationToken);
 
             if (entity == null)
-                throw new NullReferenceException(nameof(Driver));
+                throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Driver));
 
             return _mapper.Map<Driver, GetDriverResponse>(entity);
         }
@@ -51,7 +52,7 @@ namespace Delivery.Application.Services
         {
             var entity = _repository.Find(id);
             if (entity == null)
-                throw new NullReferenceException(nameof(Driver));
+                throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Driver));
 
             _repository.Delete(entity);
             _repository.SaveChanges();
@@ -63,7 +64,7 @@ namespace Delivery.Application.Services
         {
             var entity = await _repository.FindAsync(id);
             if (entity == null)
-                throw new NullReferenceException(nameof(Driver));
+                throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Driver));
 
             var updateSenderRequset = request as UpdateDriverRequest;
             var result = _mapper.Map(updateSenderRequset, entity);

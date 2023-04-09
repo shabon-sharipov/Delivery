@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Delivery.Application.Common.Interfaces;
 using Delivery.Application.Common.Interfaces.Repositories;
+using Delivery.Application.Exceptions;
 using Delivery.Application.Requests.MerchantRequest;
 using Delivery.Application.Response.MerchantResponse;
 using Delivery.Domain.Model;
@@ -23,11 +24,17 @@ namespace Delivery.Application.Services
             _mapper = mapper;
         }
 
+        public async Task<IEnumerable<MerchantResponse>> GetAll(int pageSize, int pageNumber, CancellationToken cancellationToken)
+        {
+            var merchants = _repozitory.GetAll(pageSize, pageNumber, cancellationToken);
+            return _mapper.Map<IEnumerable<PaggedMerchantListItemResponse>>(merchants);
+        }
+
 
         public async override Task<MerchantResponse> Create(MerchantRequest request, CancellationToken cancellationToken)
         {
             if (request == null)
-                throw new NullReferenceException(nameof(Merchant));
+                throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Merchant));
 
             var createMerchantRequest = request as CreateMerchantRequest;
             var entity = _mapper.Map<CreateMerchantRequest, Merchant>(createMerchantRequest);
@@ -42,7 +49,7 @@ namespace Delivery.Application.Services
         {
             var entity = await _repozitory.FindAsync(id, cancellationToken);
             if (entity == null)
-                throw new NullReferenceException(nameof(Merchant));
+                throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Merchant));
 
             return _mapper.Map<Merchant, GetMerchantResponse>(entity);
         }
@@ -51,7 +58,7 @@ namespace Delivery.Application.Services
         {
             var entity = _repozitory.Find(id);
             if (entity == null)
-                throw new NullReferenceException(nameof(Merchant));
+                throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Merchant));
 
             _repozitory.Delete(entity);
             _repozitory.SaveChanges();
@@ -62,7 +69,7 @@ namespace Delivery.Application.Services
         {
             var entity = await _repozitory.FindAsync(id, CancellationToken.None);
             if (entity == null)
-                throw new NullReferenceException(nameof(Merchant));
+                throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Merchant));
 
             var updateMerchantRequest = request as UpdateMerchantRequest;
             var result = _mapper.Map(updateMerchantRequest, entity);

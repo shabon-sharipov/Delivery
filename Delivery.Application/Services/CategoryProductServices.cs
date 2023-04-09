@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Delivery.Application.Common.Interfaces;
 using Delivery.Application.Common.Interfaces.Repositories;
+using Delivery.Application.Exceptions;
 using Delivery.Application.Requests.CategoryProductRequest;
 using Delivery.Application.Response.CategoryProductResponse;
 using Delivery.Domain.Abstract;
@@ -18,11 +19,17 @@ namespace Delivery.Application.Services
             _repository = repository;
             _mapper = mapper;
         }
+        
+        public async Task<IEnumerable<ProductCategoryResponse>> GetAll(int pageSize, int pageNumber, CancellationToken cancellationToken)
+        {
+            var merchants = _repository.GetAll(pageSize, pageNumber, cancellationToken);
+            return _mapper.Map<IEnumerable<PaggedListProductCategoryItemResponse>>(merchants);
+        }
 
         public async override Task<ProductCategoryResponse> Create(CategoryProductRequest request, CancellationToken cancellationToken)
         {
             if (request == null)
-                throw new NullReferenceException(nameof(ProductCategory));
+                throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(ProductCategory));
 
             var createCategoryProductRequest = request as CreateCategoryProductRequest;
             var entity = _mapper.Map<CreateCategoryProductRequest, ProductCategory>(createCategoryProductRequest);
@@ -37,7 +44,7 @@ namespace Delivery.Application.Services
         {
             var entity = await _repository.FindAsync(id, cancellationToken);
             if (entity == null)
-                throw new NullReferenceException(nameof(ProductCategory));
+                throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(ProductCategory));;
 
             return _mapper.Map<Category, ProductCategoryResponse>(entity);
         }
@@ -46,7 +53,7 @@ namespace Delivery.Application.Services
         {
             var entity = _repository.Find(id);
             if (entity == null)
-                throw new NullReferenceException(nameof(Product));
+                throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Product));;
 
             _repository.Delete(entity);
             _repository.SaveChanges();
@@ -57,7 +64,7 @@ namespace Delivery.Application.Services
         {
             var entity = await _repository.FindAsync(id, CancellationToken.None);
             if (entity == null)
-                throw new NullReferenceException(nameof(Product));
+                throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Product));;
 
             var categoryUpdateRequest = request as UpdateCategoryProductRequest;
             var result = _mapper.Map(categoryUpdateRequest, entity);
