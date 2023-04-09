@@ -48,5 +48,18 @@ namespace Delivery.Application.Tests.Services.OrderService
 
             Assert.That(orderResponse.AvailableFrom, Is.EqualTo(result.AvailableFrom));
         }
+
+        [Test]
+        public async Task Update_Order_Should_have_error_when_OrderId_is_null()
+        {
+            ulong orderId = 1;
+            var order = new CreateOrderRequest() { PhoneNumber = "+99288415707" };
+            _repository.Setup(o => o.FindAsync(orderId, CancellationToken.None)).Returns(Task.FromResult<Order>(null));
+
+            var service = new Application.Services.OrderService(_repository.Object, _mapper.Object);
+            Assert.ThrowsAsync<NullReferenceException>(async () => await service.Update(order, orderId, CancellationToken.None));
+
+            _repository.Verify(o=>o.FindAsync(orderId, CancellationToken.None));
+        }
     }
 }
