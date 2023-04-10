@@ -4,6 +4,7 @@ using Delivery.Application.Requests.OrderRequest;
 using Delivery.Application.Response.OrderResponse;
 using Delivery.Application.Validations.OrderValidations;
 using Delivery.Domain.Model;
+using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -18,13 +19,13 @@ namespace Delivery.Application.Tests.Services.OrderService
     {
         private readonly Mock<IRepository<Order>> _repository;
         private readonly Mock<IMapper> _mapper;
-        private CreateOrderRequestValidation _validation;
+        private CreateOrderRequestValidation _validator;
 
         public CreateOrderServiceTests()
         {
             _mapper = new Mock<IMapper>();
             _repository = new Mock<IRepository<Order>>();
-            _validation = new CreateOrderRequestValidation();
+            _validator = new CreateOrderRequestValidation();
         }
 
         [Test]
@@ -69,6 +70,44 @@ namespace Delivery.Application.Tests.Services.OrderService
 
 
         }
+
+        public void Should_have_error_when_Order_ShipAddress_is_empty()
+        {
+            var order = new CreateOrderRequest() { ShipAddress = " " };
+            var result = _validator.TestValidate(order);
+            result.ShouldHaveValidationErrorFor(o => o.ShipAddress);
+        }
+
+        public void Should_have_error_when_Order_ShipAddress_is_null()
+        {
+            var order = new CreateOrderRequest() { ShipAddress = null };
+            var result = _validator.TestValidate(order);
+            result.ShouldHaveValidationErrorFor(o => o.ShipAddress);
+        }
+
+        public void Should_have_error_when_Order_TotalPrice_is_zero()
+        {
+            var order = new CreateOrderRequest() { TotalPrice = 0 };
+            var result = _validator.TestValidate(order);
+            result.ShouldHaveValidationErrorFor(o => o.TotalPrice);
+        }
+
+        public void Should_have_error_when_Order_PhoneNumber_is_long_thirteen()
+        {
+            var order = new CreateOrderRequest() { PhoneNumber = "!+992111442277444" };
+            var result = _validator.TestValidate(order);
+            result.ShouldHaveValidationErrorFor(o => o.PhoneNumber);
+        } 
+        
+        public void Should_have_error_when_Order_PhoneNumber_is_contains_signs()
+        {
+            var order = new CreateOrderRequest() { PhoneNumber = "@,!,#," };
+            var result = _validator.TestValidate(order);
+            result.ShouldHaveValidationErrorFor(o => o.PhoneNumber);
+        }
+        
+
+
 
 
     }
