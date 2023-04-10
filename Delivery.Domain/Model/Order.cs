@@ -20,13 +20,14 @@ namespace Delivery.Domain.Model
         public ulong DriverId { get; set; }
         public virtual Driver Driver { get; set; }
 
+        public ulong CardId { get; set; }
+        public virtual Card Card { get; set; }
+
         public decimal TotalPrice { get; set; }
 
         public virtual IEnumerable<OrderDetails> OrderDetails { get; set; }
-        public string AvailableFrom { get; set; }
 
         public string AvailableTo { get; set; }
-        public string PhoneNumber { get; set; }
         public bool IsPayment { get; set; }
     }
 }

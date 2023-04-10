@@ -35,6 +35,7 @@ namespace Delivery.Application.Services
             var entity = _mapper.Map<CreateCategoryProductRequest, ProductCategory>(createCategoryProductRequest);
 
             await _repository.AddAsync(entity, cancellationToken);
+
             await _repository.SaveChangesAsync(cancellationToken);
 
             return _mapper.Map<ProductCategory, ProductCategoryResponse>(entity);

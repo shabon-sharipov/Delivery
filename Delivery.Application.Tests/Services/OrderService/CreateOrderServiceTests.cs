@@ -41,9 +41,7 @@ namespace Delivery.Application.Tests.Services.OrderService
 
             var order = new Order()
             {
-                AvailableFrom = "Restourant Forel",
                 AvailableTo = "Ulitsa A.Samadov, Dom 24",
-                PhoneNumber = "+992111442277",
                 TotalPrice = 54,
                 DriverId = 2
             };

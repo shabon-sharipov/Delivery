@@ -17,5 +17,9 @@ public class MerchantTablesConfigurations : IEntityTypeConfiguration<Merchant>
         builder.HasMany(m => m.Products)
             .WithOne(p => p.Merchant)
             .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasMany(m => m.MerchantBranchs)
+            .WithOne(mb => mb.Merchant)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }
