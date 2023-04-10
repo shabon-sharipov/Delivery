@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Delivery.Application.Common.Interfaces.Repositories;
+using Delivery.Application.Exceptions;
 using Delivery.Application.Requests.ProductsRequest;
 using Delivery.Application.Response.ProductResponse;
 using Delivery.Application.Services;
@@ -56,7 +57,7 @@ namespace Delivery.Application.Tests.Services.ProductService
 
             var service = new ProductServices(_repository.Object,_mapper.Object);
 
-            Assert.ThrowsAsync<NullReferenceException>(async () => await service.Update(product, productId, CancellationToken.None));
+            Assert.ThrowsAsync<HttpStatusCodeException>(async () => await service.Update(product, productId, CancellationToken.None));
             _repository.Verify(p => p.FindAsync(productId, CancellationToken.None));
         }
     }

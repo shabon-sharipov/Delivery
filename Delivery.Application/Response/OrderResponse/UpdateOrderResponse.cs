@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Delivery.Domain.Enam;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,5 +16,6 @@ namespace Delivery.Application.Response.OrderResponse
         public string IsPayment { get; set; }
         public decimal TotalPrice { get; set; }
         public ulong DriverId { get; set; }
+        public OrderStatus OrderStatus { get; set; }
     }
 }
