@@ -71,6 +71,7 @@ namespace Delivery.Application.Services
                 throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Order));
 
             var updateOrderRequest = request as UpdateOrderRequest;
+
             var result = _mapper.Map(updateOrderRequest, entity);
 
              _repository.Update(entity);

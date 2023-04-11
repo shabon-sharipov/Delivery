@@ -31,7 +31,7 @@ namespace Delivery.Application.Tests.Services.DriverService
         public async Task Create_Driver_Tests()
         {
             var driverRequest = new CreateDriverRequest() { Address = "Restourant Forel", 
-                Email = "fkfg@144", Password = "44d4d4d", PhoneNumber = "+9924454445", FirstName = "Ali", LastName = "Vali" };
+                PhoneNumber = "+9924454445", FirstName = "Ali", LastName = "Vali" };
 
             var driver = new Driver()
             {

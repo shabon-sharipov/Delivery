@@ -10,7 +10,6 @@ namespace Delivery.Application.Requests.MerchantRequest
     public abstract class MerchantRequest : BaseRequest
     {
         public string Name { get; set; }
-        public string Location { get; set; }
         public string ShortDiscreption { get; set; }
         public string IsActive { get; set; }
         public ulong MerchantCategoryId { get; set; }

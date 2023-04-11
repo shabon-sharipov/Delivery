@@ -13,7 +13,6 @@ namespace Delivery.Application.Validations.CreateMerchantRequestValidation
         public CreateMerchantRequestValidation()
         {
             RuleFor(m => m.Name).NotEmpty();
-            RuleFor(m => m.Location).NotEmpty();
             RuleFor(m => m.ShortDiscreption).NotEmpty().MaximumLength(30);
             RuleFor(m => m.IsActive).NotEmpty().NotNull();
         }

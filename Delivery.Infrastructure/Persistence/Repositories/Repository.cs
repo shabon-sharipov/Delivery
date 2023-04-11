@@ -18,7 +18,9 @@ namespace Delivery.Infrastructure.Persistence.Repositories
 
         public async Task<IQueryable<T>> GetAllAsync(int pageSize, int PageNumber, CancellationToken cancellationToken)
         {
-            return _dbSet.Skip(pageSize * PageNumber).Take(pageSize);
+            return _dbSet.OrderBy(e => e.Id)
+                .Skip(pageSize * PageNumber)
+                .Take(pageSize);
         }
 
         public IQueryable<T> GetAll(int pageSize, int PageNumber, CancellationToken cancellationToken)

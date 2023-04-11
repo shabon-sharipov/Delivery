@@ -29,7 +29,7 @@ namespace Delivery.Application.Tests.Services.OrderService
         public async Task Update_Order_Test()
         {
             ulong orderId = 2;
-            var order = new Order { OrderStatus = OrderStatus.Open };
+            var order = new Order { OrderStatus = OrderStatus.Open,ShipAddress="test" };
             var orderRequest = new UpdateOrderRequest { OrderStatus = OrderStatus.Open };
             var orderResponse = new UpdateOrderResponse { OrderStatus = OrderStatus.Open };
 
@@ -47,7 +47,7 @@ namespace Delivery.Application.Tests.Services.OrderService
 
             var result = entity as UpdateOrderResponse;
 
-            Assert.That(orderRequest.OrderStatus, Is.EqualTo(result.OrderStatus));
+            Assert.That("test", Is.EqualTo(result.ShipAddress));
         }
 
         [Test]

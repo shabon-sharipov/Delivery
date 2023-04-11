@@ -66,6 +66,7 @@ namespace Delivery.Application.Services
                 throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Product));;
 
             var updateProductRequset = request as UpdateProductRequest;
+
             _mapper.Map<UpdateProductRequest, Product>(updateProductRequset, entity);
             _repository.Update(entity);
             await _repository.SaveChangesAsync(CancellationToken.None);

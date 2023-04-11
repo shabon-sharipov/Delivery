@@ -27,7 +27,9 @@ namespace Delivery.Application.Tests.Services.ProductService
         {
             ulong productId = 1;
             var product = new Product() { Name = "Soup" };
+
             var productRequest = new UpdateProductRequest() { Name = "Pizza" };
+
             var productResponse = new UpdateProductResponse() { Name = "Pizza" };
 
             _repository.Setup(p => p.FindAsync(productId, CancellationToken.None)).ReturnsAsync(product);

@@ -28,9 +28,9 @@ namespace Delivery.Application.Services
         {
             if (request == null)
                 throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Driver));
-
+            //todo
             var createSenderRequest = request as CreateDriverRequest;
-            var entity = _mapper.Map<CreateDriverRequest, Driver>(createSenderRequest);
+            Driver entity = _mapper.Map<CreateDriverRequest, Driver>(createSenderRequest);
 
             await _repository.AddAsync(entity, cancellationToken);
             await _repository.SaveChangesAsync(cancellationToken);

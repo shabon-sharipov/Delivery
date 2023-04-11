@@ -28,10 +28,10 @@ namespace Delivery.Application.Tests.Services.OrderService
         {
             ulong orderId = 2;
             var order = new Order() { AvailableTo = "Ulitsa A.Samadov, Dom 24", DriverId = 4,};
-            var orderResponse = new CreateOrderResponse() { AvailableTo = "Ulitsa A.Samadov, Dom 24", DriverId = 4, };
+            var orderResponse = new GetOrderResponse() { AvailableTo = "Ulitsa A.Samadov, Dom 24", DriverId = 4, };
 
             _repository.Setup(o => o.FindAsync(orderId, CancellationToken.None)).ReturnsAsync(order);
-            _mapper.Setup(m => m.Map<Order, OrderResponse>(order)).Returns(orderResponse);
+            _mapper.Setup(m => m.Map<Order, GetOrderResponse>(order)).Returns(orderResponse);
 
             var service = new Application.Services.OrderService(_repository.Object, _mapper.Object);
             var entity = await service.Get(orderId, CancellationToken.None);
