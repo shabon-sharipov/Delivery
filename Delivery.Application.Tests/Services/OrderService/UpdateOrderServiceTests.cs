@@ -53,7 +53,7 @@ namespace Delivery.Application.Tests.Services.OrderService
         [Test]
         public async Task Update_Order_Should_have_error_when_OrderId_is_null()
         {
-            ulong orderId = 1;
+            ulong orderId = 2;
             var order = new CreateOrderRequest() { PhoneNumber = "+99288415707" };
             _repository.Setup(o => o.FindAsync(orderId, CancellationToken.None)).Returns(Task.FromResult<Order>(null));
 
