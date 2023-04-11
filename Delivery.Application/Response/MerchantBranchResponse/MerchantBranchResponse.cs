@@ -9,8 +9,8 @@ namespace Delivery.Application.Response.MerchantBranchResponse
 {
     public class MerchantBranchResponse : BaseResponse
     {
+        public ulong Id { get; set; }
         public ulong MerchantId { get; set; }
-        public virtual Merchant Merchant { get; set; }
         public string Location { get; set; }
         public string MerchantCoverage { get; set; }
     }
