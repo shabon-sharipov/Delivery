@@ -72,35 +72,35 @@ namespace Delivery.Application.Tests.Services.OrderService
 
 
         }
-
+        [Test]
         public void Should_have_error_when_Order_ShipAddress_is_empty()
         {
             var order = new CreateOrderRequest() { ShipAddress = " " };
             var result = _validator.TestValidate(order);
             result.ShouldHaveValidationErrorFor(o => o.ShipAddress);
         }
-
+        [Test]
         public void Should_have_error_when_Order_ShipAddress_is_null()
         {
             var order = new CreateOrderRequest() { ShipAddress = null };
             var result = _validator.TestValidate(order);
             result.ShouldHaveValidationErrorFor(o => o.ShipAddress);
         }
-
+        [Test]
         public void Should_have_error_when_Order_TotalPrice_is_zero()
         {
             var order = new CreateOrderRequest() { TotalPrice = 0 };
             var result = _validator.TestValidate(order);
             result.ShouldHaveValidationErrorFor(o => o.TotalPrice);
         }
-
+        [Test]
         public void Should_have_error_when_Order_PhoneNumber_is_long_thirteen()
         {
             var order = new CreateOrderRequest() { PhoneNumber = "!+992111442277444" };
             var result = _validator.TestValidate(order);
             result.ShouldHaveValidationErrorFor(o => o.PhoneNumber);
-        } 
-        
+        }
+        [Test]
         public void Should_have_error_when_Order_PhoneNumber_is_contains_signs()
         {
             var order = new CreateOrderRequest() { PhoneNumber = "@,!,#," };

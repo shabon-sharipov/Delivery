@@ -1,0 +1,92 @@
+﻿using AutoMapper;
+using Delivery.Application.Common.Interfaces.Repositories;
+using Delivery.Application.Requests.SenderRequest;
+using Delivery.Application.Validations.SenderValidations;
+using Delivery.Domain.Model;
+using FluentValidation.TestHelper;
+using Moq;
+using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Delivery.Application.Tests.Services.DriverService
+{
+    public class CreateDriverServiceTests
+    {
+        private readonly Mock<IRepository<Driver>> _repository;
+        private readonly Mock<IMapper> _mapper;
+        private CreateDriverValidation _validator;
+
+        public CreateDriverServiceTests()
+        {
+            _validator = new CreateDriverValidation();
+            _mapper = new Mock<IMapper>();
+            _repository = new Mock<IRepository<Driver>>();
+        }
+
+        [Test]
+        public async Task Create_Driver_Tests()
+        {
+            var driverRequest = new CreateDriverRequest() { Address = "Restourant Forel", 
+                Email = "fkfg@144", Password = "44d4d4d", PhoneNumber = "+9924454445", FirstName = "Ali", LastName = "Vali" };
+
+            var driver = new Driver()
+            {
+                Address = "Restourant Forel",
+                Email = "fkfg@144",
+                Password = "44d4d4d",
+                PhoneNumber = "+9924454445",
+                FirstName = "Ali",
+                LastName = "Vali"
+            };
+
+            var driverResponse = new CreateDriverResponse()
+            {
+                Address = "Restourant Forel",
+                Email = "fkfg@144",
+                Password = "44d4d4d",
+                PhoneNumber = "+9924454445",
+                FirstName = "Ali",
+                LastName = "Vali"
+            };
+            _mapper.Setup(d => d.Map<CreateDriverRequest, Driver>(driverRequest)).Returns(driver);
+            _mapper.Setup(d => d.Map<Driver, CreateDriverResponse>(driver)).Returns(driverResponse);
+
+            var service = new Application.Services.DriverService(_repository.Object, _mapper.Object);
+            var result = await service.Create(driverRequest, CancellationToken.None);
+
+            _repository.Verify(a => a.AddAsync(It.IsAny<Driver>(), CancellationToken.None));
+            _repository.Verify(a => a.SaveChangesAsync(CancellationToken.None));
+
+            var test = result as CreateDriverResponse;
+            Assert.That(test.Password, Is.EqualTo(driver.Password));
+        }
+
+        [Test]
+        public void Should_have_error_when_Driver_PhoneNumber_is_long_thirteen()
+        {
+            var driver = new CreateDriverRequest() { PhoneNumber = "!+998918277768789" };
+            var result = _validator.TestValidate(driver);
+            result.ShouldHaveValidationErrorFor(d => d.PhoneNumber);
+        }
+        [Test]
+        public void Shuold_have_error_when_Driver_Address_is_empty()
+        {
+            var driver = new CreateDriverRequest() { Address = "" };
+            var result = _validator.TestValidate(driver);
+            result.ShouldHaveValidationErrorFor(d => d.Address);
+        }
+        [Test]
+        public void Should_have_error_when_Driver_Driver_is_null()
+        {
+            var driver = new CreateDriverRequest() { Address = null };
+            var result = _validator.TestValidate(driver);
+            result.ShouldHaveValidationErrorFor(d => d.Address);
+        }
+
+            
+    }
+}
