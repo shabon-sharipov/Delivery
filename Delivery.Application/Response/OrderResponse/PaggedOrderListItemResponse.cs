@@ -1,10 +1,10 @@
 ﻿using Delivery.Application.Response.OrderResponse;
+using Delivery.Domain.Enam;
 
 public class PaggedOrderListItemResponse : OrderResponse
 {
     public ulong Id { get; set; }
-    public string AvailableFrom { get; set; }
-    public string AvailableTo { get; set; }
+    public OrderStatus OrderStatus { get; set; }
     public decimal TotalPrice { get; set; }
-    public ulong DriverId { get; set; }
+    public string AvailableTo { get; set; }
 }

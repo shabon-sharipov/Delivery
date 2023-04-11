@@ -33,9 +33,7 @@ namespace Delivery.Application.Tests.Services.OrderService
         {
             var orderRequest = new CreateOrderRequest()
             {
-                AvailableFrom = "Restourant Forel",
                 AvailableTo = "Ulitsa A.Samadov, Dom 24",
-                PhoneNumber = "+992111442277",
                 TotalPrice = 54,
                 DriverId = 2
             };
@@ -49,9 +47,7 @@ namespace Delivery.Application.Tests.Services.OrderService
 
             var orderResponse = new CreateOrderResponse()
             {
-                AvailableFrom = "Restourant Forel",
                 AvailableTo = "Ulitsa A.Samadov, Dom 24",
-                PhoneNumber = "+992111442277",
                 TotalPrice = 54,
                 DriverId = 2
             };
@@ -91,24 +87,5 @@ namespace Delivery.Application.Tests.Services.OrderService
             var result = _validator.TestValidate(order);
             result.ShouldHaveValidationErrorFor(o => o.TotalPrice);
         }
-        [Test]
-        public void Should_have_error_when_Order_PhoneNumber_is_long_thirteen()
-        {
-            var order = new CreateOrderRequest() { PhoneNumber = "!+992111442277444" };
-            var result = _validator.TestValidate(order);
-            result.ShouldHaveValidationErrorFor(o => o.PhoneNumber);
-        }
-        [Test]
-        public void Should_have_error_when_Order_PhoneNumber_is_contains_signs()
-        {
-            var order = new CreateOrderRequest() { PhoneNumber = "@,!,#," };
-            var result = _validator.TestValidate(order);
-            result.ShouldHaveValidationErrorFor(o => o.PhoneNumber);
-        }
-        
-
-
-
-
     }
 }

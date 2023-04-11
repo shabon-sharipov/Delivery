@@ -12,10 +12,8 @@ namespace Delivery.Application.Validations.OrderValidations
     {
         public CreateOrderRequestValidation()
         {
-            RuleFor(o => o.AvailableFrom).NotEmpty().NotNull();
-            RuleFor(o=>o.AvailableTo).NotEmpty().NotNull();
-            RuleFor(o=>o.PhoneNumber).NotEmpty().NotNull();
-            RuleFor(o=>o.IsPayment).NotNull();
+            RuleFor(o => o.AvailableTo).NotEmpty().NotNull();
+            RuleFor(o => o.IsPayment).NotNull();
         }
     }
 }

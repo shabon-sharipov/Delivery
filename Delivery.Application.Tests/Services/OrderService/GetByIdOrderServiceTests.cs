@@ -27,8 +27,8 @@ namespace Delivery.Application.Tests.Services.OrderService
         public async Task GetById_Order_Tests()
         {
             ulong orderId = 2;
-            var order = new Order() { AvailableFrom = "Restourant Forel", AvailableTo = "Ulitsa A.Samadov, Dom 24", DriverId = 4, PhoneNumber = "+992884157107" };
-            var orderResponse = new CreateOrderResponse() { AvailableFrom = "Restourant Forel", AvailableTo = "Ulitsa A.Samadov, Dom 24", DriverId = 4, PhoneNumber = "+992884157107" };
+            var order = new Order() { AvailableTo = "Ulitsa A.Samadov, Dom 24", DriverId = 4,};
+            var orderResponse = new CreateOrderResponse() { AvailableTo = "Ulitsa A.Samadov, Dom 24", DriverId = 4, };
 
             _repository.Setup(o => o.FindAsync(orderId, CancellationToken.None)).ReturnsAsync(order);
             _mapper.Setup(m => m.Map<Order, OrderResponse>(order)).Returns(orderResponse);
@@ -40,7 +40,7 @@ namespace Delivery.Application.Tests.Services.OrderService
 
             var result = entity as GetOrderResponse;
 
-            Assert.That("+992884157107", Is.EqualTo(result.PhoneNumber));
+            Assert.That("Ulitsa A.Samadov, Dom 24", Is.EqualTo(result.AvailableTo));
         }
     }
 }

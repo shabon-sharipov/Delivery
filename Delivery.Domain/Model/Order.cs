@@ -29,8 +29,5 @@ namespace Delivery.Domain.Model
 
         public string AvailableTo { get; set; }
         public bool IsPayment { get; set; }
-        public string AvailableFrom { get; set; }
-        public string PhoneNumber { get; set; }
-
     }
 }

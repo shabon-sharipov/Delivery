@@ -36,8 +36,6 @@ namespace Delivery.Application.Tests.Services.DriverService
             var driver = new Driver()
             {
                 Address = "Restourant Forel",
-                Email = "fkfg@144",
-                Password = "44d4d4d",
                 PhoneNumber = "+9924454445",
                 FirstName = "Ali",
                 LastName = "Vali"
@@ -45,10 +43,6 @@ namespace Delivery.Application.Tests.Services.DriverService
 
             var driverResponse = new CreateDriverResponse()
             {
-                Address = "Restourant Forel",
-                Email = "fkfg@144",
-                Password = "44d4d4d",
-                PhoneNumber = "+9924454445",
                 FirstName = "Ali",
                 LastName = "Vali"
             };
@@ -61,8 +55,8 @@ namespace Delivery.Application.Tests.Services.DriverService
             _repository.Verify(a => a.AddAsync(It.IsAny<Driver>(), CancellationToken.None));
             _repository.Verify(a => a.SaveChangesAsync(CancellationToken.None));
 
-            var test = result as CreateDriverResponse;
-            Assert.That(test.Password, Is.EqualTo(driver.Password));
+            var entity = result as CreateDriverResponse;
+            Assert.That(entity.FirstName, Is.EqualTo(driver.FirstName));
         }
 
         [Test]
