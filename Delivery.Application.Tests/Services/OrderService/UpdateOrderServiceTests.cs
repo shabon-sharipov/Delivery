@@ -2,6 +2,7 @@
 using Delivery.Application.Common.Interfaces.Repositories;
 using Delivery.Application.Requests.OrderRequest;
 using Delivery.Application.Response.OrderResponse;
+using Delivery.Domain.Enam;
 using Delivery.Domain.Model;
 using Moq;
 using NUnit.Framework;
@@ -28,9 +29,9 @@ namespace Delivery.Application.Tests.Services.OrderService
         public async Task Update_Order_Test()
         {
             ulong orderId = 2;
-            var order = new Order { AvailableFrom = "Restourant Forel" };
-            var orderRequest = new UpdateOrderRequest { AvailableFrom = "Restaurant Saray" };
-            var orderResponse = new UpdateOrderResponse { AvailableFrom = "Restaurant Saray" };
+            var order = new Order { OrderStatus = OrderStatus.Open };
+            var orderRequest = new UpdateOrderRequest { OrderStatus = OrderStatus.Open };
+            var orderResponse = new UpdateOrderResponse { OrderStatus = OrderStatus.Open };
 
             _repository.Setup(p => p.FindAsync(orderId, CancellationToken.None));
 

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Delivery.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(EFContext))]
-    [Migration("20230405082112_Initial_ModelsChange")]
-    partial class Initial_ModelsChange
+    [Migration("20230410154747_Initial_Models")]
+    partial class Initial_Models
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,54 @@ namespace Delivery.Infrastructure.Persistence.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Card", b =>
+                {
+                    b.Property<decimal>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(20,0)");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Id"));
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Card", (string)null);
+                });
+
+            modelBuilder.Entity("CardItem", b =>
+                {
+                    b.Property<decimal>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(20,0)");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Id"));
+
+                    b.Property<decimal>("CardId")
+                        .HasColumnType("decimal(20,0)");
+
+                    b.Property<decimal>("ProductId")
+                        .HasColumnType("decimal(20,0)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CardId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("CardItem", (string)null);
+                });
 
             modelBuilder.Entity("Delivery.Domain.Abstract.Category", b =>
                 {
@@ -66,10 +114,6 @@ namespace Delivery.Infrastructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<decimal>("MerchantCategoryId")
                         .HasColumnType("decimal(20,0)");
 
@@ -96,13 +140,12 @@ namespace Delivery.Infrastructure.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Id"));
 
-                    b.Property<string>("AvailableFrom")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("AvailableTo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("CardId")
+                        .HasColumnType("decimal(20,0)");
 
                     b.Property<decimal>("CustomerId")
                         .HasColumnType("decimal(20,0)");
@@ -116,10 +159,6 @@ namespace Delivery.Infrastructure.Persistence.Migrations
                     b.Property<int>("OrderStatus")
                         .HasColumnType("int");
 
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ShipAddress")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -131,6 +170,8 @@ namespace Delivery.Infrastructure.Persistence.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CardId");
 
                     b.HasIndex("CustomerId");
 
@@ -174,6 +215,32 @@ namespace Delivery.Infrastructure.Persistence.Migrations
                     b.HasIndex("MerchantId");
 
                     b.ToTable("Product", (string)null);
+                });
+
+            modelBuilder.Entity("MerchantBranch", b =>
+                {
+                    b.Property<decimal>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(20,0)");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Id"));
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MerchantCoverage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("MerchantId")
+                        .HasColumnType("decimal(20,0)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MerchantId");
+
+                    b.ToTable("MerchantBranch", (string)null);
                 });
 
             modelBuilder.Entity("OrderDetails", b =>
@@ -276,6 +343,25 @@ namespace Delivery.Infrastructure.Persistence.Migrations
                     b.HasDiscriminator().HasValue("Driver");
                 });
 
+            modelBuilder.Entity("CardItem", b =>
+                {
+                    b.HasOne("Card", "Card")
+                        .WithMany("CardItems")
+                        .HasForeignKey("CardId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Delivery.Domain.Model.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Card");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("Delivery.Domain.Model.Merchant", b =>
                 {
                     b.HasOne("Delivery.Domain.Model.MerchantCategory", "MerchantCategory")
@@ -289,6 +375,12 @@ namespace Delivery.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Delivery.Domain.Model.Order", b =>
                 {
+                    b.HasOne("Card", "Card")
+                        .WithMany()
+                        .HasForeignKey("CardId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Customer", "Customer")
                         .WithMany()
                         .HasForeignKey("CustomerId")
@@ -300,6 +392,8 @@ namespace Delivery.Infrastructure.Persistence.Migrations
                         .HasForeignKey("DriverId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Card");
 
                     b.Navigation("Customer");
 
@@ -325,6 +419,17 @@ namespace Delivery.Infrastructure.Persistence.Migrations
                     b.Navigation("Merchant");
                 });
 
+            modelBuilder.Entity("MerchantBranch", b =>
+                {
+                    b.HasOne("Delivery.Domain.Model.Merchant", "Merchant")
+                        .WithMany("MerchantBranchs")
+                        .HasForeignKey("MerchantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Merchant");
+                });
+
             modelBuilder.Entity("OrderDetails", b =>
                 {
                     b.HasOne("Delivery.Domain.Model.Order", "Order")
@@ -344,8 +449,15 @@ namespace Delivery.Infrastructure.Persistence.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("Card", b =>
+                {
+                    b.Navigation("CardItems");
+                });
+
             modelBuilder.Entity("Delivery.Domain.Model.Merchant", b =>
                 {
+                    b.Navigation("MerchantBranchs");
+
                     b.Navigation("Products");
                 });
 
