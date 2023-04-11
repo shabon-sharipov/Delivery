@@ -37,6 +37,7 @@ namespace Delivery.API
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             builder.Services.AddScoped<IMerchantService, MerchantService>();
             builder.Services.AddScoped<ICustomerService, CustomerService>();
+            builder.Services.AddScoped<IMerchantBranchService, MerchantBranchService>();
 
             //Validator
             builder.Services.AddFluentValidationAutoValidation();

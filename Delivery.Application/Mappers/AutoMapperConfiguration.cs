@@ -2,6 +2,7 @@
 using Delivery.Application.Requests.CategoryCustomerRequest;
 using Delivery.Application.Requests.CategoryProductRequest;
 using Delivery.Application.Requests.CustomerRequest;
+using Delivery.Application.Requests.MerchantBranch;
 using Delivery.Application.Requests.MerchantRequest;
 using Delivery.Application.Requests.OrderRequest;
 using Delivery.Application.Requests.ProductsRequest;
@@ -9,6 +10,7 @@ using Delivery.Application.Requests.SenderRequest;
 using Delivery.Application.Response.CategoryCustomerResponse;
 using Delivery.Application.Response.CategoryProductResponse;
 using Delivery.Application.Response.CustomerResponse;
+using Delivery.Application.Response.MerchantBranchResponse;
 using Delivery.Application.Response.MerchantResponse;
 using Delivery.Application.Response.OrderResponse;
 using Delivery.Application.Response.ProductResponse;
@@ -77,6 +79,13 @@ namespace Delivery.Application.Mappers
             CreateMap<UpdateOrderDitelsRequest, OrderDetails>();
             CreateMap<OrderDetails, UpdateOrderDitelsResponse>();
             CreateMap<OrderDetails, PaggedOrderDitelsListItemResponse>();
+
+            CreateMap<CreateMerchantBranchRequest, MerchantBranch>();
+            CreateMap<MerchantBranch, MerchantBranchResponse>();
+            CreateMap<UpdateMerchantBranchRequest, MerchantBranch>();
+            CreateMap<MerchantBranch, UpdateMerchantBranchResponse>();
+            CreateMap<MerchantBranch, GetMerchantBranchResponse>();
+
         }
 
     }
