@@ -1,7 +1,7 @@
 ﻿using Delivery.Application.Response.CardItemResponse;
 using Delivery.Domain.Model;
 
-public class PaggedListCardItemtResponse : CardItemRequest
+public class PaggedListCardItemtResponse : CardItemResponse
 {
         public ulong CardId { get; set; }
         public virtual Card Card { get; set; }
