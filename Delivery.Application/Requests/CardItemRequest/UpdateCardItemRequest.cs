@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Delivery.Application.Response.CardItemResponse
+namespace Delivery.Application.Requests.CardItemRequest
 {
-    public class CreateCardItemRequest : CardItemRequest
+    public class UpdateCardItemRequest : CardItemRequest
     {
         public ulong CardId { get; set; }
         public virtual Card Card { get; set; }

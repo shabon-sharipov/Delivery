@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Delivery.Application.Response.CardItemResponse
 {
-    public class GetCardItemResponse : CardItemResponse
+    public class GetCardItemResponse : CardItemRequest
     {
         public ulong CardId { get; set; }
         public virtual Card Card { get; set; }

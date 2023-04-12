@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Delivery.Application.Response.CardItemResponse
+namespace Delivery.Application.Requests.CardItemRequest
 {
     public class CreateCardItemRequest : CardItemRequest
     {
