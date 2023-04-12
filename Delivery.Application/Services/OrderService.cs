@@ -30,7 +30,7 @@ namespace Delivery.Application.Services
             return _mapper.Map<IEnumerable<PaggedOrderListItemResponse>>(products);
         }
 
-        public async override Task<OrderResponse> Create(OrderRequest request, CancellationToken cancellationToken)
+        public override async Task<OrderResponse> Create(OrderRequest request, CancellationToken cancellationToken)
         {
             if (request == null)
                 throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Order));
@@ -44,7 +44,7 @@ namespace Delivery.Application.Services
             return _mapper.Map<Order, CreateOrderResponse>(entity);
         }
 
-        public async override Task<OrderResponse> Get(ulong id, CancellationToken cancellationToken)
+        public override async Task<OrderResponse> Get(ulong id, CancellationToken cancellationToken)
         {
             var entity = await _repository.FindAsync(id, cancellationToken);
             if (entity == null)
@@ -64,7 +64,7 @@ namespace Delivery.Application.Services
             return true;
         }
 
-        public async override Task<OrderResponse> Update(OrderRequest request, ulong id, CancellationToken cancellationToken)
+        public override async Task<OrderResponse> Update(OrderRequest request, ulong id, CancellationToken cancellationToken)
         {
             var entity = await _repository.FindAsync(id, CancellationToken.None);
             if (entity == null)

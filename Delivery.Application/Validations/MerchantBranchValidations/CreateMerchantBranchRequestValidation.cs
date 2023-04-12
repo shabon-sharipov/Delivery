@@ -14,7 +14,6 @@ namespace Delivery.Application.Validations.MerchantBranchValidations
         {
             RuleFor(m => m.MerchantId).NotEmpty().NotNull();
             RuleFor(m => m.Location).NotEmpty().NotNull().EmailAddress();
-            RuleFor(m => m.Merchant).NotEmpty().NotNull();
         }
     }
 }
