@@ -13,7 +13,7 @@ namespace Delivery.Application.Validations.MerchantBranchValidations
         public CreateMerchantBranchRequestValidation()
         {
             RuleFor(m => m.MerchantId).NotEmpty().NotNull();
-            RuleFor(m => m.Location).NotEmpty().NotNull().EmailAddress();
+            RuleFor(m => m.Location).NotEmpty().NotNull();
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Delivery.Application.Response.CardItemResponse
 {
-    public abstract class CardItemResponse : BaseResponse
+    public abstract class CartItemResponse : BaseResponse
     {
     }
 }

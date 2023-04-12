@@ -21,7 +21,7 @@ namespace Delivery.Domain.Model
         public virtual Driver Driver { get; set; }
 
         public ulong CardId { get; set; }
-        public virtual Card Card { get; set; }
+        public virtual Cart Card { get; set; }
 
         public decimal TotalPrice { get; set; }
 

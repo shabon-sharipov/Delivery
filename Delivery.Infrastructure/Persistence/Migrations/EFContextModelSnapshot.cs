@@ -22,7 +22,7 @@ namespace Delivery.Infrastructure.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Card", b =>
+            modelBuilder.Entity("Cart", b =>
                 {
                     b.Property<decimal>("Id")
                         .ValueGeneratedOnAdd()
@@ -30,15 +30,20 @@ namespace Delivery.Infrastructure.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Id"));
 
+                    b.Property<decimal>("CurrentUserId")
+                        .HasColumnType("decimal(20,0)");
+
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Card", (string)null);
+                    b.HasIndex("CurrentUserId");
+
+                    b.ToTable("Cart", (string)null);
                 });
 
-            modelBuilder.Entity("CardItem", b =>
+            modelBuilder.Entity("CartItem", b =>
                 {
                     b.Property<decimal>("Id")
                         .ValueGeneratedOnAdd()
@@ -67,7 +72,7 @@ namespace Delivery.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("CardItem", (string)null);
+                    b.ToTable("CartItem", (string)null);
                 });
 
             modelBuilder.Entity("Delivery.Domain.Abstract.Category", b =>
@@ -340,9 +345,20 @@ namespace Delivery.Infrastructure.Persistence.Migrations
                     b.HasDiscriminator().HasValue("Driver");
                 });
 
-            modelBuilder.Entity("CardItem", b =>
+            modelBuilder.Entity("Cart", b =>
                 {
-                    b.HasOne("Card", "Card")
+                    b.HasOne("Person", "Person")
+                        .WithMany()
+                        .HasForeignKey("CurrentUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Person");
+                });
+
+            modelBuilder.Entity("CartItem", b =>
+                {
+                    b.HasOne("Cart", "Card")
                         .WithMany("CardItems")
                         .HasForeignKey("CardId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -372,7 +388,7 @@ namespace Delivery.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Delivery.Domain.Model.Order", b =>
                 {
-                    b.HasOne("Card", "Card")
+                    b.HasOne("Cart", "Card")
                         .WithMany()
                         .HasForeignKey("CardId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -446,7 +462,7 @@ namespace Delivery.Infrastructure.Persistence.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Card", b =>
+            modelBuilder.Entity("Cart", b =>
                 {
                     b.Navigation("CardItems");
                 });

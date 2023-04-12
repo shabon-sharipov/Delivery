@@ -88,13 +88,16 @@ namespace Delivery.Application.Mappers
             CreateMap<MerchantBranch, UpdateMerchantBranchResponse>();
             CreateMap<MerchantBranch, GetMerchantBranchResponse>();
 
-            CreateMap<CardItem, CreateCardItemResponse>();
-            CreateMap<CreateCardItemRequest, CardItem>();
-            CreateMap<UpdateCardItemRequest, CardItem>();
-            CreateMap<CardItem, PaggedListCardItemResponse>();
-            CreateMap<CardItem, GetCardItemResponse>();
-            CreateMap<CardItem, UpdateCardItemResponse>();
+            CreateMap<CartItem, CreateCardItemResponse>();
+            CreateMap<CreateCardItemRequest, CartItem>();
+            CreateMap<UpdateCardItemRequest, CartItem>();
+            CreateMap<CartItem, PaggedListCardItemResponse>();
+            CreateMap<CartItem, GetCardItemResponse>();
+            CreateMap<CartItem, UpdateCardItemResponse>();
 
+            CreateMap<CreateCartRequest, Cart>();
+            CreateMap<Cart, CreateCartRespons>();
+            CreateMap<Cart, GetCartResponse>();
         }
 
     }

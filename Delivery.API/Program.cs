@@ -38,6 +38,7 @@ namespace Delivery.API
             builder.Services.AddScoped<IMerchantService, MerchantService>();
             builder.Services.AddScoped<ICustomerService, CustomerService>();
             builder.Services.AddScoped<IMerchantBranchService, MerchantBranchService>();
+            builder.Services.AddScoped<ICartService, CartService>();
 
             //Validator
             builder.Services.AddFluentValidationAutoValidation();
@@ -50,7 +51,7 @@ namespace Delivery.API
 
             //AvtoMapper
             builder.Services.AddAutoMapper(typeof(AutoMapperConfiguration).Assembly);
-           
+
             //Add Db
             builder.Services.AddDbContext<EFContext>(options =>
             {

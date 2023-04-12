@@ -16,12 +16,14 @@ namespace Delivery.Application.Services
     public class OrderService : BaseService<Order, OrderResponse, OrderRequest>, IOrderService
     {
         private readonly IRepository<Order> _repository;
+        private readonly IRepository<OrderDetails> _repositoryOrderDetails;
         private readonly IMapper _mapper;
 
-        public OrderService(IRepository<Order> repository, IMapper mapper)
+        public OrderService(IRepository<Order> repository, IRepository<OrderDetails> repositoryOrderDetails, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
+            _repositoryOrderDetails = repositoryOrderDetails;
         }
 
         public async Task<IEnumerable<OrderResponse>> GetAll(int PageSize, int PageNumber, CancellationToken cancellationToken)
@@ -74,9 +76,27 @@ namespace Delivery.Application.Services
 
             var result = _mapper.Map(updateOrderRequest, entity);
 
-             _repository.Update(entity);
+            _repository.Update(entity);
             await _repository.SaveChangesAsync(CancellationToken.None);
             return _mapper.Map<Order, UpdateOrderResponse>(result);
+        }
+
+        public async Task<OrderDetails> CreateOrderDitels(OrderDetails orderDetails, CancellationToken cancellationToken)
+        {
+            await _repositoryOrderDetails.AddAsync(orderDetails, cancellationToken);
+            await _repositoryOrderDetails.SaveChangesAsync(cancellationToken);
+            return orderDetails;
+        }
+
+        public async Task<bool> DeleteOrderDitels(ulong Id, CancellationToken cancellationToken)
+        {
+            var entit = await _repositoryOrderDetails.FindAsync(Id, CancellationToken.None);
+            if (entit == null)
+                throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(OrderDetails));
+
+            _repositoryOrderDetails.Delete(entit);
+            await _repositoryOrderDetails.SaveChangesAsync(cancellationToken);
+            return true;
         }
     }
 }

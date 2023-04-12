@@ -18,31 +18,32 @@ namespace Delivery.Application.Tests.Services.OrderService
     {
         private readonly Mock<IRepository<Order>> _repository;
         private readonly Mock<IMapper> _mapper;
-
+        private readonly Mock<IRepository<OrderDetails>> _repositoryOrderDetails;
         public UpdateOrderServiceTests()
         {
             _mapper = new Mock<IMapper>();
             _repository = new Mock<IRepository<Order>>();
+            _repositoryOrderDetails = new Mock<IRepository<OrderDetails>>();
         }
 
         [Test]
         public async Task Update_Order_Test()
         {
             ulong orderId = 2;
-            var order = new Order { OrderStatus = OrderStatus.Open,ShipAddress="test" };
+            var order = new Order { OrderStatus = OrderStatus.Open, ShipAddress = "test" };
             var orderRequest = new UpdateOrderRequest { OrderStatus = OrderStatus.Open };
             var orderResponse = new UpdateOrderResponse { OrderStatus = OrderStatus.Open };
 
             _repository.Setup(p => p.FindAsync(orderId, CancellationToken.None));
 
             _mapper.Setup(m => m.Map<UpdateOrderRequest, Order>(orderRequest)).Returns(order);
-            _mapper.Setup(m=>m.Map<Order, UpdateOrderResponse>(order)).Returns(orderResponse);
+            _mapper.Setup(m => m.Map<Order, UpdateOrderResponse>(order)).Returns(orderResponse);
 
-            var service = new Application.Services.OrderService(_repository.Object, _mapper.Object);
+            var service = new Application.Services.OrderService(_repository.Object, _repositoryOrderDetails.Object, _mapper.Object);
             var entity = await service.Update(orderRequest, orderId, CancellationToken.None);
 
             _repository.Verify(m => m.FindAsync(orderId, CancellationToken.None));
-            _repository.Verify(m=>m.Update(It.IsAny<Order>()));
+            _repository.Verify(m => m.Update(It.IsAny<Order>()));
             _repository.Verify(m => m.SaveChangesAsync(CancellationToken.None));
 
             var result = entity as UpdateOrderResponse;
@@ -54,12 +55,12 @@ namespace Delivery.Application.Tests.Services.OrderService
         public async Task Update_Order_Should_have_error_when_OrderId_is_null()
         {
             ulong orderId = 2;
-            var order = new CreateOrderRequest() { TotalPrice=20 };
+            var order = new CreateOrderRequest() { TotalPrice = 20 };
             _repository.Setup(o => o.FindAsync(orderId, CancellationToken.None)).Returns(Task.FromResult<Order>(null));
 
-            var service = new Application.Services.OrderService(_repository.Object, _mapper.Object);
+            var service = new Application.Services.OrderService(_repository.Object, _repositoryOrderDetails.Object, _mapper.Object);
 
-            _repository.Verify(o=>o.FindAsync(orderId, CancellationToken.None));
+            _repository.Verify(o => o.FindAsync(orderId, CancellationToken.None));
 
             Assert.ThrowsAsync<NullReferenceException>(async () => await service.Update(order, orderId, CancellationToken.None));
         }

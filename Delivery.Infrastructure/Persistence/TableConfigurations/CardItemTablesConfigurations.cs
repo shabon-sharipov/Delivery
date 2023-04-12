@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-public class CardItemTablesConfigurations : IEntityTypeConfiguration<CardItem>
+public class CardItemTablesConfigurations : IEntityTypeConfiguration<CartItem>
 {
-    public void Configure(EntityTypeBuilder<CardItem> builder)
+    public void Configure(EntityTypeBuilder<CartItem> builder)
     {
-        builder.ToTable(nameof(CardItem));
+        builder.ToTable(nameof(CartItem));
         builder.HasKey(m => m.Id);
 
         builder.HasOne(cardItem => cardItem.Card)

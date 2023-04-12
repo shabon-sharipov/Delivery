@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Delivery.Domain.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,10 +11,11 @@ namespace Delivery.Application.Response.MerchantResponse
     {
         public ulong Id { get; set; }
         public string Name { get; set; }
-        public string Location { get; set; }
         public string ShortDiscreption { get; set; }
         public string IsActive { get; set; }
         public ulong MerchantCategoryId { get; set; }
+        public virtual IEnumerable<MerchantBranch> MerchantBranchs { get; set; }
+        public virtual IEnumerable<Product> Products { get; set; }
     }
 }
 

@@ -16,11 +16,12 @@ namespace Delivery.Application.Tests.Services.OrderService
     {
         private readonly Mock<IRepository<Order>> _repository;
         private readonly Mock<IMapper> _mapper;
-
+        private readonly Mock<IRepository<OrderDetails>> _repositoryOrderDetails;
         public GetByIdOrderServiceTests()
         {
             _repository = new Mock<IRepository<Order>>();
             _mapper = new Mock<IMapper>();
+            _repositoryOrderDetails= new Mock<IRepository<OrderDetails>>();
         }
 
         [Test]
@@ -33,7 +34,7 @@ namespace Delivery.Application.Tests.Services.OrderService
             _repository.Setup(o => o.FindAsync(orderId, CancellationToken.None)).ReturnsAsync(order);
             _mapper.Setup(m => m.Map<Order, GetOrderResponse>(order)).Returns(orderResponse);
 
-            var service = new Application.Services.OrderService(_repository.Object, _mapper.Object);
+            var service = new Application.Services.OrderService(_repository.Object, _repositoryOrderDetails.Object, _mapper.Object);
             var entity = await service.Get(orderId, CancellationToken.None);
 
             _repository.Verify(o => o.FindAsync(orderId, CancellationToken.None));

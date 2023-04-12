@@ -18,6 +18,7 @@ namespace Delivery.Application.Tests.Services.OrderService
     public class CreateOrderServiceTests
     {
         private readonly Mock<IRepository<Order>> _repository;
+        private readonly Mock<IRepository<OrderDetails>> _repositoryOrderDetails;
         private readonly Mock<IMapper> _mapper;
         private CreateOrderRequestValidation _validator;
 
@@ -25,6 +26,7 @@ namespace Delivery.Application.Tests.Services.OrderService
         {
             _mapper = new Mock<IMapper>();
             _repository = new Mock<IRepository<Order>>();
+            _repositoryOrderDetails = new Mock<IRepository<OrderDetails>>();
             _validator = new CreateOrderRequestValidation();
         }
 
@@ -55,7 +57,7 @@ namespace Delivery.Application.Tests.Services.OrderService
             _mapper.Setup(o => o.Map<CreateOrderRequest, Order>(orderRequest)).Returns(order);
             _mapper.Setup(o => o.Map<Order, CreateOrderResponse>(order)).Returns(orderResponse);
 
-            var service = new Application.Services.OrderService(_repository.Object, _mapper.Object);
+            var service = new Application.Services.OrderService(_repository.Object, _repositoryOrderDetails.Object, _mapper.Object);
             var result = await service.Create(orderRequest, CancellationToken.None);
 
             _repository.Verify(a => a.AddAsync(It.IsAny<Order>(), CancellationToken.None));
