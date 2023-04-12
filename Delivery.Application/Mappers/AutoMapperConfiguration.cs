@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Delivery.Application.Requests.CardItemRequest;
 using Delivery.Application.Requests.CategoryCustomerRequest;
 using Delivery.Application.Requests.CategoryProductRequest;
 using Delivery.Application.Requests.CustomerRequest;
@@ -7,6 +8,7 @@ using Delivery.Application.Requests.MerchantRequest;
 using Delivery.Application.Requests.OrderRequest;
 using Delivery.Application.Requests.ProductsRequest;
 using Delivery.Application.Requests.SenderRequest;
+using Delivery.Application.Response.CardItemResponse;
 using Delivery.Application.Response.CategoryCustomerResponse;
 using Delivery.Application.Response.CategoryProductResponse;
 using Delivery.Application.Response.CustomerResponse;
@@ -85,6 +87,13 @@ namespace Delivery.Application.Mappers
             CreateMap<UpdateMerchantBranchRequest, MerchantBranch>();
             CreateMap<MerchantBranch, UpdateMerchantBranchResponse>();
             CreateMap<MerchantBranch, GetMerchantBranchResponse>();
+
+            CreateMap<CardItem, CreateCardItemResponse>();
+            CreateMap<CreateCardItemRequest, CardItem>();
+            CreateMap<UpdateCardItemRequest, CardItem>();
+            CreateMap<CardItem, PaggedListCardItemResponse>();
+            CreateMap<CardItem, GetCardItemResponse>();
+            CreateMap<CardItem, UpdateCardItemResponse>();
 
         }
 

@@ -36,7 +36,7 @@ namespace Delivery.Application.Services
         {
             var CardItems = _repository.GetAll(PageSize, PageNumber, cancellationToken);
 
-            return _mapper.Map<IEnumerable<PaggedListCardItemtResponse>>(CardItems);
+            return _mapper.Map<IEnumerable<PaggedListCardItemResponse>>(CardItems);
         }
 
         public async override Task<CardItemResponse> Get(ulong id, CancellationToken cancellationToken)
