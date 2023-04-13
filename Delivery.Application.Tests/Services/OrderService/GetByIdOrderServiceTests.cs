@@ -43,5 +43,15 @@ namespace Delivery.Application.Tests.Services.OrderService
 
             Assert.That("Ulitsa A.Samadov, Dom 24", Is.EqualTo(result.AvailableTo));
         }
+        [Test]
+        public async Task GetById_Order_should_have_error_when_OrderId_is_null()
+        {
+            ulong orderId = 2;
+            _repository.Setup(x=>x.FindAsync(orderId, CancellationToken.None)).Returns(Task.FromResult<Order>(null));
+
+            var service = new Application.Services.OrderService(_repository.Object, _mapper.Object);
+            Assert.ThrowsAsync<HttpStatusCodeException>(async()=>await service.Get(orderId, CancellationToken.None));
+            _repository.Verify(x=>x.FindAsync(orderId, CancellationToken.None));
+        }
     }
 }

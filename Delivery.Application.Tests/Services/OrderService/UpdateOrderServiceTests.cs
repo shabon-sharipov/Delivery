@@ -55,12 +55,12 @@ namespace Delivery.Application.Tests.Services.OrderService
         public async Task Update_Order_Should_have_error_when_OrderId_is_null()
         {
             ulong orderId = 2;
-            var order = new CreateOrderRequest() { TotalPrice = 20 };
-            _repository.Setup(o => o.FindAsync(orderId, CancellationToken.None)).Returns(Task.FromResult<Order>(null));
+            var order = new UpdateOrderRequest() { TotalPrice = 20 };
+            _repository.Setup(x => x.FindAsync(orderId, CancellationToken.None)).Returns(Task.FromResult<Order>(null));
 
             var service = new Application.Services.OrderService(_repository.Object, _repositoryOrderDetails.Object, _mapper.Object);
 
-            _repository.Verify(o => o.FindAsync(orderId, CancellationToken.None));
+            _repository.Verify(x => x.FindAsync(orderId, CancellationToken.None));
 
             Assert.ThrowsAsync<NullReferenceException>(async () => await service.Update(order, orderId, CancellationToken.None));
         }
