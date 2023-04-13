@@ -51,7 +51,7 @@ namespace Delivery.Application.Tests.Services.DriverService
         public async Task Update_Driver_Should_have_error_when_DriverId_is_null()
         {
             ulong driverId = 5;
-            var driver = new CreateDriverRequest() { FirstName = "Vali" };
+            var driver = new UpdateDriverRequest() { FirstName = "Vali" };
             _repository.Setup(d => d.FindAsync(driverId, CancellationToken.None)).Returns(Task.FromResult<Driver>(null));
 
             var service = new Application.Services.DriverService(_repository.Object, _mapper.Object);

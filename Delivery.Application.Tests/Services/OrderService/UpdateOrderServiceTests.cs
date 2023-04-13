@@ -65,7 +65,7 @@ namespace Delivery.Application.Tests.Services.OrderService
 
             var service = new Application.Services.OrderService(_repository.Object, _repositoryOrderDetails.Object, _mapper.Object, _repositoryCart.Object, _cartItemRepository.Object);
 
-            _repository.Verify(o => o.FindAsync(orderId, CancellationToken.None));
+            _repository.Verify(x => x.FindAsync(orderId, CancellationToken.None));
 
             Assert.ThrowsAsync<NullReferenceException>(async () => await service.Update(order, orderId, CancellationToken.None));
         }

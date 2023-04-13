@@ -71,16 +71,16 @@ namespace Delivery.Application.Tests.Services.OrderService
         [Test]
         public void Should_have_error_when_Order_ShipAddress_is_empty()
         {
-            var order = new CreateOrderRequest() { ShipAddress = " " };
+            var order = new CreateOrderRequest() { ShipAddress = "" };
             var result = _validator.TestValidate(order);
-            result.ShouldHaveValidationErrorFor(o => o.ShipAddress);
+            result.ShouldHaveValidationErrorFor(x => x.ShipAddress);
         }
         [Test]
         public void Should_have_error_when_Order_ShipAddress_is_null()
         {
             var order = new CreateOrderRequest() { ShipAddress = null };
             var result = _validator.TestValidate(order);
-            result.ShouldHaveValidationErrorFor(o => o.ShipAddress);
+            result.ShouldHaveValidationErrorFor(x => x.ShipAddress);
         }
     }
 }
