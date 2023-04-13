@@ -5,6 +5,7 @@ using Delivery.Application.Requests.CategoryProductRequest;
 using Delivery.Application.Requests.CustomerRequest;
 using Delivery.Application.Requests.MerchantBranch;
 using Delivery.Application.Requests.MerchantRequest;
+using Delivery.Application.Requests.OrderFromCartRequests;
 using Delivery.Application.Requests.OrderRequest;
 using Delivery.Application.Requests.ProductsRequest;
 using Delivery.Application.Requests.SenderRequest;
@@ -14,6 +15,7 @@ using Delivery.Application.Response.CategoryProductResponse;
 using Delivery.Application.Response.CustomerResponse;
 using Delivery.Application.Response.MerchantBranchResponse;
 using Delivery.Application.Response.MerchantResponse;
+using Delivery.Application.Response.OrderFromCartResponses;
 using Delivery.Application.Response.OrderResponse;
 using Delivery.Application.Response.ProductResponse;
 using Delivery.Domain.Model;
@@ -57,9 +59,21 @@ namespace Delivery.Application.Mappers
             CreateMap<CreateOrderRequest, Order>();
             CreateMap<UpdateOrderRequest, Order>();
             CreateMap<Order, CreateOrderResponse>();
-            CreateMap<Order, GetOrderResponse>();
             CreateMap<Order, UpdateOrderResponse>();
             CreateMap<Order, PaggedOrderListItemResponse>();
+            CreateMap<Order, GetOrderResponse>()
+    .ForMember(or => or.TotalPrice, o => o.MapFrom(o => o.OrderDetails.Sum(o => o.UnitPrice * o.Quantity)));
+
+            CreateMap<OrderFromCartRequest, Order>();
+            CreateMap<Order, OrderFromCartResponse>();
+
+            CreateMap<CreateOrderDitelsRequest, OrderDetails>();
+            CreateMap<OrderDetails, CreateOrderDitelsResponse>();
+            CreateMap<UpdateOrderDitelsRequest, OrderDetails>();
+            CreateMap<OrderDetails, UpdateOrderDitelsResponse>();
+            CreateMap<OrderDetails, PaggedOrderDitelsListItemResponse>();
+            CreateMap<OrderDetails, GetOrderDitelsResponse>()
+                .ForMember(or => or.TotalPrice, o => o.MapFrom(o => o.UnitPrice * o.Quantity));
 
             CreateMap<CreateMerchantRequest, Merchant>();
             CreateMap<Merchant, CreateMerchantResponse>();
@@ -75,12 +89,6 @@ namespace Delivery.Application.Mappers
             CreateMap<Customer, UpdateCustomerResponse>();
             CreateMap<Customer, PaggedListCustomerItemResponse>();
 
-            CreateMap<CreateOrderDitelsRequest, OrderDetails>();
-            CreateMap<OrderDetails, CreateOrderDitelsResponse>();
-            CreateMap<OrderDetails, GetOrderDitelsResponse>();
-            CreateMap<UpdateOrderDitelsRequest, OrderDetails>();
-            CreateMap<OrderDetails, UpdateOrderDitelsResponse>();
-            CreateMap<OrderDetails, PaggedOrderDitelsListItemResponse>();
 
             CreateMap<CreateMerchantBranchRequest, MerchantBranch>();
             CreateMap<MerchantBranch, MerchantBranchResponse>();
@@ -92,12 +100,14 @@ namespace Delivery.Application.Mappers
             CreateMap<CreateCardItemRequest, CartItem>();
             CreateMap<UpdateCardItemRequest, CartItem>();
             CreateMap<CartItem, PaggedListCardItemResponse>();
-            CreateMap<CartItem, GetCardItemResponse>();
             CreateMap<CartItem, UpdateCardItemResponse>();
+            CreateMap<CartItem, GetCardItemResponse>()
+                 .ForMember(or => or.TotalPrice, o => o.MapFrom(o => o.UnitPrice * o.Quantity));
 
             CreateMap<CreateCartRequest, Cart>();
             CreateMap<Cart, CreateCartRespons>();
-            CreateMap<Cart, GetCartResponse>();
+            CreateMap<Cart, GetCartResponse>()
+                 .ForMember(or => or.TotalPrice, o => o.MapFrom(o => o.CardItems.Sum(o => o.UnitPrice * o.Quantity)));
         }
 
     }

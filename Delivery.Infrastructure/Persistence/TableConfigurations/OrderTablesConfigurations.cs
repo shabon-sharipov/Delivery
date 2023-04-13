@@ -12,6 +12,7 @@ public class OrderTablesConfigurations : IEntityTypeConfiguration<Order>
         builder.HasOne(o => o.Driver)
             .WithMany()
             .HasForeignKey(o => o.DriverId)
+            .IsRequired(false)
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(o => o.Customer)

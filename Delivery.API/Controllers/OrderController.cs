@@ -1,5 +1,7 @@
 ﻿using Delivery.Application.Common.Interfaces;
+using Delivery.Application.Requests.OrderFromCartRequests;
 using Delivery.Application.Requests.OrderRequest;
+using Delivery.Application.Response.OrderFromCartResponses;
 using Delivery.Application.Response.OrderResponse;
 using Microsoft.AspNetCore.Mvc;
 
@@ -51,18 +53,19 @@ namespace Delivery.API.Controllers
             return Ok();
         }
 
-        [HttpPost("OrderDetels")]
-        public async Task<ActionResult<OrderDetails>> PostOrderDetails(OrderDetails orderDetails)
+        [HttpPost("Order/FromCart/UserId")]
+        public async Task<ActionResult<OrderFromCartResponse>> PostOrderDetails(OrderFromCartRequest orderFromCartRequest)
         {
-            var entity = await _orderService.CreateOrderDitels(orderDetails, CancellationToken.None);
+            var entity = await _orderService.CreateOrder(orderFromCartRequest, CancellationToken.None);
             return Ok(entity);
         }
 
-        [HttpDelete("OrderDetails/{id}")]
-        public IActionResult DeleteOrderDetails(ulong id)
+        [HttpPost("Order/Delete/CartItems")]
+        public IActionResult DeleteCartItem(ulong cartItemId)
         {
-            var entity = _orderService.DeleteOrderDitels(id, CancellationToken.None);
-            return Ok();
+            var entity = _orderService.DeleteCartItem(cartItemId, CancellationToken.None);
+            return Ok(entity);
         }
+
     }
 }

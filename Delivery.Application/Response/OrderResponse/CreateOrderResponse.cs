@@ -10,11 +10,11 @@ namespace Delivery.Application.Response.OrderResponse
 {
     public class CreateOrderResponse : OrderResponse
     {
+        public ulong Id { get; set; }
         public string ShipAddress { get; set; }
         public ulong CustomerId { get; set; }
         public ulong DriverId { get; set; }
-        public ulong CardId { get; set; }
-        public decimal TotalPrice { get; set; }
         public string AvailableTo { get; set; }
+        public DateTime ShipDate { get; set; }
     }
 }

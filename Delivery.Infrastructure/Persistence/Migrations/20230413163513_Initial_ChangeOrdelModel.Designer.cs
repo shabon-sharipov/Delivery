@@ -4,6 +4,7 @@ using Delivery.Infrastructure.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Delivery.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(EFContext))]
-    partial class EFContextModelSnapshot : ModelSnapshot
+    [Migration("20230413163513_Initial_ChangeOrdelModel")]
+    partial class Initial_ChangeOrdelModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -140,6 +143,9 @@ namespace Delivery.Infrastructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal>("CardId")
+                        .HasColumnType("decimal(20,0)");
+
                     b.Property<decimal>("CustomerId")
                         .HasColumnType("decimal(20,0)");
 
@@ -159,7 +165,12 @@ namespace Delivery.Infrastructure.Persistence.Migrations
                     b.Property<DateTime>("ShipDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CardId");
 
                     b.HasIndex("CustomerId");
 
@@ -248,6 +259,9 @@ namespace Delivery.Infrastructure.Persistence.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<decimal>("UnitPrice")
                         .HasColumnType("decimal(18,2)");
 
@@ -330,7 +344,7 @@ namespace Delivery.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Cart", b =>
                 {
-                    b.HasOne("Customer", "Person")
+                    b.HasOne("Person", "Person")
                         .WithMany()
                         .HasForeignKey("CurrentUserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -371,6 +385,12 @@ namespace Delivery.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Delivery.Domain.Model.Order", b =>
                 {
+                    b.HasOne("Cart", "Card")
+                        .WithMany()
+                        .HasForeignKey("CardId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Customer", "Customer")
                         .WithMany()
                         .HasForeignKey("CustomerId")
@@ -382,6 +402,8 @@ namespace Delivery.Infrastructure.Persistence.Migrations
                         .HasForeignKey("DriverId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Card");
 
                     b.Navigation("Customer");
 

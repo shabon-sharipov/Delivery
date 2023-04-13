@@ -6,6 +6,7 @@ namespace Delivery.Application.Common.Interfaces.Repositories
     {
         IQueryable<TEntity> GetAll(int pageSize, int pageNumber, CancellationToken cancellation);
         Task<IQueryable<TEntity>> GetAllAsync(int pageSize, int pageNumber, CancellationToken cancellation);
+        public IQueryable<TEntity> Set();
 
         TEntity Find(ulong id);
         Task<TEntity> FindAsync(ulong id, CancellationToken cancellationToken = default);

@@ -20,6 +20,7 @@ namespace Delivery.Application.Tests.Services.OrderService
         private readonly Mock<IRepository<Order>> _repository;
         private readonly Mock<IRepository<OrderDetails>> _repositoryOrderDetails;
         private readonly Mock<IMapper> _mapper;
+        private readonly Mock<IRepository<Cart>> _repositoryCart;
         private CreateOrderRequestValidation _validator;
 
         public CreateOrderServiceTests()
@@ -27,6 +28,7 @@ namespace Delivery.Application.Tests.Services.OrderService
             _mapper = new Mock<IMapper>();
             _repository = new Mock<IRepository<Order>>();
             _repositoryOrderDetails = new Mock<IRepository<OrderDetails>>();
+            _repositoryCart = new Mock<IRepository<Cart>>();
             _validator = new CreateOrderRequestValidation();
         }
 
@@ -36,35 +38,32 @@ namespace Delivery.Application.Tests.Services.OrderService
             var orderRequest = new CreateOrderRequest()
             {
                 AvailableTo = "Ulitsa A.Samadov, Dom 24",
-                TotalPrice = 54,
                 DriverId = 2
             };
 
             var order = new Order()
             {
                 AvailableTo = "Ulitsa A.Samadov, Dom 24",
-                TotalPrice = 54,
                 DriverId = 2
             };
 
             var orderResponse = new CreateOrderResponse()
             {
                 AvailableTo = "Ulitsa A.Samadov, Dom 24",
-                TotalPrice = 54,
                 DriverId = 2
             };
 
             _mapper.Setup(o => o.Map<CreateOrderRequest, Order>(orderRequest)).Returns(order);
             _mapper.Setup(o => o.Map<Order, CreateOrderResponse>(order)).Returns(orderResponse);
 
-            var service = new Application.Services.OrderService(_repository.Object, _repositoryOrderDetails.Object, _mapper.Object);
+            var service = new Application.Services.OrderService(_repository.Object, _repositoryOrderDetails.Object, _mapper.Object, _repositoryCart.Object);
             var result = await service.Create(orderRequest, CancellationToken.None);
 
             _repository.Verify(a => a.AddAsync(It.IsAny<Order>(), CancellationToken.None));
             _repository.Verify(a => a.SaveChangesAsync(CancellationToken.None));
 
             var test = result as CreateOrderResponse;
-            Assert.That(test.TotalPrice, Is.EqualTo(order.TotalPrice));
+            Assert.That(test.DriverId, Is.EqualTo(order.DriverId));
 
 
         }
@@ -81,13 +80,6 @@ namespace Delivery.Application.Tests.Services.OrderService
             var order = new CreateOrderRequest() { ShipAddress = null };
             var result = _validator.TestValidate(order);
             result.ShouldHaveValidationErrorFor(o => o.ShipAddress);
-        }
-        [Test]
-        public void Should_have_error_when_Order_TotalPrice_is_zero()
-        {
-            var order = new CreateOrderRequest() { TotalPrice = 0 };
-            var result = _validator.TestValidate(order);
-            result.ShouldHaveValidationErrorFor(o => o.TotalPrice);
         }
     }
 }

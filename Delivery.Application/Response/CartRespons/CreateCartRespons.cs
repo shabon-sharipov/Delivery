@@ -3,6 +3,6 @@ using Delivery.Application.Response.CartRespons;
 
 public class CreateCartRespons : CartResponse
 {
-    public decimal TotalPrice { get; set; }
+    public ulong Id { get; set; }
     public ulong CurrentUserId { get; set; }
 }

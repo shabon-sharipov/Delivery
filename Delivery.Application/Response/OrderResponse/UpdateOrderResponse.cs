@@ -9,6 +9,7 @@ namespace Delivery.Application.Response.OrderResponse
 {
     public class UpdateOrderResponse : OrderResponse
     {
+        public ulong Id { get; set; }
         public string ShipAddress { get; set; }
         public ulong CustomerId { get; set; }
         public ulong DriverId { get; set; }

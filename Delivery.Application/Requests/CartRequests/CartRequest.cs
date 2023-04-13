@@ -9,7 +9,6 @@ namespace Delivery.Application.Requests.CartRequests
 {
     public abstract class CartRequest : BaseRequest
     {
-        public decimal TotalPrice { get; set; }
         public ulong CurrentUserId { get; set; }
     }
 }

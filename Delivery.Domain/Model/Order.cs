@@ -2,6 +2,7 @@
 using Delivery.Domain.Enam;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,11 @@ namespace Delivery.Domain.Model
 {
     public class Order : EntityBase
     {
+        public Order()
+        {
+            OrderDetails = new Collection<OrderDetails>();
+        }
+
         public string ShipAddress { get; set; }
         public DateTime ShipDate { get; set; }
         public OrderStatus OrderStatus { get; set; }
@@ -17,15 +23,10 @@ namespace Delivery.Domain.Model
         public ulong CustomerId { get; set; }
         public virtual Customer Customer { get; set; }
 
-        public ulong DriverId { get; set; }
+        public ulong? DriverId { get; set; }
         public virtual Driver Driver { get; set; }
 
-        public ulong CardId { get; set; }
-        public virtual Cart Card { get; set; }
-
-        public decimal TotalPrice { get; set; }
-
-        public virtual IEnumerable<OrderDetails> OrderDetails { get; set; }
+        public virtual ICollection<OrderDetails> OrderDetails { get; private set; }
 
         public string AvailableTo { get; set; }
         public bool IsPayment { get; set; }

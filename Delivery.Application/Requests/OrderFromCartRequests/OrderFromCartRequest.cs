@@ -5,15 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Delivery.Application.Requests.OrderRequest
+namespace Delivery.Application.Requests.OrderFromCartRequests
 {
-    public class CreateOrderRequest : OrderRequest
+    public class OrderFromCartRequest : BaseRequest
     {
         public string ShipAddress { get; set; }
         public DateTime ShipDate { get; set; }
         public OrderStatus OrderStatus { get; set; }
         public ulong UserId { get; set; }
-        public ulong DriverId { get; set; }
         public string AvailableTo { get; set; }
         public bool IsPayment { get; set; }
     }

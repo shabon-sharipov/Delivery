@@ -22,6 +22,8 @@ namespace Delivery.Infrastructure.Persistence.Repositories
                 .Take(pageSize);
         }
 
+        public IQueryable<T> Set() => _dbSet;
+
         public IQueryable<T> GetAll(int pageSize, int PageNumber, CancellationToken cancellationToken)
         {
             return _dbSet.Skip(pageSize * PageNumber).Take(pageSize);

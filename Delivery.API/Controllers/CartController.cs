@@ -25,13 +25,6 @@ namespace Delivery.API.Controllers
             return Ok(entity);
         }
 
-        [HttpGet("GetAll")]
-        public async Task<ActionResult<IEnumerable<CartItemResponse>>> GetAll(int pageSize, int pageNamber)
-        {
-            var entity = await _cartService.GetAll(pageNamber, pageSize, CancellationToken.None);
-            return Ok(entity);
-        }
-
         [HttpPost("Cart")]
         public async Task<ActionResult<CartResponse>> Post(CreateCartRequest Cart)
         {
