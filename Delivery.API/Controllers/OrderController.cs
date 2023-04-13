@@ -59,13 +59,5 @@ namespace Delivery.API.Controllers
             var entity = await _orderService.CreateOrder(orderFromCartRequest, CancellationToken.None);
             return Ok(entity);
         }
-
-        [HttpPost("Order/Delete/CartItems")]
-        public IActionResult DeleteCartItem(ulong cartItemId)
-        {
-            var entity = _orderService.DeleteCartItem(cartItemId, CancellationToken.None);
-            return Ok(entity);
-        }
-
     }
 }

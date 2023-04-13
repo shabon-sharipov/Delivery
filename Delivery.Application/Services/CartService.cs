@@ -15,15 +15,15 @@ namespace Delivery.Application.Services
 {
     public class CartService : BaseService<Cart, CartResponse, CartRequest>, ICartService
     {
-        private readonly IRepository<Cart> _repositoryCartMock;
-        private readonly IRepository<CartItem> _repositoryCartItemMock;
+        private readonly IRepository<Cart> _repositoryCart;
+        private readonly IRepository<CartItem> _repositoryCartItem;
         private readonly IRepository<Product> _repositoryProductMock;
         private readonly IMapper _mapper;
 
         public CartService(IRepository<Cart> repository, IMapper mapper, IRepository<CartItem> repositoryCartItem, IRepository<Product> repositoryProductMock)
         {
-            _repositoryCartMock = repository;
-            _repositoryCartItemMock = repositoryCartItem;
+            _repositoryCart = repository;
+            _repositoryCartItem = repositoryCartItem;
             _mapper = mapper;
             _repositoryProductMock = repositoryProductMock;
         }
@@ -31,20 +31,20 @@ namespace Delivery.Application.Services
         public override async Task<CartResponse> Create(CartRequest request, CancellationToken cancellationToken)
         {
             if (request == null)
-                throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Cart)); ;
+                throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Cart)); 
 
             var createCardItemRequset = request as CreateCartRequest;
             var entity = _mapper.Map<CreateCartRequest, Cart>(createCardItemRequset);
 
-            await _repositoryCartMock.AddAsync(entity, cancellationToken);
-            await _repositoryCartMock.SaveChangesAsync(cancellationToken);
+            await _repositoryCart.AddAsync(entity, cancellationToken);
+            await _repositoryCart.SaveChangesAsync(cancellationToken);
 
             return _mapper.Map<Cart, CreateCartRespons>(entity);
         }
 
         public async override Task<CartResponse> Get(ulong id, CancellationToken cancellationToken)
         {
-            var entity = await _repositoryCartMock.FindAsync(id, cancellationToken);
+            var entity = await _repositoryCart.FindAsync(id, cancellationToken);
             if (entity == null)
                 throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(CartItem)); ;
             return _mapper.Map<Cart, GetCartResponse>(entity);
@@ -52,12 +52,12 @@ namespace Delivery.Application.Services
 
         public override bool Delete(ulong id, CancellationToken cancellationToken)
         {
-            var entity = _repositoryCartMock.Find(id);
+            var entity = _repositoryCart.Find(id);
             if (entity == null)
                 throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Cart));
 
-            _repositoryCartMock.Delete(entity);
-            _repositoryCartMock.SaveChanges();
+            _repositoryCart.Delete(entity);
+            _repositoryCart.SaveChanges();
             return true;
         }
 
@@ -71,19 +71,19 @@ namespace Delivery.Application.Services
             await ValidationBeforCreateCartItem(cartItem, cancellationToken);
 
             var entity = _mapper.Map<CreateCardItemRequest, CartItem>(cartItem);
-            await _repositoryCartItemMock.AddAsync(entity, cancellationToken);
-            await _repositoryCartItemMock.SaveChangesAsync(cancellationToken);
+            await _repositoryCartItem.AddAsync(entity, cancellationToken);
+            await _repositoryCartItem.SaveChangesAsync(cancellationToken);
             return _mapper.Map<CartItem, CreateCardItemResponse>(entity); ;
         }
 
         public async Task<bool> DeleteCartItem(ulong Id, CancellationToken cancellationToken)
         {
-            var entity = await _repositoryCartItemMock.FindAsync(Id);
+            var entity = await _repositoryCartItem.FindAsync(Id);
             if (entity == null)
                 throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(CartItem));
 
-            _repositoryCartItemMock.Delete(entity);
-            await _repositoryCartItemMock.SaveChangesAsync(cancellationToken);
+            _repositoryCartItem.Delete(entity);
+            await _repositoryCartItem.SaveChangesAsync(cancellationToken);
 
             return true;
         }
@@ -99,7 +99,7 @@ namespace Delivery.Application.Services
             if (product == null)
                 throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Product));
 
-            var cart = await _repositoryCartMock.FindAsync(createCardItemRequest.CardId, cancellationToken);
+            var cart = await _repositoryCart.FindAsync(createCardItemRequest.CardId, cancellationToken);
             if (cart == null)
                 throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Cart));
 

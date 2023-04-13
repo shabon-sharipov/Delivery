@@ -9,6 +9,6 @@ namespace Delivery.Application.Requests.CartRequests
 {
     public abstract class CartRequest : BaseRequest
     {
-        public ulong CurrentUserId { get; set; }
+        public ulong CustomerId { get; set; }
     }
 }

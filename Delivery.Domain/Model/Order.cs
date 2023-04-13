@@ -28,7 +28,6 @@ namespace Delivery.Domain.Model
 
         public virtual ICollection<OrderDetails> OrderDetails { get; private set; }
 
-        public string AvailableTo { get; set; }
         public bool IsPayment { get; set; }
     }
 }

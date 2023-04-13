@@ -8,14 +8,14 @@ public class CardTablesConfigurations : IEntityTypeConfiguration<Cart>
         builder.ToTable(nameof(Cart));
         builder.HasKey(m => m.Id);
 
-        builder.HasMany(c => c.CardItems)
+        builder.HasMany(c => c.Items)
             .WithOne(cardItem => cardItem.Card)
             .HasForeignKey(cardItem => cardItem.CardId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne(c => c.Person)
+        builder.HasOne(c => c.Customer)
             .WithMany()
-            .HasForeignKey(c => c.CurrentUserId)
+            .HasForeignKey(c => c.CustomerId)
             .OnDelete(DeleteBehavior.Restrict);
     }
 }

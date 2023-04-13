@@ -30,12 +30,12 @@ namespace Delivery.Infrastructure.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Id"));
 
-                    b.Property<decimal>("CurrentUserId")
+                    b.Property<decimal>("CustomerId")
                         .HasColumnType("decimal(20,0)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CurrentUserId");
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("Cart", (string)null);
                 });
@@ -136,14 +136,10 @@ namespace Delivery.Infrastructure.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Id"));
 
-                    b.Property<string>("AvailableTo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<decimal>("CustomerId")
                         .HasColumnType("decimal(20,0)");
 
-                    b.Property<decimal>("DriverId")
+                    b.Property<decimal?>("DriverId")
                         .HasColumnType("decimal(20,0)");
 
                     b.Property<bool>("IsPayment")
@@ -330,19 +326,19 @@ namespace Delivery.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Cart", b =>
                 {
-                    b.HasOne("Customer", "Person")
+                    b.HasOne("Customer", "Customer")
                         .WithMany()
-                        .HasForeignKey("CurrentUserId")
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Person");
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("CartItem", b =>
                 {
                     b.HasOne("Cart", "Card")
-                        .WithMany("CardItems")
+                        .WithMany("Items")
                         .HasForeignKey("CardId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -380,8 +376,7 @@ namespace Delivery.Infrastructure.Persistence.Migrations
                     b.HasOne("Delivery.Domain.Model.Driver", "Driver")
                         .WithMany()
                         .HasForeignKey("DriverId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Customer");
 
@@ -439,7 +434,7 @@ namespace Delivery.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Cart", b =>
                 {
-                    b.Navigation("CardItems");
+                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("Delivery.Domain.Model.Merchant", b =>

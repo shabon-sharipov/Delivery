@@ -9,7 +9,7 @@ public class CardItemTablesConfigurations : IEntityTypeConfiguration<CartItem>
         builder.HasKey(m => m.Id);
 
         builder.HasOne(cardItem => cardItem.Card)
-            .WithMany(card => card.CardItems)
+            .WithMany(card => card.Items)
             .HasForeignKey(cardItem => cardItem.CardId)
             .OnDelete(DeleteBehavior.Restrict);
 

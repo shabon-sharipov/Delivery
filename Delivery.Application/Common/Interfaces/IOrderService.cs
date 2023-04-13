@@ -15,7 +15,6 @@ namespace Delivery.Application.Common.Interfaces
     public interface IOrderService : IBaseService<Order, OrderResponse, OrderRequest>
     {
         Task<OrderFromCartResponse> CreateOrder(OrderFromCartRequest orderDetails, CancellationToken cancellationToken);
-        bool DeleteCartItem(ulong Id, CancellationToken cancellationToken);
 
     }
 }

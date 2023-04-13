@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Delivery.Infrastructure.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial_ChangeModelCart : Migration
+    public partial class Initial_Models : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -72,15 +72,44 @@ namespace Delivery.Infrastructure.Persistence.Migrations
                 {
                     Id = table.Column<decimal>(type: "decimal(20,0)", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    CurrentUserId = table.Column<decimal>(type: "decimal(20,0)", nullable: false)
+                    CustomerId = table.Column<decimal>(type: "decimal(20,0)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Cart", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Cart_Person_CurrentUserId",
-                        column: x => x.CurrentUserId,
+                        name: "FK_Cart_Person_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Person",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Order",
+                columns: table => new
+                {
+                    Id = table.Column<decimal>(type: "decimal(20,0)", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ShipAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ShipDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    OrderStatus = table.Column<int>(type: "int", nullable: false),
+                    CustomerId = table.Column<decimal>(type: "decimal(20,0)", nullable: false),
+                    DriverId = table.Column<decimal>(type: "decimal(20,0)", nullable: true),
+                    IsPayment = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Order", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Order_Person_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Person",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Order_Person_DriverId",
+                        column: x => x.DriverId,
                         principalTable: "Person",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -138,45 +167,6 @@ namespace Delivery.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Order",
-                columns: table => new
-                {
-                    Id = table.Column<decimal>(type: "decimal(20,0)", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ShipAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ShipDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    OrderStatus = table.Column<int>(type: "int", nullable: false),
-                    CustomerId = table.Column<decimal>(type: "decimal(20,0)", nullable: false),
-                    DriverId = table.Column<decimal>(type: "decimal(20,0)", nullable: false),
-                    CardId = table.Column<decimal>(type: "decimal(20,0)", nullable: false),
-                    TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    AvailableTo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsPayment = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Order", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Order_Cart_CardId",
-                        column: x => x.CardId,
-                        principalTable: "Cart",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Order_Person_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "Person",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Order_Person_DriverId",
-                        column: x => x.DriverId,
-                        principalTable: "Person",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "CartItem",
                 columns: table => new
                 {
@@ -185,8 +175,7 @@ namespace Delivery.Infrastructure.Persistence.Migrations
                     CardId = table.Column<decimal>(type: "decimal(20,0)", nullable: false),
                     ProductId = table.Column<decimal>(type: "decimal(20,0)", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    UnitPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    UnitPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -214,8 +203,7 @@ namespace Delivery.Infrastructure.Persistence.Migrations
                     OrderId = table.Column<decimal>(type: "decimal(20,0)", nullable: false),
                     ProductId = table.Column<decimal>(type: "decimal(20,0)", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    UnitPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    UnitPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -235,9 +223,9 @@ namespace Delivery.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cart_CurrentUserId",
+                name: "IX_Cart_CustomerId",
                 table: "Cart",
-                column: "CurrentUserId");
+                column: "CustomerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CartItem_CardId",
@@ -258,11 +246,6 @@ namespace Delivery.Infrastructure.Persistence.Migrations
                 name: "IX_MerchantBranch_MerchantId",
                 table: "MerchantBranch",
                 column: "MerchantId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Order_CardId",
-                table: "Order",
-                column: "CardId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Order_CustomerId",
@@ -308,19 +291,19 @@ namespace Delivery.Infrastructure.Persistence.Migrations
                 name: "OrderDetails");
 
             migrationBuilder.DropTable(
+                name: "Cart");
+
+            migrationBuilder.DropTable(
                 name: "Order");
 
             migrationBuilder.DropTable(
                 name: "Product");
 
             migrationBuilder.DropTable(
-                name: "Cart");
+                name: "Person");
 
             migrationBuilder.DropTable(
                 name: "Merchant");
-
-            migrationBuilder.DropTable(
-                name: "Person");
 
             migrationBuilder.DropTable(
                 name: "Category");
