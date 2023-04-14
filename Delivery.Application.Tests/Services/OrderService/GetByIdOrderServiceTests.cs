@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Delivery.Application.Common.Interfaces.Repositories;
+using Delivery.Application.Exceptions;
 using Delivery.Application.Response.OrderResponse;
 using Delivery.Domain.Model;
 using Moq;
@@ -53,7 +54,7 @@ namespace Delivery.Application.Tests.Services.OrderService
             ulong orderId = 2;
             _repository.Setup(x=>x.FindAsync(orderId, CancellationToken.None)).Returns(Task.FromResult<Order>(null));
 
-            var service = new Application.Services.OrderService(_repository.Object, _mapper.Object);
+            var service = new Application.Services.OrderService(_repository.Object, _repositoryOrderDetails.Object, _mapper.Object, _repositoryCart.Object, _cartItemRepositoryMock.Object);
             Assert.ThrowsAsync<HttpStatusCodeException>(async()=>await service.Get(orderId, CancellationToken.None));
             _repository.Verify(x=>x.FindAsync(orderId, CancellationToken.None));
         }
