@@ -53,7 +53,7 @@ namespace Delivery.API.Controllers
             return Ok();
         }
 
-        [HttpPost("Order/FromCart/UserId")]
+        [HttpPost("Order/FromCart")]
         public async Task<ActionResult<OrderFromCartResponse>> PostOrderDetails(OrderFromCartRequest orderFromCartRequest)
         {
             var entity = await _orderService.CreateOrder(orderFromCartRequest, CancellationToken.None);

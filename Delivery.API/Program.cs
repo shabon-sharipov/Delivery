@@ -1,3 +1,4 @@
+using Delivery.API.Middlewares;
 using Delivery.Application.Common.Interfaces;
 using Delivery.Application.Common.Interfaces.Repositories;
 using Delivery.Application.Mappers;
@@ -60,7 +61,7 @@ namespace Delivery.API
             }, ServiceLifetime.Scoped);
 
             var app = builder.Build();
-
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {

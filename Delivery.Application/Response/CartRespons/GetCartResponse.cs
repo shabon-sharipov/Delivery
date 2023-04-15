@@ -5,7 +5,7 @@ using Delivery.Application.Response.CartRespons;
 public class GetCartResponse : CartResponse
 {
     public ulong Id { get; set; }
-    public virtual List<GetCardItemResponse> CardItems { get; set; }
+    public virtual List<GetCardItemResponse> Items { get; set; }
     public decimal TotalPrice { get; set; }
     public ulong CustomerId { get; set; }
 }

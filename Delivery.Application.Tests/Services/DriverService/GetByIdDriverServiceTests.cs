@@ -31,7 +31,7 @@ namespace Delivery.Application.Tests.Services.DriverService
             var driverResponse = new GetDriverResponse() { Address = "Ulitsa A.Samadov, Dom 24", FirstName = "Alijon" };
 
             _repository.Setup(d => d.FindAsync(driverId, CancellationToken.None)).ReturnsAsync(driver);
-            _mapper.Setup(m=>m.Map<Driver, DriverResponse>(driver)).Returns(driverResponse);
+            _mapper.Setup(m => m.Map<Driver, DriverResponse>(driver)).Returns(driverResponse);
 
             var service = new Application.Services.DriverService(_repository.Object, _mapper.Object);
             var entity = await service.Get(driverId, CancellationToken.None);
@@ -40,9 +40,5 @@ namespace Delivery.Application.Tests.Services.DriverService
             var result = entity as GetDriverResponse;
             Assert.That("Alijon", Is.EqualTo(result.FirstName));
         }
-
-
-
-
     }
 }
