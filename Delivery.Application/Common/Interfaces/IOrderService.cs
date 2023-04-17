@@ -1,4 +1,5 @@
 ﻿using Delivery.Application.Exceptions;
+using Delivery.Application.Requests.ChangeStatusOrderRequests;
 using Delivery.Application.Requests.OrderFromCartRequests;
 using Delivery.Application.Requests.OrderRequest;
 using Delivery.Application.Response.OrderFromCartResponses;
@@ -15,6 +16,6 @@ namespace Delivery.Application.Common.Interfaces
     public interface IOrderService : IBaseService<Order, OrderResponse, OrderRequest>
     {
         Task<OrderFromCartResponse> CreateOrder(OrderFromCartRequest orderDetails, CancellationToken cancellationToken);
-
+        Task<string> ChangeOrderStatus(ulong id, ChangeOrderStatusRequest request, CancellationToken cancellationToken);
     }
 }

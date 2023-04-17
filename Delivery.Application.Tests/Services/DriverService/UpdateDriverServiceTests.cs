@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Delivery.Application.Common.Interfaces.Repositories;
+using Delivery.Application.Exceptions;
 using Delivery.Application.Requests.SenderRequest;
 using Delivery.Domain.Model;
 using Moq;
@@ -31,7 +32,7 @@ namespace Delivery.Application.Tests.Services.DriverService
             var driverRequest = new UpdateDriverRequest() { Address = "Restaurant Orzu" };
             var driverResponse = new UpdateDriverResponse() { Address = "Restaurant Orzu" };
 
-            _repository.Setup(p => p.FindAsync(driverId, CancellationToken.None));
+            _repository.Setup(p => p.FindAsync(driverId, CancellationToken.None)).ReturnsAsync(driver);
 
             _mapper.Setup(m => m.Map<UpdateDriverRequest, Driver>(driverRequest)).Returns(driver);
             _mapper.Setup(m => m.Map<Driver, UpdateDriverResponse>(driver)).Returns(driverResponse);
@@ -55,7 +56,7 @@ namespace Delivery.Application.Tests.Services.DriverService
             _repository.Setup(d => d.FindAsync(driverId, CancellationToken.None)).Returns(Task.FromResult<Driver>(null));
 
             var service = new Application.Services.DriverService(_repository.Object, _mapper.Object);
-            Assert.ThrowsAsync<NullReferenceException>(async () => await service.Update(driver, driverId, CancellationToken.None));
+            Assert.ThrowsAsync<HttpStatusCodeException>(async () => await service.Update(driver, driverId, CancellationToken.None));
             _repository.Verify(d=>d.FindAsync(driverId,CancellationToken.None));
         }
     }

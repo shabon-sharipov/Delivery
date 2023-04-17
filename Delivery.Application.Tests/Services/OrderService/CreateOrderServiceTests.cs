@@ -30,7 +30,7 @@ namespace Delivery.Application.Tests.Services.OrderService
             _repository = new Mock<IRepository<Order>>();
             _repositoryOrderDetails = new Mock<IRepository<OrderDetails>>();
             _repositoryCart = new Mock<IRepository<Cart>>();
-            _cartItemRepository=new Mock<IRepository<CartItem>>();
+            _cartItemRepository = new Mock<IRepository<CartItem>>();
             _validator = new CreateOrderRequestValidation();
         }
 
@@ -65,9 +65,8 @@ namespace Delivery.Application.Tests.Services.OrderService
 
             var test = result as CreateOrderResponse;
             Assert.That(test.DriverId, Is.EqualTo(order.DriverId));
-
-
         }
+
         [Test]
         public void Should_have_error_when_Order_ShipAddress_is_empty()
         {

@@ -1,4 +1,5 @@
 ﻿using Delivery.Application.Common.Interfaces;
+using Delivery.Application.Requests.ChangeStatusOrderRequests;
 using Delivery.Application.Requests.OrderFromCartRequests;
 using Delivery.Application.Requests.OrderRequest;
 using Delivery.Application.Response.OrderFromCartResponses;
@@ -43,6 +44,13 @@ namespace Delivery.API.Controllers
         public async Task<ActionResult<OrderResponse>> Put(UpdateOrderRequest order, ulong id)
         {
             var entity = await _orderService.Update(order, id, CancellationToken.None);
+            return Ok(entity);
+        }
+
+        [HttpPut("ChangeOrderStarus")]
+        public async Task<ActionResult<OrderResponse>> Put(ChangeOrderStatusRequest request, ulong id, CancellationToken cancellationToken)
+        {
+            var entity = await _orderService.ChangeOrderStatus(id, request, CancellationToken.None);
             return Ok(entity);
         }
 

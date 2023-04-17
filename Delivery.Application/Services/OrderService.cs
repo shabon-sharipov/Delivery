@@ -1,7 +1,9 @@
-﻿using Delivery.Application.Requests.OrderFromCartRequests;
+﻿using Delivery.Application.Requests.ChangeStatusOrderRequests;
+using Delivery.Application.Requests.OrderFromCartRequests;
 using Delivery.Application.Requests.OrderRequest;
 using Delivery.Application.Response.OrderFromCartResponses;
 using Delivery.Application.Response.OrderResponse;
+using NuGet.Packaging.Signing;
 
 namespace Delivery.Application.Services;
 
@@ -87,6 +89,20 @@ public class OrderService : BaseService<Order, OrderResponse, OrderRequest>, IOr
 
         return _mapper.Map<Order, OrderFromCartResponse>(order); ;
     }
+
+    public async Task<string> ChangeOrderStatus(ulong id,ChangeOrderStatusRequest request, CancellationToken cancellationToken)
+    {
+        var entity = await _repository.FindAsync(id,cancellationToken);
+        if(entity==null)
+            throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(ChangeOrderStatusRequest));
+
+        entity.OrderStatus= request.OrderStatus;
+        _repository.Update(entity);
+        await _repository.SaveChangesAsync(cancellationToken);
+
+        return "success";
+    }
+    
 
     public void MoveItemsFromCartToOrder(Order order, Cart cart)
     {

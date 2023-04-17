@@ -30,8 +30,13 @@ namespace Delivery.Application.Tests.Services.DriverService
         [Test]
         public async Task Create_Driver_Tests()
         {
-            var driverRequest = new CreateDriverRequest() { Address = "Restourant Forel", 
-                PhoneNumber = "+9924454445", FirstName = "Ali", LastName = "Vali" };
+            var driverRequest = new CreateDriverRequest()
+            {
+                Address = "Restourant Forel",
+                PhoneNumber = "+9924454445",
+                FirstName = "Ali",
+                LastName = "Vali"
+            };
 
             var driver = new Driver()
             {
@@ -60,11 +65,11 @@ namespace Delivery.Application.Tests.Services.DriverService
         }
 
         [Test]
-        public void Should_have_error_when_Driver_PhoneNumber_is_long_thirteen()
+        public void Should_have_error_when_Driver_FirstName_is_Empty()
         {
-            var driver = new CreateDriverRequest() { PhoneNumber = "!+998918277768789" };
+            var driver = new CreateDriverRequest() { FirstName = "" };
             var result = _validator.TestValidate(driver);
-            result.ShouldHaveValidationErrorFor(d => d.PhoneNumber);
+            result.ShouldHaveValidationErrorFor(d => d.FirstName);
         }
         [Test]
         public void Shuold_have_error_when_Driver_Address_is_empty()
@@ -81,6 +86,6 @@ namespace Delivery.Application.Tests.Services.DriverService
             result.ShouldHaveValidationErrorFor(d => d.Address);
         }
 
-            
+
     }
 }

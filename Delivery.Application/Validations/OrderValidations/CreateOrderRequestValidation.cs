@@ -14,6 +14,7 @@ namespace Delivery.Application.Validations.OrderValidations
         {
             RuleFor(o => o.AvailableTo).NotEmpty().NotNull();
             RuleFor(o => o.IsPayment).NotNull();
+            RuleFor(o=>o.ShipAddress).NotNull().NotEmpty();
         }
     }
 }
