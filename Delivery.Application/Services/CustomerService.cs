@@ -32,7 +32,7 @@ namespace Delivery.Application.Services
         }
 
 
-        public async override Task<CustomerResponse> Create(CustomerRequest request, CancellationToken cancellationToken)
+        public override async Task<CustomerResponse> Create(CustomerRequest request, CancellationToken cancellationToken)
         {
             if (request == null)
                 throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Customer)); 
@@ -46,7 +46,7 @@ namespace Delivery.Application.Services
             return _mapper.Map<Customer, CreateCustomerResponse>(entity);
         }
 
-        public async override Task<CustomerResponse> Get(ulong id, CancellationToken cancellationToken)
+        public override async Task<CustomerResponse> Get(ulong id, CancellationToken cancellationToken)
         {
             var entity = await _repository.FindAsync(id, cancellationToken);
             if (entity == null)
@@ -66,7 +66,7 @@ namespace Delivery.Application.Services
             return true;
         }
 
-        public async override Task<CustomerResponse> Update(CustomerRequest request, ulong id, CancellationToken cancellationToken)
+        public override async Task<CustomerResponse> Update(CustomerRequest request, ulong id, CancellationToken cancellationToken)
         {
             var entity = await _repository.FindAsync(id, CancellationToken.None);
             if (entity == null)
