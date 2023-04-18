@@ -48,6 +48,7 @@ namespace Delivery.Application.Tests.Services.OrderService
 
             Assert.That("Ulitsa A.Samadov, Dom 24", Is.EqualTo(result.AvailableTo));
         }
+        
         [Test]
         public async Task GetById_Order_should_have_error_when_OrderId_is_null()
         {
