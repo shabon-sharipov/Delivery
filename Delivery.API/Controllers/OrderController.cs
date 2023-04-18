@@ -33,12 +33,12 @@ namespace Delivery.API.Controllers
             return Ok(entity);
         }
 
-        [HttpPost("Order")]
-        public async Task<ActionResult<OrderResponse>> Post(CreateOrderRequest order)
-        {
-            var entity = await _orderService.Create(order, CancellationToken.None);
-            return Ok(entity);
-        }
+        //[HttpPost("Order")]
+        //public async Task<ActionResult<OrderResponse>> Post(CreateOrderRequest order)
+        //{
+        //    var entity = await _orderService.Create(order, CancellationToken.None);
+        //    return Ok(entity);
+        //}
 
         [HttpPut]
         public async Task<ActionResult<OrderResponse>> Put(UpdateOrderRequest order, ulong id)

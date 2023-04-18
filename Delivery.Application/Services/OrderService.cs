@@ -3,6 +3,7 @@ using Delivery.Application.Requests.OrderFromCartRequests;
 using Delivery.Application.Requests.OrderRequest;
 using Delivery.Application.Response.OrderFromCartResponses;
 using Delivery.Application.Response.OrderResponse;
+using GoogleMaps.LocationServices;
 using NuGet.Packaging.Signing;
 
 namespace Delivery.Application.Services;
@@ -13,15 +14,17 @@ public class OrderService : BaseService<Order, OrderResponse, OrderRequest>, IOr
     private readonly IRepository<OrderDetails> _repositoryOrderDetails;
     private readonly IRepository<Cart> _repositoryCart;
     private readonly IRepository<CartItem> _cartItemRepository;
+    private readonly IRepository<Merchant> _merchantRepository;
     private readonly IMapper _mapper;
 
-    public OrderService(IRepository<Order> repository, IRepository<OrderDetails> repositoryOrderDetails, IMapper mapper, IRepository<Cart> repositoryCart, IRepository<CartItem> cartItemRepo)
+    public OrderService(IRepository<Order> repository, IRepository<OrderDetails> repositoryOrderDetails, IMapper mapper, IRepository<Cart> repositoryCart, IRepository<CartItem> cartItemRepo, IRepository<Merchant> merchantRepository)
     {
         _repository = repository;
         _mapper = mapper;
         _repositoryOrderDetails = repositoryOrderDetails;
         _repositoryCart = repositoryCart;
         _cartItemRepository = cartItemRepo;
+        _merchantRepository = merchantRepository;
     }
 
     public async Task<IEnumerable<OrderResponse>> GetAll(int PageSize, int PageNumber, CancellationToken cancellationToken)
@@ -71,38 +74,44 @@ public class OrderService : BaseService<Order, OrderResponse, OrderRequest>, IOr
             throw new HttpStatusCodeException(System.Net.HttpStatusCode.BadRequest, nameof(OrderFromCartRequest));
 
         var cart = _repositoryCart.Set().FirstOrDefault(u => u.CustomerId == request.UserId);
-
         if (cart == null)
             throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Cart));
+
+        var meurchentBranchs = _merchantRepository.Set().Select(m => m.MerchantBranchs.FirstOrDefault());
+        double lat = meurchentBranchs.FirstOrDefault().PointLat;
+        double lng = meurchentBranchs.FirstOrDefault().PointLng;
+
+        var km = GetDistanceinKm(lat, lng, request.PointLat, request.PointLng);
 
         var order = new Order()
         {
             ShipAddress = request.ShipAddress,
             ShipDate = request.ShipDate,
             Customer = cart.Customer,
-            OrderStatus = Domain.Enam.OrderStatus.Active
+            OrderStatus = Domain.Enam.OrderStatus.Active,
+            MerchantId = request.MerchantId
         };
 
         MoveItemsFromCartToOrder(order, cart);
         await _repository.AddAsync(order, cancellationToken);
         await _repository.SaveChangesAsync(cancellationToken);
 
-        return _mapper.Map<Order, OrderFromCartResponse>(order); ;
+        return _mapper.Map<Order, OrderFromCartResponse>(order);
     }
 
-    public async Task<string> ChangeOrderStatus(ulong id,ChangeOrderStatusRequest request, CancellationToken cancellationToken)
+    public async Task<string> ChangeOrderStatus(ulong id, ChangeOrderStatusRequest request, CancellationToken cancellationToken)
     {
-        var entity = await _repository.FindAsync(id,cancellationToken);
-        if(entity==null)
+        var entity = await _repository.FindAsync(id, cancellationToken);
+        if (entity == null)
             throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(ChangeOrderStatusRequest));
 
-        entity.OrderStatus= request.OrderStatus;
+        entity.OrderStatus = request.OrderStatus;
         _repository.Update(entity);
         await _repository.SaveChangesAsync(cancellationToken);
 
         return "success";
     }
-    
+
 
     public void MoveItemsFromCartToOrder(Order order, Cart cart)
     {
@@ -119,4 +128,20 @@ public class OrderService : BaseService<Order, OrderResponse, OrderRequest>, IOr
         }
         cart.Items.Clear();
     }
+
+    public double GetDistanceinKm(double sourcelat, double sourcelng, double destlat, double destlng)
+    {
+        var earthradius = 6371;
+        var sourcelatrad = toradians(sourcelat);
+        var destlatrad = toradians(destlat);
+
+        var longitudedelta = toradians(destlng - sourcelng);
+        var latitudedelta = toradians(destlat - sourcelat);
+
+        var angle = 2 * Math.Asin(Math.Sqrt(Math.Pow(Math.Sin(latitudedelta / 2), 2) +
+                        Math.Cos(sourcelatrad) * Math.Cos(destlatrad) * Math.Pow(Math.Sin(longitudedelta / 2), 2)));
+
+        return angle * earthradius;
+    }
+    private static double toradians(double angle) => angle * Math.PI / 180.0;
 }

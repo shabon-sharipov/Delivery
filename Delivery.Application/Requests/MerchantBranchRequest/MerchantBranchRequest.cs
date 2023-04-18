@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 
 namespace Delivery.Application.Requests.MerchantBranch
 {
-    public class MerchantBranchRequest: BaseRequest
+    public class MerchantBranchRequest : BaseRequest
     {
         public ulong MerchantId { get; set; }
         public string Location { get; set; }
         public string MerchantCoverage { get; set; }
+        public double PointLat { get; set; }
+        public double PointLng { get; set; }
     }
 }

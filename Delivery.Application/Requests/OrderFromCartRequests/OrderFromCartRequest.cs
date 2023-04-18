@@ -15,5 +15,8 @@ namespace Delivery.Application.Requests.OrderFromCartRequests
         public ulong UserId { get; set; }
         public string AvailableTo { get; set; }
         public bool IsPayment { get; set; }
+        public ulong MerchantId { get; set; }
+        public double PointLat { get; set; }
+        public double PointLng { get; set; }
     }
 }

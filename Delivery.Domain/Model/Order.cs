@@ -19,6 +19,11 @@ namespace Delivery.Domain.Model
         public string ShipAddress { get; set; }
         public DateTime ShipDate { get; set; }
         public OrderStatus OrderStatus { get; set; }
+        public double PointLat { get; set; }
+        public double PointLng { get; set; }
+
+        public ulong MerchantId { get; set; }
+        public virtual Merchant Merchant { get; set; }
 
         public ulong CustomerId { get; set; }
         public virtual Customer Customer { get; set; }
