@@ -13,5 +13,6 @@ namespace Delivery.Application.Requests.CardItemRequest
         public ulong ProductId { get; set; }
         public int Quantity { get; set; }
         public decimal UnitPrice { get; set; }
+        public ulong MerchantId { get; set; }
     }
 }

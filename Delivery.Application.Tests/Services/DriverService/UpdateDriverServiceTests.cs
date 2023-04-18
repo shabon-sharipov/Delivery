@@ -34,7 +34,7 @@ namespace Delivery.Application.Tests.Services.DriverService
 
             _repository.Setup(p => p.FindAsync(driverId, CancellationToken.None)).ReturnsAsync(driver);
 
-            _mapper.Setup(m => m.Map<UpdateDriverRequest, Driver>(driverRequest)).Returns(driver);
+            _mapper.Setup(m => m.Map<UpdateDriverRequest, Driver>(driverRequest,driver)).Returns(driver);
             _mapper.Setup(m => m.Map<Driver, UpdateDriverResponse>(driver)).Returns(driverResponse);
 
             var service = new Application.Services.DriverService(_repository.Object, _mapper.Object);

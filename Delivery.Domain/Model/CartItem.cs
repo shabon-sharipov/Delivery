@@ -10,4 +10,5 @@ public class CartItem : EntityBase
 
     public int Quantity { get; set; }
     public decimal UnitPrice { get; set; }
+    public ulong MerchantId { get; set; }
 }

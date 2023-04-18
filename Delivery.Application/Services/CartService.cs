@@ -31,7 +31,7 @@ namespace Delivery.Application.Services
         public override async Task<CartResponse> Create(CartRequest request, CancellationToken cancellationToken)
         {
             if (request == null)
-                throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Cart)); 
+                throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Cart));
 
             var createCardItemRequset = request as CreateCartRequest;
             var entity = _mapper.Map<CreateCartRequest, Cart>(createCardItemRequset);
@@ -44,7 +44,7 @@ namespace Delivery.Application.Services
 
         public async override Task<CartResponse> Get(ulong id, CancellationToken cancellationToken)
         {
-            var entity = await _repositoryCart.FindAsync(id, cancellationToken);
+            var entity = _repositoryCart.Set().FirstOrDefault(c => c.CustomerId == id);
             if (entity == null)
                 throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(CartItem)); ;
             return _mapper.Map<Cart, GetCartResponse>(entity);

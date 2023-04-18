@@ -20,6 +20,7 @@ namespace Delivery.Application.Tests.Services.OrderService
         private readonly Mock<IRepository<OrderDetails>> _repositoryOrderDetails;
         private readonly Mock<IRepository<Cart>> _repositoryCart;
         private readonly Mock<IRepository<CartItem>> _cartItemRepositoryMock;
+        private readonly Mock<IRepository<Merchant>> _merchantRepositoryMock;
         public GetByIdOrderServiceTests()
         {
             _repository = new Mock<IRepository<Order>>();
@@ -27,6 +28,7 @@ namespace Delivery.Application.Tests.Services.OrderService
             _repositoryOrderDetails = new Mock<IRepository<OrderDetails>>();
             _repositoryCart = new Mock<IRepository<Cart>>();
             _cartItemRepositoryMock = new Mock<IRepository<CartItem>>();
+            _merchantRepositoryMock= new Mock<IRepository<Merchant>>();
         }
 
         [Test]
@@ -39,7 +41,7 @@ namespace Delivery.Application.Tests.Services.OrderService
             _repository.Setup(o => o.FindAsync(orderId, CancellationToken.None)).ReturnsAsync(order);
             _mapper.Setup(m => m.Map<Order, GetOrderResponse>(order)).Returns(orderResponse);
 
-            var service = new Application.Services.OrderService(_repository.Object, _repositoryOrderDetails.Object, _mapper.Object, _repositoryCart.Object, _cartItemRepositoryMock.Object);
+            var service = new Application.Services.OrderService(_repository.Object, _repositoryOrderDetails.Object, _mapper.Object, _repositoryCart.Object, _cartItemRepositoryMock.Object, _merchantRepositoryMock.Object);
             var entity = await service.Get(orderId, CancellationToken.None);
 
             _repository.Verify(o => o.FindAsync(orderId, CancellationToken.None));
@@ -55,7 +57,7 @@ namespace Delivery.Application.Tests.Services.OrderService
             ulong orderId = 2;
             _repository.Setup(x=>x.FindAsync(orderId, CancellationToken.None)).Returns(Task.FromResult<Order>(null));
 
-            var service = new Application.Services.OrderService(_repository.Object, _repositoryOrderDetails.Object, _mapper.Object, _repositoryCart.Object, _cartItemRepositoryMock.Object);
+            var service = new Application.Services.OrderService(_repository.Object, _repositoryOrderDetails.Object, _mapper.Object, _repositoryCart.Object, _cartItemRepositoryMock.Object, _merchantRepositoryMock.Object);
             Assert.ThrowsAsync<HttpStatusCodeException>(async()=>await service.Get(orderId, CancellationToken.None));
             _repository.Verify(x=>x.FindAsync(orderId, CancellationToken.None));
         }
