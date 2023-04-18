@@ -16,6 +16,7 @@ namespace Delivery.Application.Validations.CustomerValiations
             RuleFor(c => c.LastName).NotEmpty().NotNull();
             RuleFor(c => c.PhoneNumber).NotNull().NotEmpty();
             RuleFor(c => c.DataOfBirth).NotNull().NotEmpty();
+            RuleFor(c => c.Address).NotEmpty();
         }
     }
 }

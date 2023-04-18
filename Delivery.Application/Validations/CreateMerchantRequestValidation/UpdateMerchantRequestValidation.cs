@@ -15,6 +15,7 @@ namespace Delivery.Application.Validations.CreateMerchantRequestValidation
             RuleFor(m => m.Name).NotEmpty();
             RuleFor(m => m.ShortDiscreption).NotEmpty().MaximumLength(30);
             RuleFor(m => m.IsActive).NotEmpty().NotNull();
+            RuleFor(m => m.MerchantCategoryId).NotEmpty().NotNull();
         }
     }
 }

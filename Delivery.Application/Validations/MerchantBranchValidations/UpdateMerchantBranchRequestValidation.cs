@@ -12,8 +12,9 @@ namespace Delivery.Application.Validations.MerchantBranchValidations
     {
         public UpdateMerchantBranchRequestValidation()
         {
-            RuleFor(m=>m.MerchantId).NotNull().NotEmpty();
-            RuleFor(m=>m.Location).NotNull().NotEmpty();
+            RuleFor(m => m.MerchantId).NotNull().NotEmpty();
+            RuleFor(m => m.Location).NotNull().NotEmpty();
+            RuleFor(m => m.MerchantCoverage).NotEmpty().NotNull();
         }
     }
 }
