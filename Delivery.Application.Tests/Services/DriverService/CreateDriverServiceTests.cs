@@ -71,6 +71,15 @@ namespace Delivery.Application.Tests.Services.DriverService
             var result = _validator.TestValidate(driver);
             result.ShouldHaveValidationErrorFor(d => d.FirstName);
         }
+        
+        [Test]
+        public void should_have_error_when_Driver_FirstName_is_Null()
+        {
+            var driver = new CreateDriverRequest() { FirstName = null };
+            var result = _validator.TestValidate(driver);
+            result.ShouldHaveValidationErrorFor(d => d.FirstName); 
+        }
+
         [Test]
         public void Shuold_have_error_when_Driver_Address_is_empty()
         {
@@ -79,13 +88,43 @@ namespace Delivery.Application.Tests.Services.DriverService
             result.ShouldHaveValidationErrorFor(d => d.Address);
         }
         [Test]
-        public void Should_have_error_when_Driver_Driver_is_null()
+        public void Should_have_error_when_Driver_Address_is_null()
         {
             var driver = new CreateDriverRequest() { Address = null };
             var result = _validator.TestValidate(driver);
             result.ShouldHaveValidationErrorFor(d => d.Address);
         }
 
+        [Test]
+        public void Should_have_error_when_Driver_LastName_is_Null()
+        {
+            var driver = new CreateDriverRequest() { LastName = null };
+            var result = _validator.TestValidate(driver);
+            result.ShouldHaveValidationErrorFor(d=>d.LastName);
+        }
 
+        //[Test]
+        //public void Should_have_error_when_Driver_DateOfBirth_is_empty()
+        //{
+        //    var driver = new CreateDriverRequest() { DataOfBirth =  };
+        //    var result = _validator.TestValidate(driver);
+        //    result.ShouldHaveValidationErrorFor(d => d.DataOfBirth);
+        //}
+
+        [Test]
+        public void Should_have_error_when_Driver_PhoneNumber_is_empty()
+        {
+            var driver = new CreateDriverRequest() { PhoneNumber = "" };
+            var result = _validator.TestValidate(driver);
+            result.ShouldHaveValidationErrorFor(d => d.PhoneNumber);
+        }
+
+        [Test]
+        public void Should_have_error_when_Driver_PhoneNumber_is_Null()
+        {
+            var driver = new CreateDriverRequest() { PhoneNumber = null };
+            var result = _validator.TestValidate(driver);
+            result.ShouldHaveValidationErrorFor(d => d.PhoneNumber);
+        }
     }
 }
