@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Delivery.Application.Common.Interfaces.Repositories;
+using Delivery.Application.Exceptions;
 using Delivery.Application.Response.SenderResponse;
 using Delivery.Domain.Model;
 using Moq;
@@ -39,6 +40,36 @@ namespace Delivery.Application.Tests.Services.DriverService
             _repository.Verify(d => d.FindAsync(driverId, CancellationToken.None));
             var result = entity as GetDriverResponse;
             Assert.That("Alijon", Is.EqualTo(result.FirstName));
+        }
+        [Test]
+        public async Task GetById_Driver_Should_have_error_when_DriverId_is_null()
+        {
+            ulong driverId = 1;
+            _repository.Setup(d => d.FindAsync(driverId, CancellationToken.None)).Returns(Task.FromResult<Driver>(null));
+            var service = new Application.Services.DriverService(_repository.Object, _mapper.Object);
+
+            Assert.ThrowsAsync<HttpStatusCodeException>(async () => await service.Get(driverId, CancellationToken.None));
+            _repository.Verify(d => d.FindAsync(driverId, CancellationToken.None));
+        }
+        [Test]
+        public async Task GetById_Driver_Should_have_error_when_DriverId_is_empty()
+        {
+            ulong driverId = 1;
+            _repository.Setup(d => d.FindAsync(driverId, CancellationToken.None));
+            var service = new Application.Services.DriverService(_repository.Object, _mapper.Object);
+
+            Assert.ThrowsAsync<HttpStatusCodeException>(async () => await service.Get(driverId, CancellationToken.None));
+            _repository.Verify(d => d.FindAsync(driverId, CancellationToken.None));
+        }
+        [Test]
+        public async Task GetById_Driver_Should_have_error_when_DriverId_is_true()
+        {
+            ulong driverId = 1;
+            _repository.Setup(d => d.FindAsync(driverId, CancellationToken.None));
+            var service = new Application.Services.DriverService(_repository.Object, _mapper.Object);
+
+            Assert.ThrowsAsync<HttpStatusCodeException>(async () => await service.Get(driverId, CancellationToken.None));
+            _repository.Verify(d => d.FindAsync(driverId, CancellationToken.None));
         }
     }
 }

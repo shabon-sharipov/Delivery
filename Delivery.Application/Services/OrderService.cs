@@ -3,8 +3,6 @@ using Delivery.Application.Requests.OrderFromCartRequests;
 using Delivery.Application.Requests.OrderRequest;
 using Delivery.Application.Response.OrderFromCartResponses;
 using Delivery.Application.Response.OrderResponse;
-using GoogleMaps.LocationServices;
-using NuGet.Packaging.Signing;
 
 namespace Delivery.Application.Services;
 

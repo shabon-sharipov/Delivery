@@ -106,7 +106,7 @@ namespace Delivery.Application.Tests.Services.DriverService
         //[Test]
         //public void Should_have_error_when_Driver_DateOfBirth_is_empty()
         //{
-        //    var driver = new CreateDriverRequest() { DataOfBirth =  };
+        //    var driver = new CreateDriverRequest() { DataOfBirth = default };
         //    var result = _validator.TestValidate(driver);
         //    result.ShouldHaveValidationErrorFor(d => d.DataOfBirth);
         //}
