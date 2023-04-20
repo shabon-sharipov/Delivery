@@ -15,6 +15,11 @@ namespace Delivery.Application.Validations.MerchantBranchValidations
             RuleFor(m => m.MerchantId).NotEmpty().NotNull();
             RuleFor(m => m.Location).NotEmpty().NotNull();
             RuleFor(m => m.MerchantCoverage).NotEmpty().NotNull();
+            RuleFor(m => m.Open).NotEmpty().NotNull();
+            RuleFor(m => m.Close).NotEmpty().NotNull();
+            RuleFor(m => m.PointLat).NotEmpty().NotNull();
+            RuleFor(m => m.PointLng).NotEmpty().NotNull();
         }
     }
 }
+

@@ -3,9 +3,10 @@ using Delivery.Application.Common.Interfaces.Repositories;
 using Delivery.Application.Exceptions;
 using Delivery.Application.Requests.MerchantRequest;
 using Delivery.Application.Response.MerchantResponse;
+using Delivery.Domain.Model;
 using Moq;
 using NUnit.Framework;
-using Delivery.Domain.Model;
+
 
 namespace Delivery.Application.Tests.Services.MerchantService;
 

@@ -37,16 +37,17 @@ namespace Delivery.Application.Tests.Services.OrderService
         public async Task Update_Order_Test()
         {
             ulong orderId = 2;
-            var order = new Order { OrderStatus = OrderStatus.Open, ShipAddress = "test" };
+            var order = new Order { OrderStatus = OrderStatus.Open, ShipAddress = "Unvermag" };
             var orderRequest = new UpdateOrderRequest { OrderStatus = OrderStatus.Open };
-            var orderResponse = new UpdateOrderResponse { OrderStatus = OrderStatus.Open };
+            var orderResponse = new UpdateOrderResponse { OrderStatus = OrderStatus.Open, ShipAddress="Panjshanbe" };
 
-            _repository.Setup(p => p.FindAsync(orderId, CancellationToken.None));
+            _repository.Setup(p => p.FindAsync(orderId, CancellationToken.None)).ReturnsAsync(order);
 
-            _mapper.Setup(m => m.Map<UpdateOrderRequest, Order>(orderRequest)).Returns(order);
+            _mapper.Setup(m => m.Map<UpdateOrderRequest, Order>(orderRequest,order)).Returns(order);
             _mapper.Setup(m => m.Map<Order, UpdateOrderResponse>(order)).Returns(orderResponse);
 
             var service = new Application.Services.OrderService(_repository.Object, _repositoryOrderDetails.Object, _mapper.Object, _repositoryCart.Object, _cartItemRepository.Object, _merchantRepositoryMock.Object);
+
             var entity = await service.Update(orderRequest, orderId, CancellationToken.None);
 
             _repository.Verify(m => m.FindAsync(orderId, CancellationToken.None));
@@ -55,7 +56,7 @@ namespace Delivery.Application.Tests.Services.OrderService
 
             var result = entity as UpdateOrderResponse;
 
-            Assert.That("test", Is.EqualTo(result.ShipAddress));
+            Assert.That("Panjshanbe", Is.EqualTo(result.ShipAddress));
         }
 
         [Test]

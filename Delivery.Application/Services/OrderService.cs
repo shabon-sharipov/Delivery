@@ -77,11 +77,7 @@ public class OrderService : BaseService<Order, OrderResponse, OrderRequest>, IOr
         if (cart == null)
             throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Cart));
 
-        var meurchentBranchs = _merchantRepository.Set().Select(m => m.MerchantBranchs.FirstOrDefault());
-        double lat = meurchentBranchs.FirstOrDefault().PointLat;
-        double lng = meurchentBranchs.FirstOrDefault().PointLng;
-
-        var km = GetDistanceinKm(lat, lng, request.PointLat, request.PointLng);
+        FindingNearestBranch(request);
 
         var order = new Order()
         {
@@ -112,8 +108,7 @@ public class OrderService : BaseService<Order, OrderResponse, OrderRequest>, IOr
         return "success";
     }
 
-
-    public void MoveItemsFromCartToOrder(Order order, Cart cart)
+    private void MoveItemsFromCartToOrder(Order order, Cart cart)
     {
         foreach (var cartItem in cart.Items)
         {
@@ -129,7 +124,25 @@ public class OrderService : BaseService<Order, OrderResponse, OrderRequest>, IOr
         cart.Items.Clear();
     }
 
-    public double GetDistanceinKm(double sourcelat, double sourcelng, double destlat, double destlng)
+   private void FindingNearestBranch(OrderFromCartRequest request)
+    {
+        var entities = _merchantRepository.Find(request.MerchantId);
+        var listKm = new List<double>();
+
+       var openBranchs = entities.MerchantBranchs.Where(m=>m.MerchantStatus==MerchantStatus.Open);
+
+        foreach (var item in openBranchs)
+        {
+            var km = GetDistanceinKm(item.PointLat, item.PointLng, request.PointLat, request.PointLng);
+
+            if (km < double.Parse(item.MerchantCoverage))
+                listKm.Add(km);
+        }
+
+        var min = listKm.Min();
+    }
+
+    private double GetDistanceinKm(double sourcelat, double sourcelng, double destlat, double destlng)
     {
         var earthradius = 6371;
         var sourcelatrad = toradians(sourcelat);
@@ -143,5 +156,6 @@ public class OrderService : BaseService<Order, OrderResponse, OrderRequest>, IOr
 
         return angle * earthradius;
     }
+
     private static double toradians(double angle) => angle * Math.PI / 180.0;
 }

@@ -4,6 +4,7 @@ using Delivery.Infrastructure.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Delivery.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(EFContext))]
-    partial class EFContextModelSnapshot : ModelSnapshot
+    [Migration("20230420051034_ToModelMerchebtPropertyClosedandOpen")]
+    partial class ToModelMerchebtPropertyClosedandOpen
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -237,9 +240,6 @@ namespace Delivery.Infrastructure.Persistence.Migrations
 
                     b.Property<decimal>("MerchantId")
                         .HasColumnType("decimal(20,0)");
-
-                    b.Property<int>("MerchantStatus")
-                        .HasColumnType("int");
 
                     b.Property<string>("Open")
                         .IsRequired()
