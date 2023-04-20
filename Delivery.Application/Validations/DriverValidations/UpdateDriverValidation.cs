@@ -1,9 +1,9 @@
 ﻿using Delivery.Application.Requests.SenderRequest;
 using FluentValidation;
 
-public class UdateDriverValidation : AbstractValidator<DriverRequest>
+public class UpdateDriverValidation : AbstractValidator<DriverRequest>
 {
-    public UdateDriverValidation()
+    public UpdateDriverValidation()
     {
         RuleFor(s => s.FirstName).NotEmpty();
         RuleFor(s => s.Address).NotEmpty().NotNull();

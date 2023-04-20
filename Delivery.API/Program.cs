@@ -47,7 +47,7 @@ namespace Delivery.API
             builder.Services.AddValidatorsFromAssembly(typeof(UpdateProductValidation).Assembly);
             builder.Services.AddValidatorsFromAssembly(typeof(CreateMerchantCategoryRequestValidation).Assembly);
             builder.Services.AddValidatorsFromAssembly(typeof(CreateDriverValidation).Assembly);
-            builder.Services.AddValidatorsFromAssembly(typeof(UdateDriverValidation).Assembly);
+            builder.Services.AddValidatorsFromAssembly(typeof(UpdateDriverValidation).Assembly);
             builder.Services.AddValidatorsFromAssembly(typeof(CreateOrderRequestValidation).Assembly);
 
             //AvtoMapper
