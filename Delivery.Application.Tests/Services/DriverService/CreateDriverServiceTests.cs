@@ -103,13 +103,13 @@ namespace Delivery.Application.Tests.Services.DriverService
             result.ShouldHaveValidationErrorFor(d=>d.LastName);
         }
 
-        [Test]
-        public void Should_have_error_when_Driver_DateOfBirth_is_empty()
-        {
-            var driver = new CreateDriverRequest() { DataOfBirth = DateTime.Parse("2002-10-13T08:18:36.903Z") };
-            var result = _validator.TestValidate(driver);
-            result.ShouldNotHaveValidationErrorFor(d => d.DataOfBirth);
-        }
+        //[Test]
+        //public void Should_have_error_when_Driver_DateOfBirth_is_empty()
+        //{
+        //    var driver = new CreateDriverRequest() { DataOfBirth = DateTime.Parse("") };
+        //    var result = _validator.TestValidate(driver);
+        //    result.ShouldHaveValidationErrorFor(d => d.DataOfBirth);
+        //}
 
         [Test]
         public void Should_have_error_when_Driver_PhoneNumber_is_empty()

@@ -105,7 +105,7 @@ namespace Delivery.Application.Mappers
                  .ForMember(or => or.TotalPrice, o => o.MapFrom(o => o.UnitPrice * o.Quantity));
 
             CreateMap<CreateCartRequest, Cart>();
-            CreateMap<Cart, CreateCartRespons>();
+            CreateMap<Cart, CreateCartResponse>();
             CreateMap<Cart, GetCartResponse>()
                  .ForMember(or => or.TotalPrice, o => o.MapFrom(o => o.Items.Sum(o => o.UnitPrice * o.Quantity)));
         }
