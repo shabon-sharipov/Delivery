@@ -96,15 +96,6 @@ namespace Delivery.Application.Tests.Services.DriverService
             _repository.Verify(d => d.FindAsync(PhoneNumber, CancellationToken.None));
         }
 
-        //[Test]
-        //public async Task Update_Driver_Should_have_error_when_Address_is_null()
-        //{
-        //    string Address = "Restaurant Forel";
-        //    _repository.Setup(d=>d.FindAsync(Address, CancellationToken.None)).Returns(Task.FromResult<Driver>(null));
-
-        //    var service = new Application.Services.DriverService(_repository.Object, _mapper.Object);
-        //    Assert.ThrowsAsync<HttpStatusCodeException>(async () => await service.Update(driver, Address, CancellationToken.None));
-        //    _repository.Verify(d => d.FindAsync(Address, CancellationToken.None));
-        //}
+      
     }
 }
