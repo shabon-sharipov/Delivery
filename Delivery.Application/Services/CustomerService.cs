@@ -24,18 +24,16 @@ namespace Delivery.Application.Services
             _repository = repository;
         }
 
-
         public async Task<IEnumerable<CustomerResponse>> GetAll(int pageSize, int pageNumber, CancellationToken cancellationToken)
         {
             var customers = _repository.GetAll(pageSize, pageNumber, cancellationToken);
             return _mapper.Map<IEnumerable<PaggedListCustomerItemResponse>>(customers);
         }
 
-
         public override async Task<CustomerResponse> Create(CustomerRequest request, CancellationToken cancellationToken)
         {
             if (request == null)
-                throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Customer)); 
+                throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Customer));
 
             var createCustomerRequest = request as CreateCustomerRequest;
             var entity = _mapper.Map<CreateCustomerRequest, Customer>(createCustomerRequest);
@@ -50,11 +48,10 @@ namespace Delivery.Application.Services
         {
             var entity = await _repository.FindAsync(id, cancellationToken);
             if (entity == null)
-                throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound,nameof(Customer));
+                throw new HttpStatusCodeException(System.Net.HttpStatusCode.NotFound, nameof(Customer));
 
             return _mapper.Map<Customer, GetCustomerResponse>(entity);
         }
-
         public override bool Delete(ulong id, CancellationToken cancellationToken)
         {
             var entity = _repository.Find(id);
@@ -65,7 +62,6 @@ namespace Delivery.Application.Services
             _repository.SaveChanges();
             return true;
         }
-
         public override async Task<CustomerResponse> Update(CustomerRequest request, ulong id, CancellationToken cancellationToken)
         {
             var entity = await _repository.FindAsync(id, CancellationToken.None);

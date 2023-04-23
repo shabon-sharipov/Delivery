@@ -34,7 +34,7 @@ namespace Delivery.Application.Tests.Services.DriverService
 
             _repository.Setup(p => p.FindAsync(driverId, CancellationToken.None)).ReturnsAsync(driver);
 
-            _mapper.Setup(m => m.Map<UpdateDriverRequest, Driver>(driverRequest,driver)).Returns(driver);
+            _mapper.Setup(m => m.Map<UpdateDriverRequest, Driver>(driverRequest, driver)).Returns(driver);
             _mapper.Setup(m => m.Map<Driver, UpdateDriverResponse>(driver)).Returns(driverResponse);
 
             var service = new Application.Services.DriverService(_repository.Object, _mapper.Object);
@@ -80,8 +80,8 @@ namespace Delivery.Application.Tests.Services.DriverService
             _repository.Setup(d => d.FindAsync(PhoneNumber, CancellationToken.None)).Returns(Task.FromResult<Driver>(null));
 
             var service = new Application.Services.DriverService(_repository.Object, _mapper.Object);
-            Assert.ThrowsAsync<HttpStatusCodeException>(async()=>await service.Update(driver, PhoneNumber, CancellationToken.None));
-            _repository.Verify(d=>d.FindAsync(PhoneNumber,CancellationToken.None));
+            Assert.ThrowsAsync<HttpStatusCodeException>(async () => await service.Update(driver, PhoneNumber, CancellationToken.None));
+            _repository.Verify(d => d.FindAsync(PhoneNumber, CancellationToken.None));
         }
 
         [Test]
@@ -96,15 +96,15 @@ namespace Delivery.Application.Tests.Services.DriverService
             _repository.Verify(d => d.FindAsync(PhoneNumber, CancellationToken.None));
         }
 
-        //[Test]
-        //public async Task Update_Driver_Should_have_error_when_Address_is_null()
-        //{
-        //    string Address = "Restaurant Forel";
-        //    _repository.Setup(d=>d.FindAsync(Address, CancellationToken.None)).Returns(Task.FromResult<Driver>(null));
+        [Test]
+        public async Task Update_Driver_Should_have_error_when_Address_is_null()
+        {
+            ulong driverId = 1;
+            _repository.Setup(d => d.FindAsync(driverId, CancellationToken.None)).Returns(Task.FromResult<Driver>(null));
 
-        //    var service = new Application.Services.DriverService(_repository.Object, _mapper.Object);
-        //    Assert.ThrowsAsync<HttpStatusCodeException>(async () => await service.Update(driver, Address, CancellationToken.None));
-        //    _repository.Verify(d => d.FindAsync(Address, CancellationToken.None));
-        //}
+            var service = new Application.Services.DriverService(_repository.Object, _mapper.Object);
+
+            Assert.ThrowsAsync<HttpStatusCodeException>(async () => await service.Update(It.IsAny<DriverRequest>(), driverId, CancellationToken.None));
+        }
     }
 }
