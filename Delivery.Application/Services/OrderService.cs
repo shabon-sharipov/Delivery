@@ -15,7 +15,11 @@ public class OrderService : BaseService<Order, OrderResponse, OrderRequest>, IOr
     private readonly IRepository<Merchant> _merchantRepository;
     private readonly IMapper _mapper;
 
-    public OrderService(IRepository<Order> repository, IRepository<OrderDetails> repositoryOrderDetails, IMapper mapper, IRepository<Cart> repositoryCart, IRepository<CartItem> cartItemRepo, IRepository<Merchant> merchantRepository)
+    public OrderService(IRepository<Order> repository, 
+        IRepository<OrderDetails> repositoryOrderDetails, 
+        IMapper mapper, IRepository<Cart> repositoryCart, 
+        IRepository<CartItem> cartItemRepo, 
+        IRepository<Merchant> merchantRepository)
     {
         _repository = repository;
         _mapper = mapper;
@@ -25,7 +29,8 @@ public class OrderService : BaseService<Order, OrderResponse, OrderRequest>, IOr
         _merchantRepository = merchantRepository;
     }
 
-    public async Task<IEnumerable<OrderResponse>> GetAll(int PageSize, int PageNumber, CancellationToken cancellationToken)
+    public async Task<IEnumerable<OrderResponse>> GetAll(int PageSize, int PageNumber, 
+        CancellationToken cancellationToken)
     {
         var products = _repository.GetAll(PageSize, PageNumber, cancellationToken);
         return _mapper.Map<IEnumerable<PaggedOrderListItemResponse>>(products);
@@ -51,7 +56,8 @@ public class OrderService : BaseService<Order, OrderResponse, OrderRequest>, IOr
         return true;
     }
 
-    public override async Task<OrderResponse> Update(OrderRequest request, ulong id, CancellationToken cancellationToken)
+    public override async Task<OrderResponse> Update(OrderRequest request, ulong id,
+        CancellationToken cancellationToken)
     {
         var entity = await _repository.FindAsync(id, CancellationToken.None);
         if (entity == null)
@@ -66,7 +72,8 @@ public class OrderService : BaseService<Order, OrderResponse, OrderRequest>, IOr
         return _mapper.Map<Order, UpdateOrderResponse>(result);
     }
 
-    public async Task<OrderFromCartResponse> CreateOrder(OrderFromCartRequest request, CancellationToken cancellationToken)
+    public async Task<OrderFromCartResponse> CreateOrder(OrderFromCartRequest request, 
+        CancellationToken cancellationToken)
     {
         if (request == null)
             throw new HttpStatusCodeException(System.Net.HttpStatusCode.BadRequest, nameof(OrderFromCartRequest));
@@ -93,7 +100,8 @@ public class OrderService : BaseService<Order, OrderResponse, OrderRequest>, IOr
         return _mapper.Map<Order, OrderFromCartResponse>(order);
     }
 
-    public async Task<string> ChangeOrderStatus(ulong id, ChangeOrderStatusRequest request, CancellationToken cancellationToken)
+    public async Task<string> ChangeOrderStatus(ulong id, ChangeOrderStatusRequest request, 
+       CancellationToken cancellationToken)
     {
         var entity = await _repository.FindAsync(id, cancellationToken);
         if (entity == null)
@@ -154,6 +162,5 @@ public class OrderService : BaseService<Order, OrderResponse, OrderRequest>, IOr
 
         return angle * earthradius;
     }
-
-    private static double toradians(double angle) => angle * Math.PI / 180.0;
+        private static double toradians(double angle) => angle * Math.PI / 180.0;
 }
