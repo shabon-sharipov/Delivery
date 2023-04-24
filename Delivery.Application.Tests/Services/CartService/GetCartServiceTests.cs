@@ -2,6 +2,7 @@
 using Delivery.Application.Common.Interfaces.Repositories;
 using Delivery.Application.Exceptions;
 using Delivery.Application.Response.CartRespons;
+using Delivery.Domain.Model;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -16,11 +17,17 @@ namespace Delivery.Application.Tests.Services.CartService
     {
         private readonly Mock<IRepository<Cart>> _repository;
         private readonly Mock<IMapper> _mapper;
+        private readonly Mock<IRepository<Product>> _repositoryProductMock;
+        private readonly Mock<IRepository<CartItem>> _repositoryCartItem;
+        
 
         public GetCartServiceTests()
         {
             _mapper = new Mock<IMapper>();
             _repository = new Mock<IRepository<Cart>>();
+            _repositoryProductMock = new Mock<IRepository<Product>>();
+            _repositoryCartItem = new Mock<IRepository<CartItem>>();
+          
         }
 
         [Test]
@@ -33,7 +40,8 @@ namespace Delivery.Application.Tests.Services.CartService
             _repository.Setup(c => c.FindAsync(cartId, CancellationToken.None)).ReturnsAsync(cart);
             _mapper.Setup(m => m.Map<Cart, CartResponse>(cart)).Returns(cartResponse);
 
-            var service = new Application.Services.CartService(_repository.Object, _mapper.Object);
+            var service = new Application.Services.CartService(_repository.Object, _mapper.Object,
+                _repositoryCartItem.Object, _repositoryProductMock.Object);
             var entity = await service.Get(cartId, CancellationToken.None);
 
             _repository.Verify(c => c.FindAsync(cartId, CancellationToken.None));
@@ -45,7 +53,8 @@ namespace Delivery.Application.Tests.Services.CartService
         {
             ulong cartId = 5;
             _repository.Setup(d => d.FindAsync(cartId, CancellationToken.None)).Returns(Task.FromResult<Cart>(null));
-            var service = new Application.Services.CartService(_repository.Object, _mapper.Object);
+            var service = new Application.Services.CartService(_repository.Object, _mapper.Object,
+                _repositoryCartItem.Object, _repositoryProductMock.Object);
 
             Assert.ThrowsAsync<HttpStatusCodeException>(async () => await service.Get(cartId, CancellationToken.None));
             _repository.Verify(d => d.FindAsync(cartId, CancellationToken.None));
@@ -56,7 +65,8 @@ namespace Delivery.Application.Tests.Services.CartService
         {
             ulong cartId = 5;
             _repository.Setup(d => d.FindAsync(cartId, CancellationToken.None));
-            var service = new Application.Services.CartService(_repository.Object, _mapper.Object);
+            var service = new Application.Services.CartService(_repository.Object, _mapper.Object,
+                _repositoryCartItem.Object, _repositoryProductMock.Object);
 
             Assert.ThrowsAsync<HttpStatusCodeException>(async () => await service.Get(cartId, CancellationToken.None));
             _repository.Verify(d => d.FindAsync(cartId, CancellationToken.None));
@@ -66,7 +76,8 @@ namespace Delivery.Application.Tests.Services.CartService
         {
             ulong cartId = 5;
             _repository.Setup(d => d.FindAsync(cartId, CancellationToken.None));
-            var service = new Application.Services.CartService(_repository.Object, _mapper.Object);
+            var service = new Application.Services.CartService(_repository.Object, _mapper.Object,
+                _repositoryCartItem.Object, _repositoryProductMock.Object);
 
             Assert.ThrowsAsync<HttpStatusCodeException>(async () => await service.Get(cartId, CancellationToken.None));
             _repository.Verify(d => d.FindAsync(cartId, CancellationToken.None));

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Delivery.Application.Response.CartResponse
 {
-    public class UpdateCartResponse : BaseResponse
+    public class UpdateCartResponse : CartResponse
     {
         public ulong CustomerId { get; set; }
     }
